@@ -1,0 +1,214 @@
+:root {
+    --main-bg-color: #009d63;
+    --main-text-color: #009d63;
+    --second-text-color: #bbbec5;
+    --second-bg-color: #c1efde;
+}
+
+.primary-text {
+    color: var(--main-text-color);
+}
+
+.second-text {
+    color: var(--second-text-color);
+}
+
+.primary-bg {
+    background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+    background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+    border-radius: 100%;
+}
+
+#wrapper {
+    overflow-x: hidden;
+    background-image: linear-gradient(to right, #baf3d7, #c2f5de, #cbf7e4, #d4f8ea, #ddfaef);
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin 0.25s ease-out;
+    -moz-transition: margin 0.25s ease-out;
+    -o-transition: margin 0.25s ease-out;
+    transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#menu-toggle {
+    cursor: pointer;
+}
+
+.list-group-item {
+    border: none;
+    padding: 20px 30px;
+}
+
+.list-group-item.active {
+    background-color: transparent;
+    color: var(--main-text-color);
+    font-weight: bold;
+    border: none;
+}
+
+#close_wrapper_button {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #page-content-wrapper {
+        display: block;
+    }
+
+    #sidebar-wrapper {
+        width: 100vw;
+    }
+
+    #page-content-wrapper.toggled {
+        display: none;
+    }
+
+    #close_wrapper_button {
+        display: block;
+    }
+}
+
+// MENU LATERAL
+@media (max-width: 768px) {
+    .d-flex.toggled .list-group-item {
+        width: 100vw;
+        text-align: center;
+    }
+    .login-box-body {
+        padding: 40px 25px !important;
+        margin: 0px 25px !important;
+        margin-top: 15px !important;
+    }
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+        left: -70px;
+    }
+    .d-flex.toggled #close_wrapper_button {
+        position: absolute;
+        top: 35px;
+        right: 20px;
+    }
+    .d-flex.toggled #close_wrapper_button a {
+        background-color: white !important;
+    }
+}
+
+// QUITAR COLOR AL ABRIR MENU
+#wrapper {
+    background-image: linear-gradient(to right, white, white, white, white, white) !important;
+}
+
+// BACKGROUND COLOR
+#page-content-wrapper {
+    background-color: white;
+}
+
+// RIGHT BORDER MENU
+#sidebar-wrapper {
+    border-right: 1px solid #c8c8c8 !important;
+}
+
+// COLOR BUTTONS LEFT MENU
+.list-group-item-action {
+    color: #495057;
+}
+
+.list-group-item-action:hover, .list-group-item-action:focus {
+    color: #495057;
+    background-color: #ededed !important;
+}
+
+// SPACE LETTERS DW
+.sidebar-heading .logo_DW {
+    letter-spacing: 3px;
+}
+
+h1.logo_DW {
+    letter-spacing: 10px;
+}
+
+// CENTER LOGIN
+.login-logo, .register-logo {
+    text-align: center;
+    // margin-bottom: 25px;
+}
+
+.login-box, .register-box {
+    margin: 7% auto;
+}
+
+// LOGIN WIDTH
+.login-box-body {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    max-width: 400px;
+    margin-top: 50px;
+    margin: 7% auto;
+    box-shadow: 1px 1px 20px gainsboro;
+}
+
+.login-box {
+    margin-top: 150px;
+}
+
+.WelcomeMSG {
+    padding: 35px;
+    background-color: #e8fff5;
+}
+
+// FOOTER LOGIN BOX
+.login-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; 
+}
+
+.login-footer label {
+    margin-top: 15px;
+}
+
+.login-footer input {
+    margin-right: 10px;
+}

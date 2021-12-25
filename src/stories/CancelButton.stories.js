@@ -6,9 +6,5 @@ const stories = storiesOf('CancelButton', module);
 
 stories.add('Primary', () => {
 
-    return (
-        <div className='form'>
-            <CancelButton />
-        </div>
-    );
+    return (<CancelButton />);
 });

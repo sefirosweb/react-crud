@@ -1,7 +1,12 @@
 import React from 'react';
 
-export const CancelButton = () => {
+import { GiCancel } from "react-icons/gi";
+import { Button } from "react-bootstrap";
+
+export const CancelButton = (props) => {
     return (
-        <> Hola</>
+        <Button {...props} variant="secondary">
+            <GiCancel size={22} />
+        </Button>
     );
 };
