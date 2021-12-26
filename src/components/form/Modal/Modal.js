@@ -1,5 +1,5 @@
 import { Button, Modal } from "react-bootstrap";
-import LoadingButton from "@/components/buttons/LoadingButton";
+import { LoadingButton } from "./../../buttons/LoadingButton";
 
 const CustomModal = ({
     show,
