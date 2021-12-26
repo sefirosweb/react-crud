@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { GiCancel } from "react-icons/gi";
 import { Button } from "react-bootstrap";
 
