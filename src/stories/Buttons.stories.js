@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import useState from 'storybook-addon-state';
 import { action } from '@storybook/addon-actions';
 import { CancelButton } from '../components/buttons/CancelButton';
 import { CronjobButton } from '../components/buttons/CronjobButton';
@@ -15,7 +16,9 @@ export const actions = {
 
 const CancelButtonStory = storiesOf('Buttons/CancelButton', module);
 CancelButtonStory.add('Primary', () => {
-    return (<CancelButton {...actions} />);
+    const [disabled, setDisabled] = useState(false);
+
+    return (<CancelButton disabled={disabled} onClick={() => { setDisabled(true) }} />);
 });
 
 const CronjobButtonStory = storiesOf('Buttons/CronjobButton', module);

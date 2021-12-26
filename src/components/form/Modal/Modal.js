@@ -1,7 +1,8 @@
-import { Button, Modal } from "react-bootstrap";
+import React from "react";
+import { Button, Modal as BootstrapModal } from "react-bootstrap";
 import { LoadingButton } from "./../../buttons/LoadingButton";
 
-const CustomModal = ({
+export const Modal = ({
     show,
     setShow,
     handleAccept,
@@ -10,13 +11,13 @@ const CustomModal = ({
     accept,
     onExited,
     onShow,
-    isLoading,
+    isLoading
 }) => {
     const handleClose = () => setShow(false);
 
     return (
         <>
-            <Modal
+            <BootstrapModal
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
@@ -24,11 +25,11 @@ const CustomModal = ({
                 onExited={onExited}
                 onShow={onShow}
             >
-                <Modal.Header>
-                    <Modal.Title>{title}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{body}</Modal.Body>
-                <Modal.Footer>
+                <BootstrapModal.Header>
+                    <BootstrapModal.Title>{title}</BootstrapModal.Title>
+                </BootstrapModal.Header>
+                <BootstrapModal.Body>{body}</BootstrapModal.Body>
+                <BootstrapModal.Footer>
                     <Button
                         variant="danger"
                         onClick={handleClose}
@@ -48,10 +49,8 @@ const CustomModal = ({
                     ) : (
                         ""
                     )}
-                </Modal.Footer>
-            </Modal>
+                </BootstrapModal.Footer>
+            </BootstrapModal>
         </>
     );
 };
-
-export default CustomModal;
