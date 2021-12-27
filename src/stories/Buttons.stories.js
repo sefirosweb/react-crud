@@ -13,14 +13,6 @@ export const actions = {
     onClick: action('onClick')
 };
 
-
-const CancelButtonStory = storiesOf('Buttons/CancelButton', module);
-CancelButtonStory.add('Primary', () => {
-    const [disabled, setDisabled] = useState(false);
-
-    return (<CancelButton disabled={disabled} onClick={() => { setDisabled(true) }} />);
-});
-
 const CronjobButtonStory = storiesOf('Buttons/CronjobButton', module);
 CronjobButtonStory.add('Primary', () => {
     return (<CronjobButton {...actions} />);
