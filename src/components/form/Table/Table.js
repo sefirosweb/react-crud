@@ -1,3 +1,4 @@
+import React from 'react'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { Col, Form, Pagination, Row } from 'react-bootstrap'
 import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table'
