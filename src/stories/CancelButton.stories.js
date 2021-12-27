@@ -1,8 +1,6 @@
 import React from 'react';
 
-import useState from 'storybook-addon-state';
-
-import CancelButton from '../components/buttons/CancelButton';
+import { CancelButton } from '../components/buttons/CancelButton';
 
 export default {
     title: 'Buttons/Cancel',
