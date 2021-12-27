@@ -8,3 +8,5 @@ export * from './components/buttons/LoadingButton';
 export * from './components/buttons/PlayButton';
 export * from './components/buttons/RefreshButton';
 
+export * from './components/form/Modal';
+
