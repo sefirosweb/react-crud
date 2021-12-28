@@ -14,16 +14,25 @@ CRUDStory.add('Simple', () => {
             accessor: 'id'
         },
         {
-            titleOnDelete: true,
-            Header: 'Item Type',
-            accessor: 'name',
+            titleOnDelete: true, // This show when is going to "delete button"
+            titleOnCRUD: 'Label Item Type', // Label on CRUD modal
+            Header: 'Item Type', // Header Table
+            accessor: 'name', // data from request
+            editable: true
         }
     ]
 
 
     const options = {
         columns,
-        crudUrl: `/api/crud`
+        crudUrl: `/api/crud`,
+        canSearch: true,
+        canRefresh: true,
+
+        // CRUD OPTIONS
+        createButtonTitle: 'Create new registry',
+        canEdit: true,
+        canDelete: true,
     }
 
     return <Crud options={options} />

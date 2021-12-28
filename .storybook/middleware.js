@@ -51,7 +51,6 @@ const expressMiddleWare = router => {
         setTimeout(() => {
             response.send({
                 success: true,
-                message: "Data inserted correctly",
                 data
             })
         }, TIMEOUT)
