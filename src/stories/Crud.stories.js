@@ -64,13 +64,36 @@ AdvancedFields.args = {
                 sortable: true
             },
             {
-                titleOnCRUD: 'Field Type',
-                Header: 'Field Type',
+                titleOnCRUD: 'Select Field Type',
+                Header: 'Select Type',
                 accessor: 'field_type',
                 type: 'select',
                 selectOptionsUrl: '/api/crud/options',
                 editable: true,
                 sortable: true
+            },
+            {
+                titleOnCRUD: 'Multi Select',
+                Header: 'Multi Select',
+                accessor: 'field_type_muliselect',
+                type: 'multiselect',
+                multiSelectOptionsUrl: `/api/crud/options/modify`,
+                multiSelectOptionsUrlColumns: [
+                    {
+                        primaryKey: true,
+                        Header: '#',
+                        accessor: 'id'
+                    },
+                    {
+                        Header: 'Campo',
+                        accessor: 'field'
+                    },
+                    {
+                        Header: 'Descripcion',
+                        accessor: 'description'
+                    }
+                ],
+                editable: true
             }
         ],
 
