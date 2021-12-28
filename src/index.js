@@ -12,4 +12,5 @@ export * from './components/form/Modal';
 export * from './components/form/ModalCrud';
 export * from './components/form/Table';
 export * from './components/form/FormTypes';
+export * from './components/form/Crud';
 

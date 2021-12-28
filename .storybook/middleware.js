@@ -43,6 +43,7 @@ const expressMiddleWare = router => {
                     "ean": makeRandomText(8),
                     "sku_base": makeRandomText(9),
                     "descripcion": makeRandomText(50),
+                    "name": makeRandomText(7)
                 }
             )
         }
