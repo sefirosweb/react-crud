@@ -9,6 +9,7 @@ export * from './components/buttons/PlayButton';
 export * from './components/buttons/RefreshButton';
 
 export * from './components/form/Modal';
+export * from './components/form/ModalCrud';
 export * from './components/form/Table';
 export * from './components/form/FormTypes';
 

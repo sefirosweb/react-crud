@@ -7,10 +7,6 @@ const expressMiddleWare = router => {
     router.use(bodyParser.json());
 
     router.get("/api/getSelectOptions", (request, response) => {
-        if (request.params.orderId === 'error') {
-            response.status(500).send('Something broke!')
-        }
-
         response.send({
             success: true,
             data: [
@@ -19,9 +15,26 @@ const expressMiddleWare = router => {
                 'Option 3',
                 'Option 4',
             ]
-        }
-        )
+        })
+    })
 
+    router.post("/api/crud", (request, response) => {
+        response.send({
+            success: true,
+            message: "Data inserted correctly"
+        })
+    })
+    router.put("/api/crud", (request, response) => {
+        response.send({
+            success: true,
+            message: "Data updated correctly"
+        })
+    })
+    router.delete("/api/crud", (request, response) => {
+        response.send({
+            success: true,
+            message: "Data deleted correctly"
+        })
     })
 };
 
