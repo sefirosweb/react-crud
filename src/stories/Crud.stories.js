@@ -77,7 +77,7 @@ AdvancedFields.args = {
                 Header: 'Multi Select',
                 accessor: 'field_type_muliselect',
                 type: 'multiselect',
-                multiSelectOptionsUrl: `/api/crud/options/modify`,
+                multiSelectOptionsUrl: `/api/multiselect`,
                 multiSelectOptionsUrlColumns: [
                     {
                         primaryKey: true,

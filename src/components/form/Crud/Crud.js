@@ -10,13 +10,14 @@ import { Button, Row, Col, Form, InputGroup } from "react-bootstrap";
 
 import { Table } from "./../Table";
 import { ModalCrud } from "./../ModalCrud";
+import { MultiSelectCrud } from "./../MultiSelectCrud";
 
 import { EditButton } from "./../../buttons/EditButton";
 import { DeleteButton } from "./../../buttons/DeleteButton";
 import { RefreshButton } from "./../../buttons/RefreshButton";
 
 // import preloadSelect from './../../../lib/preloadSelect'
-// import MultiSelectCrud from "@/components/MultiSelectCrud";
+
 
 export const Crud = forwardRef((props, ref) => {
     const { options } = props;
@@ -83,22 +84,21 @@ export const Crud = forwardRef((props, ref) => {
     // Add extra buttons depending of options
     if (options.canEdit) {
 
-        // TODO
-        // newColumns.forEach(c => {
-        //     if (c.type === 'multiselect' && c.editable) {
-        //         c.Cell = (row) => {
-        //             return (
-        //                 <div style={{ textAlign: "center" }}>
-        //                     <MultiSelectCrud
-        //                         primaryKey={row.cell.row.original[primaryKey]}
-        //                         crudUrl={row.cell.column.multiSelectOptionsUrl}
-        //                         columns={row.cell.column.multiSelectOptionsUrlColumns}
-        //                     />
-        //                 </div >
-        //             )
-        //         }
-        //     }
-        // })
+        newColumns.forEach(c => {
+            if (c.type === 'multiselect' && c.editable) {
+                c.Cell = (row) => {
+                    return (
+                        <div style={{ textAlign: "center" }}>
+                            <MultiSelectCrud
+                                primaryKey={row.cell.row.original[primaryKey]}
+                                crudUrl={row.cell.column.multiSelectOptionsUrl}
+                                columns={row.cell.column.multiSelectOptionsUrlColumns}
+                            />
+                        </div >
+                    )
+                }
+            }
+        })
 
         newColumns.push({
             Header: () => {
