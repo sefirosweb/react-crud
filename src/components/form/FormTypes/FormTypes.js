@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios'
 import { Form } from "react-bootstrap";
-import { connect } from 'react-redux'
-// import store from './../../../lib/store';
-import { setCache } from './../../../lib/cacheAction';
-// let cache = store.getState().cacheReducer.cache;
-
+import getDataMemo from './../../../lib/getDataMemo';
 
 export const FormTypes = ({ type, inputFieldName, isLoading, label, value, handleChange, selectOptionsUrl, cache, setCache }) => {
     const mounted = useRef(false);
@@ -14,39 +10,25 @@ export const FormTypes = ({ type, inputFieldName, isLoading, label, value, handl
         return () => (mounted.current = false);
     });
 
-
-    console.log({ cache })
-
     if (type === 'select') {
         const [selectOptions, setSelectOptions] = useState([]);
 
         useEffect(() => {
             const cancelTokenSource = axios.CancelToken.source();
-
-            // if (cache[selectOptionsUrl]) {
-            //     setSelectOptions(cache[selectOptionsUrl])
-            // } else {
-
-            axios
-                .get(selectOptionsUrl, { cancelToken: cancelTokenSource.token })
-                .then((request) => {
+            getDataMemo(selectOptionsUrl, cancelTokenSource)
+                .then(({ data, success }) => {
                     if (mounted.current) {
-                        const responseData = request.data.data;
-                        const success = request.data.success;
                         if (success) {
-                            console.log({ responseData })
-                            // setCache(selectOptionsUrl, responseData);
-                            setSelectOptions(responseData)
+                            setSelectOptions(data)
                         }
                     }
                 })
                 .catch((error) => console.log(error))
-            // }
+
             return () => {
                 cancelTokenSource.cancel();
             };
         }, []);
-
 
         return (
             <Form.Group controlId={inputFieldName} className='mb-2'>
@@ -79,7 +61,6 @@ export const FormTypes = ({ type, inputFieldName, isLoading, label, value, handl
             </Form.Group>
         )
     }
-
 
     if (type === 'password' || type === 'text') {
         return (
