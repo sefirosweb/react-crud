@@ -35,3 +35,52 @@ Simple.args = {
         canDelete: true // Enable to DELETE
     }
 };
+
+export const AdvancedFields = Template.bind({});
+AdvancedFields.args = {
+    options: {
+        columns: [
+            {
+                primaryKey: true,
+                Header: '#',
+                accessor: 'id',
+                visible: true,
+                sortable: true
+            },
+            {
+                titleOnDelete: true,
+                titleOnCRUD: 'Label Item Type',
+                Header: 'Item Type',
+                accessor: 'name',
+                editable: true,
+                sortable: true
+            },
+            {
+                titleOnCRUD: 'Secret Label for passwords',
+                Header: 'Secret Label',
+                accessor: 'sku_base',
+                editable: true,
+                type: 'password',
+                sortable: true
+            },
+            {
+                titleOnCRUD: 'Field Type',
+                Header: 'Field Type',
+                accessor: 'field_type',
+                type: 'select',
+                selectOptionsUrl: '/api/crud/options',
+                editable: true,
+                sortable: true
+            }
+        ],
+
+        crudUrl: `/api/crud`, // Same url is used for GET & CREATE & UPDATE & DELETE, must be have in backend all methods (GET / POST / PUT / DELETED) ajax requests
+        canSearch: true, // Enable input box for search
+        canRefresh: true, // Enable button for refresh manually
+
+        // CRUD OPTIONS
+        createButtonTitle: 'Create new registry', // Button name for create row
+        canEdit: true, // Enable to EDIT
+        canDelete: true // Enable to DELETE
+    }
+};

@@ -17,6 +17,13 @@ const makeRandomText = (length) => {
 
 const TIMEOUT = 800
 
+const options = [
+    'Option 1',
+    'Option 2',
+    'Option 3',
+    'Option 4',
+]
+
 const expressMiddleWare = router => {
     router.use(bodyParser.urlencoded({ extended: false }));
     router.use(bodyParser.json());
@@ -24,15 +31,19 @@ const expressMiddleWare = router => {
     router.get("/api/getSelectOptions", (request, response) => {
         response.send({
             success: true,
-            data: [
-                'Option 1',
-                'Option 2',
-                'Option 3',
-                'Option 4',
-            ]
+            data: options
         })
     })
 
+    router.get("/api/crud/options", (request, response) => {
+        response.send({
+            success: true,
+            data: options
+        })
+    })
+
+
+    // CRUD - GET
     router.get("/api/crud", (request, response) => {
         const random = Math.floor(Math.random() * 300)
         const data = []
@@ -43,7 +54,8 @@ const expressMiddleWare = router => {
                     "ean": makeRandomText(8),
                     "sku_base": makeRandomText(9),
                     "descripcion": makeRandomText(50),
-                    "name": makeRandomText(7)
+                    "name": makeRandomText(7),
+                    "field_type": options[Math.floor(Math.random() * options.length)]
                 }
             )
         }
@@ -55,6 +67,8 @@ const expressMiddleWare = router => {
             })
         }, TIMEOUT)
     })
+
+    // CRUD - CREATE
     router.post("/api/crud", (request, response) => {
         setTimeout(() => {
             response.send({
@@ -63,6 +77,8 @@ const expressMiddleWare = router => {
             })
         }, TIMEOUT)
     })
+
+    // CRUD - UPDATE
     router.put("/api/crud", (request, response) => {
         setTimeout(() => {
             response.send({
@@ -71,6 +87,8 @@ const expressMiddleWare = router => {
             })
         }, TIMEOUT)
     })
+
+    // CRUD - DELETE
     router.delete("/api/crud", (request, response) => {
         setTimeout(() => {
             response.send({
