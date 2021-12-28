@@ -37,7 +37,7 @@ export const FormTypes = ({ type, inputFieldName, isLoading, label, value, handl
                     value={value}
                     name={inputFieldName}
                     onChange={handleChange}
-                    readOnly={isLoading}
+                    disabled={isLoading}
                 >
                     <option value={""}></option>
                     {selectOptions.map((option) => {
