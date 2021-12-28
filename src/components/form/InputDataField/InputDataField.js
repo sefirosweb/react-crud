@@ -1,16 +1,14 @@
+import React, { useEffect, useImperativeHandle, useRef, useState, forwardRef } from "react"
 import axios from "axios"
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { connect } from 'react-redux'
 import { Col, Form, InputGroup, Button, Row } from "react-bootstrap"
-import { setCache } from '@/actions/cacheAction'
+import getDataMemo from "../../../lib/getDataMemo"
 
-const InputDataField = forwardRef((props, ref) => {
-    const { data = [], limit = 10, onAcceptButton, handleChangeFilter, url, isLoading, cache, setCache } = props
+export const InputDataField = forwardRef((props, ref) => {
+    const { data = [], limit = 10, onAcceptButton, handleChangeFilter, url, isLoading } = props
     const [filter, setFilter] = useState('')
     const [dataField, setDataField] = useState(data)
     const mounted = useRef(false);
 
-    // Check if component is mounted
     useEffect(() => {
         mounted.current = true;
         return () => (mounted.current = false);
@@ -21,6 +19,7 @@ const InputDataField = forwardRef((props, ref) => {
             setFilter('');
         }
     }));
+
 
     const onChangeFilter = (e) => {
         setFilter(e.target.value)
@@ -39,23 +38,16 @@ const InputDataField = forwardRef((props, ref) => {
         const cancelTokenSource = axios.CancelToken.source();
         if (!url) return
 
-        if (cache[url]) {
-            setDataField(cache[url])
-        } else {
-            axios.get(url, { cancelToken: cancelTokenSource.token })
-                .then((request) => {
-                    if (mounted.current) {
-                        const responseData = request.data.data
-                        const success = request.data.success
-                        if (success) {
-                            const result = Object.keys(responseData).map((key) => responseData[key]);
-                            setCache(url, result);
-                            setDataField(result)
-                        }
+        getDataMemo(url, cancelTokenSource)
+            .then((request) => {
+                if (mounted.current) {
+                    const responseData = request.data
+                    const success = request.success
+                    if (success) {
+                        setDataField(responseData)
                     }
-                })
-        }
-
+                }
+            })
 
         return () => { cancelTokenSource.cancel() }
     }, [url, setDataField])
@@ -95,17 +87,3 @@ const InputDataField = forwardRef((props, ref) => {
         </>
     )
 })
-
-
-const mapStateToProps = (reducers) => {
-    const { cacheReducer } = reducers
-    const { cache } = cacheReducer
-    return { cache }
-}
-
-const mapDispatchToProps = {
-    setCache
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(InputDataField)
