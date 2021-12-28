@@ -68,7 +68,7 @@ AdvancedFields.args = {
                 Header: 'Select Type',
                 accessor: 'field_type',
                 type: 'select',
-                selectOptionsUrl: '/api/crud/options',
+                selectOptionsUrl: '/api/getSelectOptions',
                 editable: true,
                 sortable: true
             },

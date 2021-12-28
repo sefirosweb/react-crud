@@ -29,19 +29,13 @@ const expressMiddleWare = router => {
     router.use(bodyParser.json());
 
     router.get("/api/getSelectOptions", (request, response) => {
-        response.send({
-            success: true,
-            data: options
-        })
+        setTimeout(() => {
+            response.send({
+                success: true,
+                data: options
+            })
+        }, TIMEOUT)
     })
-
-    router.get("/api/crud/options", (request, response) => {
-        response.send({
-            success: true,
-            data: options
-        })
-    })
-
 
     // CRUD - GET
     router.get("/api/crud", (request, response) => {
@@ -90,6 +84,50 @@ const expressMiddleWare = router => {
 
     // CRUD - DELETE
     router.delete("/api/crud", (request, response) => {
+        setTimeout(() => {
+            response.send({
+                success: true,
+                message: "Data deleted correctly"
+            })
+        }, TIMEOUT)
+    })
+
+    /* MULTI SELECT */
+
+    // MULTI SELECT CRUD - GET
+    router.get("/api/multiselect", (request, response) => {
+        const random = Math.floor(Math.random() * 7)
+        const data = []
+        for (var i = 0; i < random; i++) {
+            data.push(
+                {
+                    "id": makeRandomText(5),
+                    "name": makeRandomText(7),
+                    "field_type": options[Math.floor(Math.random() * options.length)]
+                }
+            )
+        }
+
+        setTimeout(() => {
+            response.send({
+                success: true,
+                data
+            })
+        }, TIMEOUT)
+    })
+
+    // MULTI SELECT CRUD - GET ELEMENT OF ARRAY
+    router.get("/api/multiselect/get_array", (request, response) => {
+        setTimeout(() => {
+            response.send({
+                success: true,
+                data: options
+            })
+        }, TIMEOUT)
+    })
+
+    // MULTI SELECT CRUD - DELETE
+    router.delete("/api/multiselect", (request, response) => {
         setTimeout(() => {
             response.send({
                 success: true,
