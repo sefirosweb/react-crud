@@ -14,7 +14,8 @@ Simple.args = {
             {
                 primaryKey: true,
                 Header: '#',
-                accessor: 'id'
+                accessor: 'id',
+                visible: true // Show / hide column
             },
             {
                 titleOnDelete: true, // This show when is going to "delete button"
