@@ -31,11 +31,11 @@ export const FormTypes = ({ type, inputFieldName, isLoading, label, value, handl
                 .get(selectOptionsUrl, { cancelToken: cancelTokenSource.token })
                 .then((request) => {
                     if (mounted.current) {
-                        setCache(selectOptionsUrl, request.data);
                         const responseData = request.data.data;
                         const success = request.data.success;
                         if (success) {
-                            setCache(selectOptionsUrl, responseData);
+                            console.log({ responseData })
+                            // setCache(selectOptionsUrl, responseData);
                             setSelectOptions(responseData)
                         }
                     }
