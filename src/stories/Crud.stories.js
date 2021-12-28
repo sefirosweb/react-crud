@@ -1,40 +1,36 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { Crud } from '../components/form/Crud';
-import useState from 'storybook-addon-state';
 
+export default {
+    title: 'Form/CRUD',
+    component: Crud
+}
 
-const CRUDStory = storiesOf('Form/CRUD', module);
-CRUDStory.add('Simple', () => {
-
-    const columns = [
-        {
-            primaryKey: true,
-            Header: '#',
-            accessor: 'id'
-        },
-        {
-            titleOnDelete: true, // This show when is going to "delete button"
-            titleOnCRUD: 'Label Item Type', // Label on CRUD modal
-            Header: 'Item Type', // Header Table
-            accessor: 'name', // data from request
-            editable: true
-        }
-    ]
-
-
-    const options = {
-        columns,
-        crudUrl: `/api/crud`,
-        canSearch: true,
-        canRefresh: true,
+const Template = (args) => <Crud {...args} />
+export const Simple = Template.bind({});
+Simple.args = {
+    options: {
+        columns: [
+            {
+                primaryKey: true,
+                Header: '#',
+                accessor: 'id'
+            },
+            {
+                titleOnDelete: true, // This show when is going to "delete button"
+                titleOnCRUD: 'Label Item Type', // Label on CRUD modal
+                Header: 'Item Type', // Header Table
+                accessor: 'name', // data from request
+                editable: true
+            }
+        ],
+        crudUrl: `/api/crud`, // Same url is used for GET & CREATE & UPDATE & DELETE, must be have in backend all methods (GET / POST / PUT / DELETED) ajax requests
+        canSearch: true, // Enable input box for search
+        canRefresh: true, // Enable button for refresh manually
 
         // CRUD OPTIONS
-        createButtonTitle: 'Create new registry',
-        canEdit: true,
-        canDelete: true,
+        createButtonTitle: 'Create new registry', // Button name for create row
+        canEdit: true, // Enable to EDIT
+        canDelete: true // Enable to DELETE
     }
-
-    return <Crud options={options} />
-
-});
+};
