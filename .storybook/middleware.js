@@ -94,7 +94,7 @@ const expressMiddleWare = router => {
 
     /* MULTI SELECT */
 
-    // MULTI SELECT CRUD - GET
+    // MULTI SELECT CRUD - GET TABLE DATA
     router.get("/api/multiselect", (request, response) => {
         const random = Math.floor(Math.random() * 7)
         const data = []
@@ -103,7 +103,7 @@ const expressMiddleWare = router => {
                 {
                     "id": makeRandomText(5),
                     "name": makeRandomText(7),
-                    "field_type": options[Math.floor(Math.random() * options.length)]
+                    "description": makeRandomText(20)
                 }
             )
         }
@@ -122,6 +122,16 @@ const expressMiddleWare = router => {
             response.send({
                 success: true,
                 data: options
+            })
+        }, TIMEOUT)
+    })
+
+    // MULTI SELECT CRUD - Create
+    router.post("/api/multiselect", (request, response) => {
+        setTimeout(() => {
+            response.send({
+                success: true,
+                message: "Data inserted correctly"
             })
         }, TIMEOUT)
     })
