@@ -16,7 +16,7 @@ import { EditButton } from "./../../buttons/EditButton";
 import { DeleteButton } from "./../../buttons/DeleteButton";
 import { RefreshButton } from "./../../buttons/RefreshButton";
 
-// import preloadSelect from './../../../lib/preloadSelect'
+import preloadSelect from './../../../lib/preloadSelect'
 
 
 export const Crud = forwardRef((props, ref) => {
@@ -189,7 +189,7 @@ export const Crud = forwardRef((props, ref) => {
                             (key) => responseData[key]
                         );
                         setDataTable(result);
-                        // preloadSelect(columns);
+                        preloadSelect(columns);
                     }
                 }
             })
