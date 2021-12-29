@@ -1,13 +1,14 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { Modal } from '../components/form/Modal';
 import { Button } from "react-bootstrap";
 import useState from 'storybook-addon-state';
 
+export default {
+    title: 'Form/Modal',
+    component: Modal
+}
 
-const ModalStory = storiesOf('Form/Modal', module);
-ModalStory.add('Primary', () => {
-
+const Template = () => {
     const [show, setShow] = useState("show", false);
     const [isLoading, setIsLoading] = useState("isLoading", false);
 
@@ -48,5 +49,7 @@ ModalStory.add('Primary', () => {
                 onShow={onShow}
             />
         </>
-    );
-});
+    )
+}
+
+export const Default = Template.bind({});
