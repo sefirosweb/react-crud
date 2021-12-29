@@ -53,6 +53,7 @@ export const Crud = forwardRef((props, ref) => {
     });
 
     const handleModalShow = (type, key) => {
+
         const titleOnCRUD = columns.find(
             (column) => column.titleOnCRUD
         ).accessor;
@@ -96,9 +97,10 @@ export const Crud = forwardRef((props, ref) => {
                     return (
                         <div style={{ textAlign: "center" }}>
                             <MultiSelectCrud
-                                primaryKey={row.cell.row.original[primaryKey]}
+                                primaryKeyId={row.cell.row.original[primaryKey]}
+                                primaryKey={row.cell.column.multiSelectOptionsPrimaryKey}
                                 crudUrl={row.cell.column.multiSelectOptionsUrl}
-                                columns={row.cell.column.multiSelectOptionsUrlColumns}
+                                columns={row.cell.column.multiSelectOptionsColumns}
                             />
                         </div >
                     )

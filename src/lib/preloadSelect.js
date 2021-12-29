@@ -3,8 +3,6 @@ import axios from "axios";
 import getDataMemo from './getDataMemo';
 
 const preloadSelect = (columns) => {
-    console.log({ columns })
-
     columns.forEach(c => {
         if (c.selectOptionsUrl && c.type === 'select') {
             const cancelTokenSource = axios.CancelToken.source();

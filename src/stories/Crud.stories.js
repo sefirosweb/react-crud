@@ -22,7 +22,6 @@ Simple.args = {
 
     columns: [
         {
-            primaryKey: true,
             Header: '#',
             accessor: 'id',
             visible: true
@@ -86,9 +85,9 @@ AdvancedFields.args = {
             accessor: 'field_type_muliselect',
             type: 'multiselect',
             multiSelectOptionsUrl: `/api/multiselect`,
-            multiSelectOptionsUrlColumns: [
+            multiSelectOptionsPrimaryKey: `id`,
+            multiSelectOptionsColumns: [
                 {
-                    primaryKey: true,
                     Header: '#',
                     accessor: 'id'
                 },

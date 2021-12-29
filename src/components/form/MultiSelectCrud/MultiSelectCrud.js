@@ -6,7 +6,7 @@ import { InputDataField } from './../InputDataField'
 import { EditButton } from "./../../buttons/EditButton";
 import { DeleteButton } from "./../../buttons/DeleteButton";
 
-export const MultiSelectCrud = ({ primaryKey, crudUrl, columns }) => {
+export const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
     const [show, setShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [dataModal, setDataModal] = useState([])
@@ -23,22 +23,16 @@ export const MultiSelectCrud = ({ primaryKey, crudUrl, columns }) => {
         }
     }
 
-
-
-    const primaryKeyId = newColumns.find(
-        (column) => column.primaryKey
-    ).accessor;
-
     newColumns.push({
         Header: 'Borrar',
         accessor: 'delete_crud',
-        Cell: row => <DeleteButton disabled={isLoading} onClick={() => handleDelete(row.cell.row.original[primaryKeyId])} />
+        Cell: row => <DeleteButton disabled={isLoading} onClick={() => handleDelete(row.cell.row.original[primaryKey])} />
     });
 
     const loadTableModal = () => {
         setDataModal([])
         setIsLoading(true)
-        axios.get(`${crudUrl}`, { params: { primaryKey } })
+        axios.get(`${crudUrl}`, { params: { primaryKeyId } })
             .then((request) => {
                 const responseData = request.data.data
                 const success = request.data.success
@@ -54,14 +48,14 @@ export const MultiSelectCrud = ({ primaryKey, crudUrl, columns }) => {
     const handleDelete = (id) => {
         setIsLoading(true)
         axios.delete(`${crudUrl}`,
-            { data: { primaryKey, id } })
+            { data: { primaryKeyId, id } })
             .then(refreshModalTable)
             .catch(() => setIsLoading(false))
     }
 
     const onAcceptButton = (dataField) => {
         setIsLoading(true)
-        axios.post(`${crudUrl}`, { name: dataField, primaryKey })
+        axios.post(`${crudUrl}`, { name: dataField, primaryKeyId })
             .then(refreshModalTable)
             .catch(() => setIsLoading(false))
     }
