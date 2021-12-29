@@ -1,17 +1,13 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 import { Modal } from './../Modal'
 import { Table } from './../Table'
 import { InputDataField } from './../InputDataField'
 import { EditButton } from './../../buttons/EditButton'
 import { DeleteButton } from './../../buttons/DeleteButton'
 
-export const MultiSelectCrud = ({
-    primaryKey,
-    primaryKeyId,
-    crudUrl,
-    columns,
-}) => {
+const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
     const [show, setShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [dataModal, setDataModal] = useState([])
@@ -102,3 +98,12 @@ export const MultiSelectCrud = ({
         </>
     )
 }
+
+MultiSelectCrud.propTypes = {
+    primaryKey: PropTypes.string.isRequired,
+    primaryKeyId: PropTypes.string.isRequired,
+    crudUrl: PropTypes.string.isRequired,
+    columns: PropTypes.array.isRequired,
+}
+
+export { MultiSelectCrud }
