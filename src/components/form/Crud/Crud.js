@@ -20,8 +20,16 @@ import preloadSelect from './../../../lib/preloadSelect'
 
 
 export const Crud = forwardRef((props, ref) => {
-    const { options } = props;
-    const { columns } = options;
+    const {
+        options = {}, // Pending to check still exist old propieties
+        canSearch = false,
+        canRefresh = false,
+        canEdit = false,
+        canDelete = false,
+        createButtonTitle = false,
+        crudUrl = "",
+        columns = []
+    } = props;
 
     const newColumns = [...columns];
     const tableRef = useRef();
@@ -82,7 +90,7 @@ export const Crud = forwardRef((props, ref) => {
     };
 
     // Add extra buttons depending of options
-    if (options.canEdit) {
+    if (canEdit) {
 
         newColumns.forEach(c => {
             if (c.type === 'multiselect' && c.editable) {
@@ -104,7 +112,7 @@ export const Crud = forwardRef((props, ref) => {
             Header: () => {
                 return (
                     <div style={{ textAlign: "center" }}>
-                        {options.canEdit === true ? "Edit" : options.canEdit}
+                        {canEdit === true ? "Edit" : canEdit}
                     </div >
                 );
             },
@@ -122,12 +130,12 @@ export const Crud = forwardRef((props, ref) => {
         });
     }
 
-    if (options.canDelete) {
+    if (canDelete) {
         newColumns.push({
             Header: () => {
                 return (
                     <div style={{ textAlign: "center" }}>
-                        {options.canDelete === true ? "Delete" : options.canDelete}
+                        {canDelete === true ? "Delete" : canDelete}
                     </div >
                 );
             },
@@ -146,14 +154,14 @@ export const Crud = forwardRef((props, ref) => {
     }
 
     const createButton = () => {
-        if (options.createButtonTitle) {
+        if (createButtonTitle) {
             return (
                 <Button
                     crud="CREATE"
                     variant="success"
                     onClick={() => handleModalShow("CREATE")}
                 >
-                    {options.createButtonTitle}
+                    {createButtonTitle}
                 </Button>
             );
         }
@@ -170,12 +178,12 @@ export const Crud = forwardRef((props, ref) => {
     // Get data from backend using axios
 
     useEffect(() => {
-        if (!options.crudUrl) return;
+        if (!crudUrl) return;
         const cancelTokenSource = axios.CancelToken.source();
         setDataTable([]);
         setIsLoadingTable(true);
         axios
-            .get(options.crudUrl,
+            .get(crudUrl,
                 {
                     cancelToken: cancelTokenSource.token,
                     params: options.filters
@@ -199,7 +207,7 @@ export const Crud = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel();
         };
-    }, [sendRequest, options.crudUrl, options.filters]);
+    }, [sendRequest, crudUrl, options.filters]);
     const loadTable = () => setSendRequest(!sendRequest);
 
 
@@ -228,7 +236,7 @@ export const Crud = forwardRef((props, ref) => {
                 >
 
                     <InputGroup className="d-flex justify-content-end">
-                        {options.canSearch ? (
+                        {canSearch ? (
                             <Form.Control
                                 onChange={handleSearchField}
                                 value={searchField}
@@ -236,7 +244,7 @@ export const Crud = forwardRef((props, ref) => {
                             />
                         ) : ("")}
 
-                        {options.canRefresh ? (
+                        {canRefresh ? (
                             <RefreshButton onClick={loadTable} />
                         ) : ("")}
 
@@ -268,7 +276,7 @@ export const Crud = forwardRef((props, ref) => {
                 modalData={modalData}
                 setModalData={setModalData}
                 crud={crud}
-                url={options.crudUrl}
+                url={crudUrl}
                 handleSuccess={loadTable}
             />
         </div>
