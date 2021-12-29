@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { CancelButton } from '../components/buttons/CancelButton';
+import { EditButton } from '../components/buttons/EditButton';
 
 export default {
-    title: 'Buttons/CancelButton',
-    component: CancelButton
+    title: 'Buttons/EditButton',
+    component: EditButton
 }
 
-const Template = (args) => <CancelButton {...args} />
+const Template = (args) => <EditButton {...args} />
 
 export const Active = Template.bind({});
 Active.args = {

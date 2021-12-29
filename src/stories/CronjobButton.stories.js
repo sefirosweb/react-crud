@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { CancelButton } from '../components/buttons/CancelButton';
+import { CronjobButton } from '../components/buttons/CronjobButton';
 
 export default {
-    title: 'Buttons/CancelButton',
-    component: CancelButton
+    title: 'Buttons/CronjobButton',
+    component: CronjobButton
 }
 
-const Template = (args) => <CancelButton {...args} />
+const Template = (args) => <CronjobButton {...args} />
 
 export const Active = Template.bind({});
 Active.args = {
