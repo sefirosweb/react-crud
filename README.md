@@ -27,33 +27,41 @@ Import components whant you wish:
 ```js
 import { Crud } from "@sefirosweb/react-crud";
 
+...
+
 // Columns to retrieve from backend
 const columns = [
   {
-    primaryKey: true, // Used for UPDATE / DELETE in CRUD
     Header: "#",
     accessor: "id",
     visible: true, // Can hide this element
   },
   {
-    titleOnDelete: true,
     titleOnCRUD: "Label Item Type", // Label on CRUD modal
-    Header: "Item Type",
-    accessor: "name",
-    editable: true,
+    Header: "Item Type", // Label in table
+    accessor: "name", // field retreived from backend
+    editable: true, // field can be editabled
   },
 ];
 
-// Declare options for crud:
-const options = {
-  columns,
-  crudUrl: "http://localhost:6006/api/crud",
-  canDelete: true,
-  canEdit: true,
-};
+...
 
 // Import CRUD component
-<Crud options={options} />;
+<Crud
+    canSearch: true,
+    canRefresh: true,
+
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
+    createButtonTitle: 'http://localhost:6006/api/crud',
+    canEdit: true,
+    canDelete: true,
+    crudUrl: `/api/crud`,
+
+    columns
+
+/>
 ```
 
 All components in the Storybook
@@ -87,4 +95,11 @@ npm start
 ```
 npm run build
 npm publish
+```
+
+## Build and publish to GitHub Pages
+
+```
+npm run build-storybook
+npm run deploy-storybook
 ```
