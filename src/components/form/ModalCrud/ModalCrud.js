@@ -16,6 +16,8 @@ export const ModalCrud = ({
     modalData,
     setModalData,
     crud,
+    primaryKey,
+    titleOnDelete,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -81,12 +83,10 @@ export const ModalCrud = ({
 
     const titleOnCRUD = () => {
         if (crud === "DELETE") {
-            const primaryKey = fields.find((field) => field.primaryKey).accessor;
-            const titleOnCRUD = fields.find((field) => field.titleOnDelete).accessor;
             return (
                 <span>
                     <p>Seguro que quieres el registro: {modalData[primaryKey]}</p>
-                    <p>{modalData[titleOnCRUD]}</p>
+                    <p>{modalData[titleOnDelete]}</p>
                 </span>
             );
         }
@@ -95,8 +95,6 @@ export const ModalCrud = ({
     const onExited = () => setModalData({});
 
     const bodyFields = () => {
-        const primaryKey = fields.find((field) => field.primaryKey).accessor;
-
         return (
             <Form>
                 {fields.map((field, key) => {

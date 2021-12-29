@@ -103,6 +103,8 @@ ModalCrudStory.add('Primary', () => {
                 crud={crud}
                 url={"/api/crud"}
                 handleSuccess={handleSuccess}
+                primaryKey={"id"}
+                titleOnDelete={"name"}
             />
         </>
     );

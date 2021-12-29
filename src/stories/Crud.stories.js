@@ -12,6 +12,9 @@ Simple.args = {
     canSearch: true,
     canRefresh: true,
 
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
     createButtonTitle: 'Create new registry',
     canEdit: true,
     canDelete: true,
@@ -22,13 +25,12 @@ Simple.args = {
             primaryKey: true,
             Header: '#',
             accessor: 'id',
-            visible: true // Show / hide column
+            visible: true
         },
         {
-            titleOnDelete: true, // This show when is going to "delete button"
-            titleOnCRUD: 'Label Item Type', // Label on CRUD modal
-            Header: 'Item Type', // Header Table
-            accessor: 'name', // data from request
+            titleOnCRUD: 'Label Item Type',
+            Header: 'Item Type',
+            accessor: 'name',
             editable: true
         }
     ]
@@ -39,6 +41,9 @@ AdvancedFields.args = {
     canSearch: true,
     canRefresh: true,
 
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
     createButtonTitle: 'Create new registry',
     canEdit: true,
     canDelete: true,
@@ -46,14 +51,12 @@ AdvancedFields.args = {
 
     columns: [
         {
-            primaryKey: true,
             Header: '#',
             accessor: 'id',
             visible: true,
             sortable: true
         },
         {
-            titleOnDelete: true,
             titleOnCRUD: 'Label Item Type',
             Header: 'Item Type',
             accessor: 'name',

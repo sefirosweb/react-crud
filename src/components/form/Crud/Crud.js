@@ -27,8 +27,10 @@ export const Crud = forwardRef((props, ref) => {
         canEdit = false,
         canDelete = false,
         createButtonTitle = false,
-        crudUrl = "",
-        columns = []
+        columns = [],
+        crudUrl,
+        primaryKey,
+        titleOnDelete
     } = props;
 
     const newColumns = [...columns];
@@ -49,10 +51,6 @@ export const Crud = forwardRef((props, ref) => {
         mounted.current = true;
         return () => (mounted.current = false);
     });
-
-    const primaryKey = columns.find(
-        (column) => column.primaryKey
-    ).accessor;
 
     const handleModalShow = (type, key) => {
         const titleOnCRUD = columns.find(
@@ -278,6 +276,8 @@ export const Crud = forwardRef((props, ref) => {
                 crud={crud}
                 url={crudUrl}
                 handleSuccess={loadTable}
+                primaryKey={primaryKey}
+                titleOnDelete={titleOnDelete}
             />
         </div>
     );
