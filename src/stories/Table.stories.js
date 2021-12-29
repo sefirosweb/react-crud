@@ -1,168 +1,77 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { Table } from '../components/form/Table';
 import useState from 'storybook-addon-state';
 import { makeRandomText } from './helpers'
 
-const TableHistory = storiesOf('Form/Table', module);
-TableHistory.add('Primary', () => {
-
-    const tableGenerator = () => {
-        const random = Math.floor(Math.random() * 300)
-        const data = []
-        for (var i = 0; i < random; i++) {
-            data.push(
-                {
-                    "id": makeRandomText(5),
-                    "ean": makeRandomText(8),
-                    "sku_base": makeRandomText(9),
-                    "descripcion": makeRandomText(50),
-                }
-            )
-        }
-        return data
-    }
-
-    const [isLoadingTable, setIsLoadingTable] = useState('isLoadingTable', false)
-
-    const newColumns =
-        [
+const tableGenerator = () => {
+    const random = Math.floor(Math.random() * 300)
+    const data = []
+    for (var i = 0; i < random; i++) {
+        data.push(
             {
-                Header: '#',
-                accessor: 'id'
-            },
-            {
-                Header: 'Ean',
-                accessor: 'ean',
-            },
-            {
-                Header: 'Sku',
-                accessor: 'sku_base',
-            },
-            {
-                Header: 'Descripcion',
-                accessor: 'descripcion',
+                "id": makeRandomText(5),
+                "ean": makeRandomText(8),
+                "sku_base": makeRandomText(9),
+                "descripcion": makeRandomText(50),
             }
-        ]
-
-    const dataTable = tableGenerator()
-
-    return (
-        <Table
-            data={dataTable}
-            columns={newColumns}
-            isLoading={isLoadingTable}
-        // canSelectRow={true}
-        // ref={tableRef}
-        />
-
-    );
-});
-
-TableHistory.add('Select Rows', () => {
-
-    const tableGenerator = () => {
-        const random = Math.floor(Math.random() * 300)
-        const data = []
-        for (var i = 0; i < random; i++) {
-            data.push(
-                {
-                    "id": makeRandomText(5),
-                    "ean": makeRandomText(8),
-                    "sku_base": makeRandomText(9),
-                    "descripcion": makeRandomText(50),
-                }
-            )
-        }
-        return data
+        )
     }
+    return data
+}
 
-    const [isLoadingTable, setIsLoadingTable] = useState('isLoadingTable', false)
-
-    const newColumns =
-        [
-            {
-                Header: '#',
-                accessor: 'id'
-            },
-            {
-                Header: 'Ean',
-                accessor: 'ean',
-            },
-            {
-                Header: 'Sku',
-                accessor: 'sku_base',
-            },
-            {
-                Header: 'Descripcion',
-                accessor: 'descripcion',
-            }
-        ]
-
-    const dataTable = tableGenerator()
-
-    return (
-        <Table
-            data={dataTable}
-            columns={newColumns}
-            isLoading={isLoadingTable}
-            canSelectRow={true}
-        // ref={tableRef}
-        />
-
-    );
-});
-
-TableHistory.add('Loading', () => {
-
-    const tableGenerator = () => {
-        const random = Math.floor(Math.random() * 300)
-        const data = []
-        for (var i = 0; i < random; i++) {
-            data.push(
-                {
-                    "id": makeRandomText(5),
-                    "ean": makeRandomText(8),
-                    "sku_base": makeRandomText(9),
-                    "descripcion": makeRandomText(50),
-                }
-            )
+const newColumns =
+    [
+        {
+            Header: '#',
+            accessor: 'id'
+        },
+        {
+            Header: 'Ean',
+            accessor: 'ean',
+        },
+        {
+            Header: 'Sku',
+            accessor: 'sku_base',
+        },
+        {
+            Header: 'Descripcion',
+            accessor: 'descripcion',
         }
-        return data
-    }
+    ]
 
-    const [isLoadingTable, setIsLoadingTable] = useState('isLoadingTable', true)
+const dataTable = tableGenerator()
 
-    const newColumns =
-        [
-            {
-                Header: '#',
-                accessor: 'id'
-            },
-            {
-                Header: 'Ean',
-                accessor: 'ean',
-            },
-            {
-                Header: 'Sku',
-                accessor: 'sku_base',
-            },
-            {
-                Header: 'Descripcion',
-                accessor: 'descripcion',
-            }
-        ]
 
-    const dataTable = tableGenerator()
+export default {
+    title: 'Form/Table',
+    component: Table
+}
 
-    return (
-        <Table
-            data={dataTable}
-            columns={newColumns}
-            isLoading={isLoadingTable}
-            canSelectRow={true}
-        // ref={tableRef}
-        />
 
-    );
-});
+const Template = (args) => <Table {...args} />
+
+export const Default = Template.bind({});
+Default.args = {
+    isLoading: false,
+    canSelectRow: false,
+    columns: newColumns,
+    data: dataTable,
+};
+
+
+export const canSelectRow = Template.bind({});
+canSelectRow.args = {
+    isLoading: false,
+    canSelectRow: true,
+    columns: newColumns,
+    data: dataTable,
+};
+
+export const loading = Template.bind({});
+loading.args = {
+    isLoading: true,
+    canSelectRow: false,
+    columns: newColumns,
+    data: dataTable,
+};
+
