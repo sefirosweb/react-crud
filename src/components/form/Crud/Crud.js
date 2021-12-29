@@ -3,23 +3,22 @@ import React, {
     useEffect,
     useImperativeHandle,
     useState,
-    useRef
-} from "react";
-import axios from "axios";
-import { Button, Row, Col, Form, InputGroup } from "react-bootstrap";
+    useRef,
+} from 'react'
+import axios from 'axios'
+import { Button, Row, Col, Form, InputGroup } from 'react-bootstrap'
 
-import { Table } from "./../Table";
-import { ModalCrud } from "./../ModalCrud";
-import { MultiSelectCrud } from "./../MultiSelectCrud";
+import { Table } from './../Table'
+import { ModalCrud } from './../ModalCrud'
+import { MultiSelectCrud } from './../MultiSelectCrud'
 
-import { EditButton } from "./../../buttons/EditButton";
-import { DeleteButton } from "./../../buttons/DeleteButton";
-import { RefreshButton } from "./../../buttons/RefreshButton";
+import { EditButton } from './../../buttons/EditButton'
+import { DeleteButton } from './../../buttons/DeleteButton'
+import { RefreshButton } from './../../buttons/RefreshButton'
 
 import preloadSelect from './../../../lib/preloadSelect'
 
-
-export const Crud = forwardRef((props, ref) => {
+const Crud = forwardRef((props, ref) => {
     const {
         options = {}, // Pending to check still exist old propieties
         canSearch = false,
@@ -30,127 +29,134 @@ export const Crud = forwardRef((props, ref) => {
         columns = [],
         crudUrl,
         primaryKey,
-        titleOnDelete
-    } = props;
+        titleOnDelete,
+    } = props
 
-    const newColumns = [...columns];
-    const tableRef = useRef();
-    const mounted = useRef(false);
-    const [crud, setCrud] = useState("");
-    const [show, setShow] = useState(false);
-    const [dataTable, setDataTable] = useState([]);
-    const [modalData, setModalData] = useState({});
-    const [modalTitle, setModalTitle] = useState("");
-    const [searchField, setSearchField] = useState("");
-    const [sendRequest, setSendRequest] = useState(false);
-    const [isLoadingTable, setIsLoadingTable] = useState(false);
+    const newColumns = [...columns]
+    const tableRef = useRef()
+    const mounted = useRef(false)
+    const [crud, setCrud] = useState('')
+    const [show, setShow] = useState(false)
+    const [dataTable, setDataTable] = useState([])
+    const [modalData, setModalData] = useState({})
+    const [modalTitle, setModalTitle] = useState('')
+    const [searchField, setSearchField] = useState('')
+    const [sendRequest, setSendRequest] = useState(false)
+    const [isLoadingTable, setIsLoadingTable] = useState(false)
 
-    const handleSearchField = (e) => setSearchField(e.target.value);
+    const handleSearchField = (e) => setSearchField(e.target.value)
 
     useEffect(() => {
-        mounted.current = true;
-        return () => (mounted.current = false);
-    });
+        mounted.current = true
+        return () => (mounted.current = false)
+    })
 
     const handleModalShow = (type, key) => {
-
         const titleOnCRUD = columns.find(
             (column) => column.titleOnCRUD
-        ).accessor;
+        ).accessor
 
         const fieldsCanBeEdit = columns
             .filter((column) => column.editable)
-            .map((column) => column.accessor);
+            .map((column) => column.accessor)
 
-        let findDataCanBeEdit = {};
-        let findData = {};
-        if (type !== "CREATE") {
+        let findDataCanBeEdit = {}
+        let findData = {}
+        if (type !== 'CREATE') {
             findDataCanBeEdit = Object.keys(dataTable[key]).reduce(
                 (returnData, column) => {
                     if (
                         fieldsCanBeEdit.includes(column) ||
                         column === primaryKey
                     ) {
-                        returnData[column] = dataTable[key][column];
+                        returnData[column] = dataTable[key][column]
                     }
-                    return returnData;
+                    return returnData
                 },
                 {}
-            );
+            )
         }
 
-        setCrud(type);
-        setModalData(findDataCanBeEdit);
+        setCrud(type)
+        setModalData(findDataCanBeEdit)
         setModalTitle(
-            `${type} ${findData[titleOnCRUD] ? findData[titleOnCRUD] : ""}`
-        );
+            `${type} ${findData[titleOnCRUD] ? findData[titleOnCRUD] : ''}`
+        )
 
-        setShow(true);
-    };
+        setShow(true)
+    }
 
     // Add extra buttons depending of options
     if (canEdit) {
-
-        newColumns.forEach(c => {
+        newColumns.forEach((c) => {
             if (c.type === 'multiselect' && c.editable) {
-                c.Cell = (row) => {
+                const newCell = (row) => {
                     return (
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{ textAlign: 'center' }}>
                             <MultiSelectCrud
                                 primaryKeyId={row.cell.row.original[primaryKey]}
-                                primaryKey={row.cell.column.multiSelectOptionsPrimaryKey}
+                                primaryKey={
+                                    row.cell.column.multiSelectOptionsPrimaryKey
+                                }
                                 crudUrl={row.cell.column.multiSelectOptionsUrl}
-                                columns={row.cell.column.multiSelectOptionsColumns}
+                                columns={
+                                    row.cell.column.multiSelectOptionsColumns
+                                }
                             />
-                        </div >
+                        </div>
                     )
                 }
+                c.Cell = newCell
             }
         })
 
         newColumns.push({
             Header: () => {
                 return (
-                    <div style={{ textAlign: "center" }}>
-                        {canEdit === true ? "Edit" : canEdit}
-                    </div >
-                );
+                    <div style={{ textAlign: 'center' }}>
+                        {canEdit === true ? 'Edit' : canEdit}
+                    </div>
+                )
             },
             accessor: 'Edit',
             editable: false,
             Cell: (row) => {
                 return (
-                    <div style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: 'center' }}>
                         <EditButton
-                            onClick={() => handleModalShow("UPDATE", row.cell.row.id)}
+                            onClick={() =>
+                                handleModalShow('UPDATE', row.cell.row.id)
+                            }
                         />
-                    </div >
-                );
+                    </div>
+                )
             },
-        });
+        })
     }
 
     if (canDelete) {
         newColumns.push({
             Header: () => {
                 return (
-                    <div style={{ textAlign: "center" }}>
-                        {canDelete === true ? "Delete" : canDelete}
-                    </div >
-                );
+                    <div style={{ textAlign: 'center' }}>
+                        {canDelete === true ? 'Delete' : canDelete}
+                    </div>
+                )
             },
             accessor: 'Delete',
             editable: false,
             Cell: (row) => {
                 return (
-                    <div style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: 'center' }}>
                         <DeleteButton
-                            onClick={() => handleModalShow("DELETE", row.cell.row.id)}
+                            onClick={() =>
+                                handleModalShow('DELETE', row.cell.row.id)
+                            }
                         />
-                    </div >
-                );
+                    </div>
+                )
             },
-        });
+        })
     }
 
     const createButton = () => {
@@ -159,66 +165,64 @@ export const Crud = forwardRef((props, ref) => {
                 <Button
                     crud="CREATE"
                     variant="success"
-                    onClick={() => handleModalShow("CREATE")}
+                    onClick={() => handleModalShow('CREATE')}
                 >
                     {createButtonTitle}
                 </Button>
-            );
+            )
         }
-        return "";
-    };
+        return ''
+    }
 
     const loadCustomButtons = () => {
         if (options.customButtons) {
-            return options.customButtons;
+            return options.customButtons
         }
-        return "";
-    };
+        return ''
+    }
 
     // Get data from backend using axios
 
     useEffect(() => {
-        if (!crudUrl) return;
-        const cancelTokenSource = axios.CancelToken.source();
-        setDataTable([]);
-        setIsLoadingTable(true);
+        if (!crudUrl) return
+        const cancelTokenSource = axios.CancelToken.source()
+        setDataTable([])
+        setIsLoadingTable(true)
         axios
-            .get(crudUrl,
-                {
-                    cancelToken: cancelTokenSource.token,
-                    params: options.filters
-                })
+            .get(crudUrl, {
+                cancelToken: cancelTokenSource.token,
+                params: options.filters,
+            })
             .then((request) => {
                 if (mounted.current) {
-                    const responseData = request.data.data;
-                    const success = request.data.success;
+                    const responseData = request.data.data
+                    const success = request.data.success
                     if (success) {
                         const result = Object.keys(responseData).map(
                             (key) => responseData[key]
-                        );
-                        setDataTable(result);
-                        preloadSelect(columns);
+                        )
+                        setDataTable(result)
+                        preloadSelect(columns)
                     }
                 }
             })
             .catch((error) => console.log(error))
-            .then(() => setIsLoadingTable(false));
+            .then(() => setIsLoadingTable(false))
 
         return () => {
-            cancelTokenSource.cancel();
-        };
-    }, [sendRequest, crudUrl, options.filters]);
-    const loadTable = () => setSendRequest(!sendRequest);
-
+            cancelTokenSource.cancel()
+        }
+    }, [sendRequest, crudUrl, options.filters])
+    const loadTable = () => setSendRequest(!sendRequest)
 
     useImperativeHandle(ref, () => ({
         refreshTable() {
-            loadTable();
+            loadTable()
         },
         setDataTable,
         setIsLoadingTable,
-        tableRef
-    }));
+        tableRef,
+    }))
 
     return (
         <div>
@@ -234,7 +238,6 @@ export const Crud = forwardRef((props, ref) => {
                     lg={{ span: 3, offset: 3 }}
                     className="mt-3"
                 >
-
                     <InputGroup className="d-flex justify-content-end">
                         {canSearch ? (
                             <Form.Control
@@ -242,19 +245,21 @@ export const Crud = forwardRef((props, ref) => {
                                 value={searchField}
                                 placeholder="Buscar"
                             />
-                        ) : ("")}
+                        ) : (
+                            ''
+                        )}
 
                         {canRefresh ? (
                             <RefreshButton onClick={loadTable} />
-                        ) : ("")}
-
+                        ) : (
+                            ''
+                        )}
                     </InputGroup>
                 </Col>
             </Row>
 
             <Row className="mt-3">
                 <Col>
-
                     <Table
                         data={dataTable}
                         columns={newColumns}
@@ -282,5 +287,9 @@ export const Crud = forwardRef((props, ref) => {
                 titleOnDelete={titleOnDelete}
             />
         </div>
-    );
-});
+    )
+})
+
+Crud.displayName = 'Crud'
+
+export { Crud }

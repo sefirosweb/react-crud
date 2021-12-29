@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { DeleteButton } from '../components/buttons/DeleteButton';
+import { DeleteButton } from '../components/buttons/DeleteButton'
 
 export default {
     title: 'Buttons/DeleteButton',
-    component: DeleteButton
+    component: DeleteButton,
 }
 
 const Template = (args) => <DeleteButton {...args} />
 
-export const Active = Template.bind({});
+export const Active = Template.bind({})
 Active.args = {
-    disabled: false
-};
+    disabled: false,
+}
 
-export const Disabled = Template.bind({});
+export const Disabled = Template.bind({})
 Disabled.args = {
-    disabled: true
-};
+    disabled: true,
+}

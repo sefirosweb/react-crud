@@ -5,7 +5,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -14,9 +15,13 @@
         "ecmaVersion": 13,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "rules": {
+        "react/prop-types": ["off"]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

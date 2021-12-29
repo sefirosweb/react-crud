@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
-import { MultiSelectCrud } from './../components/form/MultiSelectCrud';
+import { MultiSelectCrud } from './../components/form/MultiSelectCrud'
 
 export default {
     title: 'Form/MultiSelectCrud',
-    component: MultiSelectCrud
+    component: MultiSelectCrud,
 }
 
 const Template = (args) => <MultiSelectCrud {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 Primary.args = {
     primaryKey: 'id',
     primaryKeyId: '50',
@@ -17,15 +17,15 @@ Primary.args = {
     columns: [
         {
             Header: '#',
-            accessor: 'id'
+            accessor: 'id',
         },
         {
             Header: 'Name',
-            accessor: 'name'
+            accessor: 'name',
         },
         {
             Header: 'Descripcion',
-            accessor: 'description'
-        }
-    ]
-};
+            accessor: 'description',
+        },
+    ],
+}

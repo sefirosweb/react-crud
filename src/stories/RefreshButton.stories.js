@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { RefreshButton } from '../components/buttons/RefreshButton';
+import { RefreshButton } from '../components/buttons/RefreshButton'
 
 export default {
     title: 'Buttons/RefreshButton',
-    component: RefreshButton
+    component: RefreshButton,
 }
 
 const Template = (args) => <RefreshButton {...args} />
 
-export const Active = Template.bind({});
+export const Active = Template.bind({})
 Active.args = {
-    disabled: false
-};
+    disabled: false,
+}
 
-export const Disabled = Template.bind({});
+export const Disabled = Template.bind({})
 Disabled.args = {
-    disabled: true
-};
+    disabled: true,
+}

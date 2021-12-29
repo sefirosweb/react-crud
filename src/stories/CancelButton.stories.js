@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { CancelButton } from '../components/buttons/CancelButton';
+import { CancelButton } from '../components/buttons/CancelButton'
 
 export default {
     title: 'Buttons/CancelButton',
-    component: CancelButton
+    component: CancelButton,
 }
 
 const Template = (args) => <CancelButton {...args} />
 
-export const Active = Template.bind({});
+export const Active = Template.bind({})
 Active.args = {
-    disabled: false
-};
+    disabled: false,
+}
 
-export const Disabled = Template.bind({});
+export const Disabled = Template.bind({})
 Disabled.args = {
-    disabled: true
-};
+    disabled: true,
+}

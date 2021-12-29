@@ -3,15 +3,20 @@ import axios from 'axios'
 import { Modal } from './../Modal'
 import { Table } from './../Table'
 import { InputDataField } from './../InputDataField'
-import { EditButton } from "./../../buttons/EditButton";
-import { DeleteButton } from "./../../buttons/DeleteButton";
+import { EditButton } from './../../buttons/EditButton'
+import { DeleteButton } from './../../buttons/DeleteButton'
 
-export const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
+export const MultiSelectCrud = ({
+    primaryKey,
+    primaryKeyId,
+    crudUrl,
+    columns,
+}) => {
     const [show, setShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [dataModal, setDataModal] = useState([])
-    const InputDataFieldRef = useRef();
-    const newColumns = [...columns];
+    const InputDataFieldRef = useRef()
+    const newColumns = [...columns]
 
     const refreshModalTable = (request) => {
         const { success } = request.data
@@ -26,52 +31,66 @@ export const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) 
     newColumns.push({
         Header: 'Borrar',
         accessor: 'delete_crud',
-        Cell: row => <DeleteButton disabled={isLoading} onClick={() => handleDelete(row.cell.row.original[primaryKey])} />
-    });
+        Cell: (row) => (
+            <DeleteButton
+                disabled={isLoading}
+                onClick={() => handleDelete(row.cell.row.original[primaryKey])}
+            />
+        ),
+    })
 
     const loadTableModal = () => {
         setDataModal([])
         setIsLoading(true)
-        axios.get(`${crudUrl}`, { params: { primaryKeyId } })
+        axios
+            .get(`${crudUrl}`, { params: { primaryKeyId } })
             .then((request) => {
                 const responseData = request.data.data
                 const success = request.data.success
                 if (success) {
-                    const result = Object.keys(responseData).map((key) => responseData[key]);
                     setDataModal(responseData)
                 }
             })
-            .catch(error => console.log(error))
+            .catch((error) => console.log(error))
             .then(() => setIsLoading(false))
     }
 
     const handleDelete = (id) => {
         setIsLoading(true)
-        axios.delete(`${crudUrl}`,
-            { data: { primaryKeyId, id } })
+        axios
+            .delete(`${crudUrl}`, { data: { primaryKeyId, id } })
             .then(refreshModalTable)
             .catch(() => setIsLoading(false))
     }
 
     const onAcceptButton = (dataField) => {
         setIsLoading(true)
-        axios.post(`${crudUrl}`, { name: dataField, primaryKeyId })
+        axios
+            .post(`${crudUrl}`, { name: dataField, primaryKeyId })
             .then(refreshModalTable)
             .catch(() => setIsLoading(false))
     }
 
     const body = (
         <>
-            <InputDataField ref={InputDataFieldRef} url={`${crudUrl}/get_array`} onAcceptButton={onAcceptButton} isLoading={isLoading} />
-            <Table className='mt-3' columns={newColumns} data={dataModal} isLoading={isLoading} />
+            <InputDataField
+                ref={InputDataFieldRef}
+                url={`${crudUrl}/get_array`}
+                onAcceptButton={onAcceptButton}
+                isLoading={isLoading}
+            />
+            <Table
+                className="mt-3"
+                columns={newColumns}
+                data={dataModal}
+                isLoading={isLoading}
+            />
         </>
     )
 
     return (
         <>
-            <EditButton
-                onClick={() => setShow(true)}
-            />
+            <EditButton onClick={() => setShow(true)} />
             <Modal
                 show={show}
                 setShow={setShow}

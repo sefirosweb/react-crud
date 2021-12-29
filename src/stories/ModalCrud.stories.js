@@ -1,44 +1,42 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { ModalCrud } from '../components/form/ModalCrud';
-import { Button } from "react-bootstrap";
-import useState from 'storybook-addon-state';
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { ModalCrud } from '../components/form/ModalCrud'
+import { Button } from 'react-bootstrap'
+import useState from 'storybook-addon-state'
 
-
-const ModalCrudStory = storiesOf('Form/ModalCrud', module);
+const ModalCrudStory = storiesOf('Form/ModalCrud')
 ModalCrudStory.add('Primary', () => {
+    const [show, setShow] = useState('show', false)
+    const [crud, setCrud] = useState('')
+    const [modalData, setModalData] = useState('modalData', {})
 
-    const [show, setShow] = useState("show", false);
-    const [crud, setCrud] = useState("");
-    const [modalData, setModalData] = useState('modalData', {});
-
-    const [response, setResponse] = useState("response", '');
+    const [response, setResponse] = useState('response', '')
 
     const columns = [
         {
             primaryKey: true,
             Header: '#',
-            accessor: 'id'
+            accessor: 'id',
         },
         {
             titleOnDelete: true,
             titleOnCRUD: 'Item Type',
             Header: 'Table Name',
             accessor: 'nombre',
-            editable: true
+            editable: true,
         },
         {
             titleOnCRUD: 'URL',
             Header: 'URL',
             accessor: 'url',
-            editable: true
+            editable: true,
         },
         {
             titleOnCRUD: 'API KEY',
             Header: 'API KEY',
             accessor: 'api_key',
-            editable: true
-        }
+            editable: true,
+        },
     ]
 
     const handleSuccess = (response) => {
@@ -50,40 +48,44 @@ ModalCrudStory.add('Primary', () => {
     return (
         <>
             <p>
-                <Button onClick={() => {
-                    setCrud('CREATE')
-                    setShow(true)
-                }}>
+                <Button
+                    onClick={() => {
+                        setCrud('CREATE')
+                        setShow(true)
+                    }}
+                >
                     CREATE
                 </Button>
             </p>
             <p>
-                <Button onClick={() => {
-                    setCrud('UPDATE')
-                    setShow(true)
-                    setModalData({
-                        id: 5,
-                        nombre: "Core I7 10º gen",
-                        url: "http://goologoolo.com",
-                        api_key: "·$ADADFTWSEGF%G%Gg45"
-
-                    })
-                }}>
+                <Button
+                    onClick={() => {
+                        setCrud('UPDATE')
+                        setShow(true)
+                        setModalData({
+                            id: 5,
+                            nombre: 'Core I7 10º gen',
+                            url: 'http://goologoolo.com',
+                            api_key: '·$ADADFTWSEGF%G%Gg45',
+                        })
+                    }}
+                >
                     UPDATE
                 </Button>
             </p>
             <p>
-                <Button onClick={() => {
-                    setCrud('DELETE')
-                    setShow(true)
-                    setModalData({
-                        id: 5,
-                        nombre: "Core I7 10º gen",
-                        url: "http://goologoolo.com",
-                        api_key: "·$ADADFTWSEGF%G%Gg45"
-
-                    })
-                }}>
+                <Button
+                    onClick={() => {
+                        setCrud('DELETE')
+                        setShow(true)
+                        setModalData({
+                            id: 5,
+                            nombre: 'Core I7 10º gen',
+                            url: 'http://goologoolo.com',
+                            api_key: '·$ADADFTWSEGF%G%Gg45',
+                        })
+                    }}
+                >
                     DELETE
                 </Button>
             </p>
@@ -97,15 +99,15 @@ ModalCrudStory.add('Primary', () => {
                 show={show}
                 setShow={setShow}
                 fields={columns}
-                title={"Title Modal Crud"}
+                title={'Title Modal Crud'}
                 modalData={modalData}
                 setModalData={setModalData}
                 crud={crud}
-                url={"/api/crud"}
+                url={'/api/crud'}
                 handleSuccess={handleSuccess}
-                primaryKey={"id"}
-                titleOnDelete={"name"}
+                primaryKey={'id'}
+                titleOnDelete={'name'}
             />
         </>
-    );
-});
+    )
+})

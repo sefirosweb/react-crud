@@ -1,1 +1,1 @@
-export * from './FormTypes';
+export * from './FormTypes'

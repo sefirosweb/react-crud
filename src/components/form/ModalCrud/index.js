@@ -1,1 +1,1 @@
-export * from './ModalCrud';
+export * from './ModalCrud'

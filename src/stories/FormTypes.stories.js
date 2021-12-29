@@ -1,43 +1,42 @@
-import React from 'react';
-import { FormTypes } from '../components/form/FormTypes';
+import React from 'react'
+import { FormTypes } from '../components/form/FormTypes'
 
 export default {
     title: 'Form/FormTypes',
-    component: FormTypes
+    component: FormTypes,
 }
 
 const Template = (args) => <FormTypes {...args} />
 
-export const Text = Template.bind({});
+export const Text = Template.bind({})
 Text.args = {
-    type: "text",
-    inputFieldName: "input_field_name",
-    label: "Insert text",
-    isLoading: false
-};
+    type: 'text',
+    inputFieldName: 'input_field_name',
+    label: 'Insert text',
+    isLoading: false,
+}
 
-export const TextArea = Template.bind({});
+export const TextArea = Template.bind({})
 TextArea.args = {
-    type: "textarea",
-    inputFieldName: "input_field_name",
-    label: "Insert text",
-    isLoading: false
-};
+    type: 'textarea',
+    inputFieldName: 'input_field_name',
+    label: 'Insert text',
+    isLoading: false,
+}
 
-export const Password = Template.bind({});
+export const Password = Template.bind({})
 Password.args = {
-    type: "password",
-    inputFieldName: "input_field_name",
-    label: "Insert text",
-    isLoading: false
-};
+    type: 'password',
+    inputFieldName: 'input_field_name',
+    label: 'Insert text',
+    isLoading: false,
+}
 
-export const Select = Template.bind({});
+export const Select = Template.bind({})
 Select.args = {
-    type: "select",
-    selectOptionsUrl: "/api/getSelectOptions",
-    inputFieldName: "input_field_name",
-    label: "Select option",
-    isLoading: false
-};
-
+    type: 'select',
+    selectOptionsUrl: '/api/getSelectOptions',
+    inputFieldName: 'input_field_name',
+    label: 'Select option',
+    isLoading: false,
+}

@@ -7,13 +7,15 @@
   "homepage": "https://sefirosweb.github.io/react-crud",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "cp storybook-static/index.html storybook-static/404.html && gh-pages -d storybook-static",
     "build-lib": "rollup -c",
     "start": "npm run storybook",
     "build": "npm run build-lib",
-    "docker": "docker run --rm -it --name node-docker-storybook -v $PWD:/home/app -w /home/app -e \"NODE_OPTIONS=--openssl-legacy-provider\" -p 6006:6006 -u node node:latest /bin/bash"
+    "docker": "docker run --rm -it --name node-docker-storybook -v $PWD:/home/app -w /home/app -e \"NODE_OPTIONS=--openssl-legacy-provider\" -p 6006:6006 -u node node:latest /bin/bash",
+    "prepare": "husky install"
   },
   "author": "@Sefirosweb",
   "license": "MIT",
@@ -31,9 +33,14 @@
     "babel-loader": "^8.2.3",
     "bootstrap": "^5.1.3",
     "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "gh-pages": "^3.2.3",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
     "lodash.memoize": "^4.1.2",
+    "prettier": "^2.5.1",
     "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.4",
@@ -60,5 +67,8 @@
     "react-icons": "^4.3.1",
     "react-table": "^7.7.0",
     "toastr": "^2.1.4"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   }
 }

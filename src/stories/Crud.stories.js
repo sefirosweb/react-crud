@@ -1,13 +1,13 @@
-import React from 'react';
-import { Crud } from '../components/form/Crud';
+import React from 'react'
+import { Crud } from '../components/form/Crud'
 
 export default {
     title: 'Form/CRUD',
-    component: Crud
+    component: Crud,
 }
 
 const Template = (args) => <Crud {...args} />
-export const Simple = Template.bind({});
+export const Simple = Template.bind({})
 Simple.args = {
     canSearch: true,
     canRefresh: true,
@@ -24,18 +24,18 @@ Simple.args = {
         {
             Header: '#',
             accessor: 'id',
-            visible: true
+            visible: true,
         },
         {
             titleOnCRUD: 'Label Item Type',
             Header: 'Item Type',
             accessor: 'name',
-            editable: true
-        }
-    ]
-};
+            editable: true,
+        },
+    ],
+}
 
-export const AdvancedFields = Template.bind({});
+export const AdvancedFields = Template.bind({})
 AdvancedFields.args = {
     canSearch: true,
     canRefresh: true,
@@ -53,14 +53,14 @@ AdvancedFields.args = {
             Header: '#',
             accessor: 'id',
             visible: true,
-            sortable: true
+            sortable: true,
         },
         {
             titleOnCRUD: 'Label Item Type',
             Header: 'Item Type',
             accessor: 'name',
             editable: true,
-            sortable: true
+            sortable: true,
         },
         {
             titleOnCRUD: 'Secret Label for passwords',
@@ -68,7 +68,7 @@ AdvancedFields.args = {
             accessor: 'sku_base',
             editable: true,
             type: 'password',
-            sortable: true
+            sortable: true,
         },
         {
             titleOnCRUD: 'Select Field Type',
@@ -77,7 +77,7 @@ AdvancedFields.args = {
             type: 'select',
             selectOptionsUrl: '/api/getSelectOptions',
             editable: true,
-            sortable: true
+            sortable: true,
         },
         {
             titleOnCRUD: 'Multi Select',
@@ -89,18 +89,18 @@ AdvancedFields.args = {
             multiSelectOptionsColumns: [
                 {
                     Header: '#',
-                    accessor: 'id'
+                    accessor: 'id',
                 },
                 {
                     Header: 'Campo',
-                    accessor: 'field'
+                    accessor: 'field',
                 },
                 {
                     Header: 'Descripcion',
-                    accessor: 'description'
-                }
+                    accessor: 'description',
+                },
             ],
-            editable: true
-        }
-    ]
-};
+            editable: true,
+        },
+    ],
+}

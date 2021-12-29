@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'react'
 
-import { CronjobButton } from '../components/buttons/CronjobButton';
+import { CronjobButton } from '../components/buttons/CronjobButton'
 
 export default {
     title: 'Buttons/CronjobButton',
-    component: CronjobButton
+    component: CronjobButton,
 }
 
 const Template = (args) => <CronjobButton {...args} />
 
-export const Active = Template.bind({});
+export const Active = Template.bind({})
 Active.args = {
-    disabled: false
-};
+    disabled: false,
+}
 
-export const Disabled = Template.bind({});
+export const Disabled = Template.bind({})
 Disabled.args = {
-    disabled: true
-};
+    disabled: true,
+}

@@ -1,16 +1,15 @@
-import React from 'react';
-import { Modal } from '../components/form/Modal';
-import { Button } from "react-bootstrap";
-import useState from 'storybook-addon-state';
+import React from 'react'
+import { Modal } from '../components/form/Modal'
+import { Button } from 'react-bootstrap'
+import useState from 'storybook-addon-state'
 
 export default {
     title: 'Form/Modal',
-    component: Modal
+    component: Modal,
 }
 
 const Template = () => {
-    const [show, setShow] = useState("show", false);
-    const [isLoading, setIsLoading] = useState("isLoading", false);
+    const [show, setShow] = useState('show', false)
 
     const onExited = () => {
         console.log('onExited')
@@ -21,11 +20,7 @@ const Template = () => {
         console.log('handleAccept')
     }
 
-    const bodyFields = (
-        <div>
-            Body Modal Fields
-        </div>
-    )
+    const bodyFields = <div>Body Modal Fields</div>
 
     const onShow = () => {
         console.log('On Show')
@@ -33,7 +28,11 @@ const Template = () => {
 
     return (
         <>
-            <Button onClick={() => { setShow(true) }}>
+            <Button
+                onClick={() => {
+                    setShow(true)
+                }}
+            >
                 Open Modal
             </Button>
 
@@ -42,9 +41,9 @@ const Template = () => {
                 setShow={setShow}
                 handleAccept={handleAccept}
                 body={bodyFields}
-                title={"Modal Title"}
+                title={'Modal Title'}
                 onExited={onExited}
-                isLoading={isLoading}
+                isLoading={false}
                 accept="Accept Button"
                 onShow={onShow}
             />
@@ -52,4 +51,4 @@ const Template = () => {
     )
 }
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})

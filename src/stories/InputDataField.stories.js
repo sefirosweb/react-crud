@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
-import { InputDataField } from './../components/form/InputDataField';
+import { InputDataField } from './../components/form/InputDataField'
 
 export default {
     title: 'Form/InputDataField',
-    component: InputDataField
+    component: InputDataField,
 }
 
 const Template = (args) => <InputDataField {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-    url: '/api/getSelectOptions'
-};
+    url: '/api/getSelectOptions',
+}

@@ -1,1 +1,1 @@
-export * from './MultiSelectCrud';
+export * from './MultiSelectCrud'

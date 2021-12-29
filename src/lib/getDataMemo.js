@@ -1,4 +1,4 @@
-import memoize from "lodash.memoize";
+import memoize from 'lodash.memoize'
 import axios from 'axios'
 
 const getDataMemo = (selectOptionsUrl, cancelTokenSource) =>
@@ -7,6 +7,6 @@ const getDataMemo = (selectOptionsUrl, cancelTokenSource) =>
             .get(selectOptionsUrl, { cancelToken: cancelTokenSource.token })
             .then((response) => resolve(response.data))
             .catch((error) => reject(error))
-    });
+    })
 
-export default memoize(getDataMemo);
+export default memoize(getDataMemo)

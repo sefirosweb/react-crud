@@ -1,19 +1,19 @@
-import React from "react";
-import { Button, Modal as BootstrapModal } from "react-bootstrap";
-import { LoadingButton } from "./../../buttons/LoadingButton";
+import React from 'react'
+import { Button, Modal as BootstrapModal } from 'react-bootstrap'
+import { LoadingButton } from './../../buttons/LoadingButton'
 
 export const Modal = ({
     show,
     setShow,
     handleAccept,
-    body = "",
+    body = '',
     title,
     accept,
     onExited,
     onShow,
-    isLoading
+    isLoading,
 }) => {
-    const handleClose = () => setShow(false);
+    const handleClose = () => setShow(false)
 
     return (
         <>
@@ -47,10 +47,10 @@ export const Modal = ({
                             </Button>
                         )
                     ) : (
-                        ""
+                        ''
                     )}
                 </BootstrapModal.Footer>
             </BootstrapModal>
         </>
-    );
-};
+    )
+}
