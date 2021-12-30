@@ -11,6 +11,7 @@ const Template = (args) => <FormTypes {...args} />
 export const Text = Template.bind({})
 Text.args = {
     type: 'text',
+    selectOptionsUrl: '',
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,
@@ -19,6 +20,7 @@ Text.args = {
 export const TextArea = Template.bind({})
 TextArea.args = {
     type: 'textarea',
+    selectOptionsUrl: '',
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,
@@ -27,6 +29,7 @@ TextArea.args = {
 export const Password = Template.bind({})
 Password.args = {
     type: 'password',
+    selectOptionsUrl: '',
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,

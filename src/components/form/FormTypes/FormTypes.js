@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Form } from 'react-bootstrap'
 import getDataMemo from './../../../lib/getDataMemo'
 
-export const FormTypes = ({
+const FormTypes = ({
     type,
     inputFieldName,
     isLoading,
@@ -104,3 +105,16 @@ export const FormTypes = ({
         </Form.Group>
     )
 }
+
+FormTypes.propTypes = {
+    type: PropTypes.oneOf(['text', 'textarea', 'password', 'select'])
+        .isRequired,
+    inputFieldName: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    isLoading: PropTypes.bool,
+    handleChange: PropTypes.func,
+    value: PropTypes.string,
+    selectOptionsUrl: PropTypes.string,
+}
+
+export { FormTypes }
