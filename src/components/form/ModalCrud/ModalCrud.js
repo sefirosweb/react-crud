@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import toastr from 'toastr'
 import { Form } from 'react-bootstrap'
 import { Modal } from './../Modal'
 import { FormTypes } from './../FormTypes'
 
-export const ModalCrud = ({
+const ModalCrud = ({
     show,
     setShow,
     title,
@@ -160,3 +161,19 @@ export const ModalCrud = ({
         </>
     )
 }
+
+ModalCrud.propTypes = {
+    show: PropTypes.bool,
+    setShow: PropTypes.func,
+    title: PropTypes.string,
+    fields: PropTypes.array,
+    url: PropTypes.string,
+    handleSuccess: PropTypes.func,
+    modalData: PropTypes.object,
+    setModalData: PropTypes.func,
+    crud: PropTypes.string.isRequired,
+    primaryKey: PropTypes.string.isRequired,
+    titleOnDelete: PropTypes.string,
+}
+
+export { ModalCrud }
