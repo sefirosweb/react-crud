@@ -5,6 +5,7 @@ import React, {
     useState,
     forwardRef,
 } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Col, Form, InputGroup, Button, Row } from 'react-bootstrap'
 import getDataMemo from '../../../lib/getDataMemo'
@@ -123,5 +124,14 @@ const InputDataField = forwardRef((props, ref) => {
 })
 
 InputDataField.displayName = 'InputDataField'
+
+InputDataField.propTypes = {
+    url: PropTypes.string,
+    data: PropTypes.array,
+    limit: PropTypes.number,
+    isLoading: PropTypes.bool,
+    onAcceptButton: PropTypes.func,
+    handleChangeFilter: PropTypes.func,
+}
 
 export { InputDataField }
