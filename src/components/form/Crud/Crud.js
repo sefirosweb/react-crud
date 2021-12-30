@@ -5,6 +5,7 @@ import React, {
     useState,
     useRef,
 } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Button, Row, Col, Form, InputGroup } from 'react-bootstrap'
 
@@ -291,5 +292,39 @@ const Crud = forwardRef((props, ref) => {
 })
 
 Crud.displayName = 'Crud'
+
+Crud.propTypes = {
+    canSearch: PropTypes.bool,
+    canRefresh: PropTypes.bool,
+    canEdit: PropTypes.bool,
+    canDelete: PropTypes.bool,
+    titleOnDelete: PropTypes.string,
+    primaryKey: PropTypes.string,
+    crudUrl: PropTypes.string,
+    createButtonTitle: PropTypes.string,
+
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            accessor: PropTypes.string.isRequired,
+            Header: PropTypes.string,
+            titleOnCRUD: PropTypes.string,
+            editable: PropTypes.bool,
+            sortable: PropTypes.bool,
+            visible: PropTypes.bool,
+            type: PropTypes.oneOf([
+                'text',
+                'textarea',
+                'password',
+                'select',
+                'multiselect',
+            ]),
+            selectOptionsUrl: PropTypes.string,
+            multiSelectOptionsPrimaryKey: PropTypes.string,
+            multiSelectOptionsColumns: PropTypes.string,
+        })
+    ).isRequired,
+
+    options: PropTypes.object, // TODO pending to delete
+}
 
 export { Crud }
