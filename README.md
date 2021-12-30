@@ -1,14 +1,12 @@
 # Project
 
-This a React component for reusable on multi projects,
+It´s a React compononet to be used at multiple projets
 
-Normally you must have a CRUD system for a lot of things, and you want to make an a fast CRUD system,
+Normally you are interested to have a CRUD system for a lot of things, usually you want to make a fast and simple CRUD system,
 
-This way help you in the front end to make a simply and fast CRUD system
+It is made by bootstrap (react-bootstrap) you can modify colors and styles for these components
 
-It is maded by bootstrap (react-bootstrap) you can add custom colors for this project
-
-Currently is in beta and can have a lot of changes and increase the functionalities
+Currently is in beta and it can have a lot of changes and add the functionalities
 
 # Start Production
 
