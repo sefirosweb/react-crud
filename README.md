@@ -64,19 +64,13 @@ const columns = [
 />
 ```
 
-All components in the Storybook
+All components in the [Storybook](https://storybook.sefirosweb.es)
 
-Contribute to this project by Github
+Contribute to this project in [GitHub](https://github.com/sefirosweb/react-crud)
 
 # Start develop
 
 ## Start docker
-
-```
-docker run --rm -it --name node-docddker -v $PWD:/home/app -w /home/app -e "NODE_OPTIONS=--openssl-legacy-provider" -p 6006:6006 -u node node:latest /bin/bash
-```
-
-or
 
 ```
 npm run docker
