@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Modal as BootstrapModal } from 'react-bootstrap'
 import { LoadingButton } from './../../buttons/LoadingButton'
 
-export const Modal = ({
+const Modal = ({
     show,
     setShow,
     handleAccept,
@@ -54,3 +55,17 @@ export const Modal = ({
         </>
     )
 }
+
+Modal.propTypes = {
+    show: PropTypes.bool,
+    setShow: PropTypes.func,
+    handleAccept: PropTypes.func,
+    body: PropTypes.element,
+    title: PropTypes.string,
+    accept: PropTypes.string,
+    onExited: PropTypes.func,
+    onShow: PropTypes.func,
+    isLoading: PropTypes.bool,
+}
+
+export { Modal }
