@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { AiFillEdit } from 'react-icons/ai'
 import { Button } from 'react-bootstrap'
 
-export const EditButton = (props) => {
+const EditButton = (props) => {
     return (
         <Button {...props} variant="secondary">
             {props.children}
@@ -10,3 +11,9 @@ export const EditButton = (props) => {
         </Button>
     )
 }
+
+EditButton.propTypes = {
+    children: PropTypes.element,
+}
+
+export { EditButton }

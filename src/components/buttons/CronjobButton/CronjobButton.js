@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { AiFillClockCircle } from 'react-icons/ai'
 import { Button } from 'react-bootstrap'
 
-export const CronjobButton = (props) => {
+const CronjobButton = (props) => {
     return (
         <Button {...props} variant="secondary">
             {props.children}
@@ -10,3 +11,9 @@ export const CronjobButton = (props) => {
         </Button>
     )
 }
+
+CronjobButton.propTypes = {
+    children: PropTypes.element,
+}
+
+export { CronjobButton }

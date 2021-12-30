@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { FiPlay } from 'react-icons/fi'
 import { Button } from 'react-bootstrap'
 
-export const PlayButton = (props) => {
+const PlayButton = (props) => {
     return (
         <Button {...props} variant="secondary">
             {props.children}
@@ -10,3 +11,9 @@ export const PlayButton = (props) => {
         </Button>
     )
 }
+
+PlayButton.propTypes = {
+    children: PropTypes.element,
+}
+
+export { PlayButton }
