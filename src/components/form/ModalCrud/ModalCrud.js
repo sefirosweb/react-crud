@@ -166,7 +166,20 @@ ModalCrud.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
     title: PropTypes.string,
-    fields: PropTypes.array,
+    fields: PropTypes.arrayOf(
+        PropTypes.shape({
+            accessor: PropTypes.string.isRequired,
+            type: PropTypes.oneOf([
+                'text',
+                'textarea',
+                'password',
+                'select',
+                'multiselect',
+            ]),
+            editable: PropTypes.bool,
+            selectOptionsUrl: PropTypes.string,
+        })
+    ),
     url: PropTypes.string,
     handleSuccess: PropTypes.func,
     modalData: PropTypes.object,

@@ -1,11 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ModalCrud } from '../components/form/ModalCrud'
 import { Button } from 'react-bootstrap'
 import useState from 'storybook-addon-state'
 
-const ModalCrudStory = storiesOf('Form/ModalCrud')
-ModalCrudStory.add('Primary', () => {
+export default {
+    title: 'Form/ModalCrud',
+    component: ModalCrud,
+}
+
+const Template = (/*args*/) => {
     const [show, setShow] = useState('show', false)
     const [crud, setCrud] = useState('crud', 'CREATE')
     const [modalData, setModalData] = useState('modalData', {})
@@ -110,4 +113,7 @@ ModalCrudStory.add('Primary', () => {
             />
         </>
     )
-})
+}
+
+export const Default = Template.bind({})
+Default.args = {}
