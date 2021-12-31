@@ -208,7 +208,11 @@ const Crud = forwardRef((props, ref) => {
                 }
             })
             .catch((error) => console.log(error))
-            .then(() => setIsLoadingTable(false))
+            .then(() => {
+                if (mounted.current) {
+                    setIsLoadingTable(false)
+                }
+            })
 
         return () => {
             cancelTokenSource.cancel()
