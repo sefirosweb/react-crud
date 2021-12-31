@@ -23,8 +23,8 @@ Table.displayName = 'Table'
 Table.propTypes = {
     columns: PropTypes.array.isRequired,
     data: PropTypes.array,
-    isLoading: PropTypes.array,
-    canSelectRow: PropTypes.array,
+    isLoading: PropTypes.bool,
+    canSelectRow: PropTypes.bool,
     filter: PropTypes.string,
 }
 

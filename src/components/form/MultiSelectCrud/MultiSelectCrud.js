@@ -101,7 +101,8 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
 
 MultiSelectCrud.propTypes = {
     primaryKey: PropTypes.string.isRequired,
-    primaryKeyId: PropTypes.string.isRequired,
+    primaryKeyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
     crudUrl: PropTypes.string.isRequired,
     columns: PropTypes.array.isRequired,
 }

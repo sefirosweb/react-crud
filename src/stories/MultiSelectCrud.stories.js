@@ -12,7 +12,7 @@ const Template = (args) => <MultiSelectCrud {...args} />
 export const Primary = Template.bind({})
 Primary.args = {
     primaryKey: 'id',
-    primaryKeyId: '50',
+    primaryKeyId: 50,
     crudUrl: '/api/multiselect',
     columns: [
         {

@@ -7,7 +7,7 @@ import useState from 'storybook-addon-state'
 const ModalCrudStory = storiesOf('Form/ModalCrud')
 ModalCrudStory.add('Primary', () => {
     const [show, setShow] = useState('show', false)
-    const [crud, setCrud] = useState('')
+    const [crud, setCrud] = useState('crud', 'CREATE')
     const [modalData, setModalData] = useState('modalData', {})
 
     const [response, setResponse] = useState('response', '')

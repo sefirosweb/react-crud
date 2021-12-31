@@ -171,7 +171,7 @@ ModalCrud.propTypes = {
     handleSuccess: PropTypes.func,
     modalData: PropTypes.object,
     setModalData: PropTypes.func,
-    crud: PropTypes.string.isRequired,
+    crud: PropTypes.oneOf(['CREATE', 'UPDATE', 'DELETE']).isRequired,
     primaryKey: PropTypes.string.isRequired,
     titleOnDelete: PropTypes.string,
 }

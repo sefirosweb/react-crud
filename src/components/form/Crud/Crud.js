@@ -36,7 +36,7 @@ const Crud = forwardRef((props, ref) => {
     const newColumns = [...columns]
     const tableRef = useRef()
     const mounted = useRef(false)
-    const [crud, setCrud] = useState('')
+    const [crud, setCrud] = useState('CREATE')
     const [show, setShow] = useState(false)
     const [dataTable, setDataTable] = useState([])
     const [modalData, setModalData] = useState({})
@@ -306,7 +306,7 @@ Crud.propTypes = {
     columns: PropTypes.arrayOf(
         PropTypes.shape({
             accessor: PropTypes.string.isRequired,
-            Header: PropTypes.string,
+            Header: PropTypes.string.isRequired,
             titleOnCRUD: PropTypes.string,
             editable: PropTypes.bool,
             sortable: PropTypes.bool,
@@ -320,7 +320,12 @@ Crud.propTypes = {
             ]),
             selectOptionsUrl: PropTypes.string,
             multiSelectOptionsPrimaryKey: PropTypes.string,
-            multiSelectOptionsColumns: PropTypes.string,
+            multiSelectOptionsColumns: PropTypes.arrayOf(
+                PropTypes.shape({
+                    accessor: PropTypes.string.isRequired,
+                    Header: PropTypes.string.isRequired,
+                })
+            ),
         })
     ).isRequired,
 
