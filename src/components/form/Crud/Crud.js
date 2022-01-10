@@ -31,6 +31,7 @@ const Crud = forwardRef((props, ref) => {
         crudUrl,
         primaryKey,
         titleOnDelete,
+        lazyLoad = false,
     } = props
 
     const newColumns = [...columns]
@@ -44,8 +45,21 @@ const Crud = forwardRef((props, ref) => {
     const [searchField, setSearchField] = useState('')
     const [sendRequest, setSendRequest] = useState(false)
     const [isLoadingTable, setIsLoadingTable] = useState(false)
+    const [filters, setFilters] = useState({})
 
     const handleSearchField = (e) => setSearchField(e.target.value)
+
+    useEffect(() => {
+        if (!lazyLoad) return
+        setIsLoadingTable(true)
+
+        const timer = setTimeout(() => {
+            const newFilter = { ...filters }
+            newFilter.global = searchField
+            setFilters(newFilter)
+        }, 400)
+        return () => clearTimeout(timer)
+    }, [searchField])
 
     useEffect(() => {
         mounted.current = true
@@ -192,7 +206,7 @@ const Crud = forwardRef((props, ref) => {
         axios
             .get(crudUrl, {
                 cancelToken: cancelTokenSource.token,
-                params: options.filters,
+                params: filters,
             })
             .then((request) => {
                 if (mounted.current) {
@@ -217,7 +231,7 @@ const Crud = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [sendRequest, crudUrl, options.filters])
+    }, [sendRequest, crudUrl, filters])
     const loadTable = () => setSendRequest(!sendRequest)
 
     useImperativeHandle(ref, () => ({
@@ -298,6 +312,7 @@ const Crud = forwardRef((props, ref) => {
 Crud.displayName = 'Crud'
 
 Crud.propTypes = {
+    lazyLoad: PropTypes.bool,
     canSearch: PropTypes.bool,
     canRefresh: PropTypes.bool,
     canEdit: PropTypes.bool,
