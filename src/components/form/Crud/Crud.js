@@ -119,24 +119,23 @@ const Crud = forwardRef((props, ref) => {
     }
 
     // Add extra buttons depending of options
-    if (canEdit) {
-        newColumns.forEach((c) => {
-            if (c.filter) {
-                c.Header = (
-                    <>
-                        {c.Header}
-                        <Form.Control
-                            onChange={(e) => {
-                                handleSearchField(c.accessor, e.target.value)
-                            }}
-                            type="text"
-                        />
-                    </>
-                )
 
-                return
-            }
+    newColumns.forEach((c) => {
+        if (c.filter) {
+            c.Header = (
+                <>
+                    {c.Header}
+                    <Form.Control
+                        onChange={(e) => {
+                            handleSearchField(c.accessor, e.target.value)
+                        }}
+                        type="text"
+                    />
+                </>
+            )
+        }
 
+        if (canEdit) {
             if (c.type === 'multiselect' && c.editable) {
                 const newCell = (row) => {
                     return (
@@ -156,8 +155,10 @@ const Crud = forwardRef((props, ref) => {
                 }
                 c.Cell = newCell
             }
-        })
+        }
+    })
 
+    if (canEdit) {
         newColumns.push({
             Header: () => {
                 return (
