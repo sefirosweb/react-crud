@@ -32,6 +32,7 @@ const Crud = forwardRef((props, ref) => {
         primaryKey,
         titleOnDelete,
         lazyLoad = false,
+        customButtons = '',
     } = props
 
     const newColumns = columns.map((a) => Object.assign({}, a))
@@ -224,13 +225,6 @@ const Crud = forwardRef((props, ref) => {
         return ''
     }
 
-    const loadCustomButtons = () => {
-        if (options.customButtons) {
-            return options.customButtons
-        }
-        return ''
-    }
-
     // Get data from backend using axios
 
     useEffect(() => {
@@ -291,7 +285,7 @@ const Crud = forwardRef((props, ref) => {
             <Row className="align-items-center">
                 <Col xs={12} md={6} className="mt-3">
                     {createButton()}
-                    {loadCustomButtons()}
+                    {customButtons}
                 </Col>
 
                 <Col
@@ -364,6 +358,7 @@ Crud.propTypes = {
     primaryKey: PropTypes.string,
     crudUrl: PropTypes.string,
     createButtonTitle: PropTypes.string,
+    customButtons: PropTypes.elementType,
 
     columns: PropTypes.arrayOf(
         PropTypes.shape({
