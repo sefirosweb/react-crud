@@ -134,6 +134,7 @@ lazyLoad.args = {
             accessor: 'name',
             editable: true,
             sortable: true,
+            filter: true,
         },
         {
             titleOnCRUD: 'Secret Label for passwords',
@@ -142,6 +143,7 @@ lazyLoad.args = {
             editable: true,
             type: 'password',
             sortable: true,
+            filter: true,
         },
         {
             titleOnCRUD: 'Select Field Type',

@@ -45,21 +45,38 @@ const Crud = forwardRef((props, ref) => {
     const [searchField, setSearchField] = useState('')
     const [sendRequest, setSendRequest] = useState(false)
     const [isLoadingTable, setIsLoadingTable] = useState(false)
+    const [tempFilters, setTempFilters] = useState({})
     const [filters, setFilters] = useState({})
 
-    const handleSearchField = (e) => setSearchField(e.target.value)
+    const handleGlobalSearchField = (e) => setSearchField(e.target.value)
+
+    const handleSearchField = (field, value) => {
+        if (!lazyLoad) return
+        setIsLoadingTable(true)
+
+        const newFilter = { ...filters }
+        newFilter[field] = value
+        setTempFilters(newFilter)
+    }
+
+    useEffect(() => {
+        if (!lazyLoad) return
+        setIsLoadingTable(true)
+
+        const newFilter = { ...filters }
+        newFilter.global = searchField
+        setTempFilters(newFilter)
+    }, [searchField])
 
     useEffect(() => {
         if (!lazyLoad) return
         setIsLoadingTable(true)
 
         const timer = setTimeout(() => {
-            const newFilter = { ...filters }
-            newFilter.global = searchField
-            setFilters(newFilter)
+            setFilters(tempFilters)
         }, 400)
         return () => clearTimeout(timer)
-    }, [searchField])
+    }, [tempFilters])
 
     useEffect(() => {
         mounted.current = true
@@ -104,6 +121,22 @@ const Crud = forwardRef((props, ref) => {
     // Add extra buttons depending of options
     if (canEdit) {
         newColumns.forEach((c) => {
+            if (c.filter) {
+                c.Header = (
+                    <>
+                        {c.Header}
+                        <Form.Control
+                            onChange={(e) => {
+                                handleSearchField(c.accessor, e.target.value)
+                            }}
+                            type="text"
+                        />
+                    </>
+                )
+
+                return
+            }
+
             if (c.type === 'multiselect' && c.editable) {
                 const newCell = (row) => {
                     return (
@@ -260,7 +293,7 @@ const Crud = forwardRef((props, ref) => {
                     <InputGroup className="d-flex justify-content-end">
                         {canSearch ? (
                             <Form.Control
-                                onChange={handleSearchField}
+                                onChange={handleGlobalSearchField}
                                 value={searchField}
                                 placeholder="Buscar"
                             />
@@ -330,6 +363,7 @@ Crud.propTypes = {
             editable: PropTypes.bool,
             sortable: PropTypes.bool,
             visible: PropTypes.bool,
+            filter: PropTypes.bool,
             type: PropTypes.oneOf([
                 'text',
                 'textarea',
