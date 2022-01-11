@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import { Crud } from '../components/form/Crud'
 
 export default {
@@ -153,6 +154,48 @@ lazyLoad.args = {
             selectOptionsUrl: '/api/getSelectOptions',
             editable: true,
             sortable: true,
+        },
+    ],
+}
+
+export const customButtons = Template.bind({})
+customButtons.args = {
+    lazyLoad: false,
+    canSearch: false,
+    canRefresh: false,
+
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
+    createButtonTitle: 'Create new registry',
+    customButtons: (
+        <Button
+            onClick={() => {
+                console.log('Button clicked!')
+            }}
+            className="mx-3"
+        >
+            Hello World
+        </Button>
+    ),
+    canEdit: false,
+    canDelete: false,
+    crudUrl: `/api/crud`,
+
+    columns: [
+        {
+            Header: '#',
+            accessor: 'id',
+        },
+        {
+            titleOnCRUD: 'Name',
+            Header: 'Item Type',
+            accessor: 'name',
+            editable: true,
+        },
+        {
+            Header: 'Secret Label',
+            accessor: 'sku_base',
         },
     ],
 }

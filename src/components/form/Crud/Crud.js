@@ -358,7 +358,7 @@ Crud.propTypes = {
     primaryKey: PropTypes.string,
     crudUrl: PropTypes.string,
     createButtonTitle: PropTypes.string,
-    customButtons: PropTypes.elementType,
+    customButtons: PropTypes.element,
 
     columns: PropTypes.arrayOf(
         PropTypes.shape({
