@@ -117,8 +117,8 @@ lazyLoad.args = {
     titleOnDelete: 'name',
 
     createButtonTitle: 'Create new registry',
-    canEdit: true,
-    canDelete: true,
+    canEdit: false,
+    canDelete: false,
     crudUrl: `/api/crud`,
 
     columns: [
@@ -153,29 +153,6 @@ lazyLoad.args = {
             selectOptionsUrl: '/api/getSelectOptions',
             editable: true,
             sortable: true,
-        },
-        {
-            titleOnCRUD: 'Multi Select',
-            Header: 'Multi Select',
-            accessor: 'field_type_muliselect',
-            type: 'multiselect',
-            multiSelectOptionsUrl: `/api/multiselect`,
-            multiSelectOptionsPrimaryKey: `id`,
-            multiSelectOptionsColumns: [
-                {
-                    Header: '#',
-                    accessor: 'id',
-                },
-                {
-                    Header: 'Campo',
-                    accessor: 'field',
-                },
-                {
-                    Header: 'Descripcion',
-                    accessor: 'description',
-                },
-            ],
-            editable: true,
         },
     ],
 }

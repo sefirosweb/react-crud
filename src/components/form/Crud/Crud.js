@@ -37,6 +37,7 @@ const Crud = forwardRef((props, ref) => {
     const newColumns = columns.map((a) => Object.assign({}, a))
     const tableRef = useRef()
     const mounted = useRef(false)
+    const firstLoad = useRef(true)
     const [crud, setCrud] = useState('CREATE')
     const [show, setShow] = useState(false)
     const [dataTable, setDataTable] = useState([])
@@ -235,6 +236,14 @@ const Crud = forwardRef((props, ref) => {
     useEffect(() => {
         if (!crudUrl) return
         const cancelTokenSource = axios.CancelToken.source()
+
+        if (lazyLoad) {
+            if (firstLoad.current) {
+                firstLoad.current = false
+                return
+            }
+        }
+
         setDataTable([])
         setIsLoadingTable(true)
         axios
@@ -265,7 +274,7 @@ const Crud = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [sendRequest, crudUrl, filters])
+    }, [sendRequest, crudUrl, filters, lazyLoad])
     const loadTable = () => setSendRequest(!sendRequest)
 
     useImperativeHandle(ref, () => ({
