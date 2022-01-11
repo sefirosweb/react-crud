@@ -34,7 +34,7 @@ const Crud = forwardRef((props, ref) => {
         lazyLoad = false,
     } = props
 
-    const newColumns = [...columns]
+    const newColumns = columns.map((a) => Object.assign({}, a))
     const tableRef = useRef()
     const mounted = useRef(false)
     const [crud, setCrud] = useState('CREATE')
