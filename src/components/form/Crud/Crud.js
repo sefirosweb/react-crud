@@ -26,6 +26,7 @@ const Crud = forwardRef((props, ref) => {
         canRefresh = false,
         canEdit = false,
         canDelete = false,
+        canSelectRow = false,
         createButtonTitle = false,
         columns = [],
         crudUrl,
@@ -323,7 +324,7 @@ const Crud = forwardRef((props, ref) => {
                         defaultSort={options.defaultSort}
                         defaultSortOrder={options.defaultSortOrder}
                         filter={searchField}
-                        canSelectRow={options.canSelectRow}
+                        canSelectRow={canSelectRow}
                         ref={tableRef}
                     />
                 </Col>
@@ -354,6 +355,7 @@ Crud.propTypes = {
     canRefresh: PropTypes.bool,
     canEdit: PropTypes.bool,
     canDelete: PropTypes.bool,
+    canSelectRow: PropTypes.bool,
     titleOnDelete: PropTypes.string,
     primaryKey: PropTypes.string,
     crudUrl: PropTypes.string,

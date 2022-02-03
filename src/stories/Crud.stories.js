@@ -20,6 +20,7 @@ Simple.args = {
     createButtonTitle: 'Create new registry',
     canEdit: true,
     canDelete: true,
+    canSelectRow: false,
     crudUrl: `/api/crud`,
 
     columns: [
@@ -49,6 +50,7 @@ AdvancedFields.args = {
     createButtonTitle: 'Create new registry',
     canEdit: true,
     canDelete: true,
+    canSelectRow: true,
     crudUrl: `/api/crud`,
 
     columns: [
@@ -120,6 +122,7 @@ lazyLoad.args = {
     createButtonTitle: 'Create new registry',
     canEdit: false,
     canDelete: false,
+    canSelectRow: false,
     crudUrl: `/api/crud`,
 
     columns: [
