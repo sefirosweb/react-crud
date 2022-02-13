@@ -51,8 +51,11 @@ const FormTypes = ({
                     <option value={''}></option>
                     {selectOptions.map((option) => {
                         return (
-                            <option key={option} value={option}>
-                                {option}
+                            <option
+                                key={option.value ? option.value : option}
+                                value={option.value ? option.value : option}
+                            >
+                                {option.name ? option.name : option}
                             </option>
                         )
                     })}
