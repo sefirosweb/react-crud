@@ -62,7 +62,7 @@ const columns = [
 />
 ```
 
-All components in the [Storybook](https://storybook.sefirosweb.es)
+All components in the [Storybook](https://sefirosweb.github.io/react-crud/)
 
 Contribute to this project in [GitHub](https://github.com/sefirosweb/react-crud)
 
