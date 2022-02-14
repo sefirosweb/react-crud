@@ -84,7 +84,7 @@ const InputDataField = forwardRef((props, ref) => {
 
     const options = () => {
         const items = dataField.filter((i) => {
-            const item = i.name ? i.name : item
+            const item = i.name ? i.name : i
             return item
                 .toString()
                 .toLowerCase()
