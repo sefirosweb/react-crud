@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Col, Form, InputGroup, Button, Row } from 'react-bootstrap'
 import getDataMemo from '../../../lib/getDataMemo'
+import toastr from 'toastr'
 
 const InputDataField = forwardRef((props, ref) => {
     const {
@@ -45,11 +46,20 @@ const InputDataField = forwardRef((props, ref) => {
     }
 
     const handleOnAcceptButton = () => {
+        const dataFound = dataField.find((d) => {
+            const valueToFind = d.name ? d.name : d
+            return valueToFind == filter
+        })
+
+        if (!dataFound) {
+            toastr.warning('The selected is not correct')
+            return
+        }
         if (
             onAcceptButton &&
             {}.toString.call(onAcceptButton) === '[object Function]'
         ) {
-            onAcceptButton(filter)
+            onAcceptButton(dataFound.value ? dataFound.value : dataFound)
         }
     }
 
@@ -73,7 +83,8 @@ const InputDataField = forwardRef((props, ref) => {
     }, [url, setDataField])
 
     const options = () => {
-        const items = dataField.filter((item) => {
+        const items = dataField.filter((i) => {
+            const item = i.name ? i.name : item
             return item
                 .toString()
                 .toLowerCase()
@@ -92,7 +103,12 @@ const InputDataField = forwardRef((props, ref) => {
             items.splice(0, items.length - limit)
         }
 
-        return items.map((item, key) => <option key={key} value={item} />)
+        return items.map((item, key) => (
+            <option
+                key={item.value ? item.value : key}
+                value={item.name ? item.name : item}
+            />
+        ))
     }
 
     return (

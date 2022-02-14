@@ -11,5 +11,5 @@ const Template = (args) => <InputDataField {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-    url: '/api/getSelectOptions',
+    url: '/api/getSelectOptionsWithValue',
 }
