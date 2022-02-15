@@ -175,6 +175,7 @@ ModalCrud.propTypes = {
                 'password',
                 'select',
                 'multiselect',
+                'checkbox',
             ]),
             editable: PropTypes.bool,
             selectOptionsUrl: PropTypes.string,

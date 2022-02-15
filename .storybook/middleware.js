@@ -73,6 +73,7 @@ const expressMiddleWare = (router) => {
                 descripcion: makeRandomText(50),
                 name: makeRandomText(7),
                 field_type: options[Math.floor(Math.random() * options.length)],
+                check_box: Math.random() > 0.5 ? 'true' : 'false',
             })
         }
 

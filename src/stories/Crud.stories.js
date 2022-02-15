@@ -85,6 +85,18 @@ AdvancedFields.args = {
             sortable: true,
         },
         {
+            titleOnCRUD: 'Select Check Type',
+            Header: 'Check Type',
+            accessor: 'check_box',
+            type: 'checkbox',
+            editable: true,
+            sortable: true,
+            Cell: (row) =>
+                row.cell.row.original.check_box === 'true'
+                    ? 'active'
+                    : 'inactive',
+        },
+        {
             titleOnCRUD: 'Multi Select',
             Header: 'Multi Select',
             accessor: 'field_type_muliselect',

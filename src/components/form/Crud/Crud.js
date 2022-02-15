@@ -377,6 +377,7 @@ Crud.propTypes = {
                 'password',
                 'select',
                 'multiselect',
+                'checkbox',
             ]),
             selectOptionsUrl: PropTypes.string,
             multiSelectOptionsPrimaryKey: PropTypes.string,

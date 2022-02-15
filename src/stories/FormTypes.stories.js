@@ -43,3 +43,12 @@ Select.args = {
     label: 'Select option',
     isLoading: false,
 }
+
+export const Checkbox = Template.bind({})
+Checkbox.args = {
+    type: 'checkbox',
+    selectOptionsUrl: '',
+    inputFieldName: 'input_field_name',
+    label: 'Check option',
+    isLoading: false,
+}

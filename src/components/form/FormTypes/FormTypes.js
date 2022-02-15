@@ -95,6 +95,39 @@ const FormTypes = ({
         )
     }
 
+    if (type === 'checkbox') {
+        const checked =
+            value === true
+                ? true
+                : value === 'true'
+                ? true
+                : value === 1
+                ? true
+                : value === '1'
+                ? true
+                : false
+
+        return (
+            <Form.Group controlId={inputFieldName} className="mb-2">
+                <Form.Check
+                    type="switch"
+                    disabled={isLoading}
+                    onChange={() => {
+                        handleChange({
+                            target: {
+                                name: inputFieldName,
+                                value: checked ? '0' : '1',
+                            },
+                        })
+                    }}
+                    checked={checked}
+                    label={label}
+                    name={inputFieldName}
+                />
+            </Form.Group>
+        )
+    }
+
     return (
         <Form.Group controlId={inputFieldName}>
             <Form.Label>{label}</Form.Label>
@@ -110,8 +143,13 @@ const FormTypes = ({
 }
 
 FormTypes.propTypes = {
-    type: PropTypes.oneOf(['text', 'textarea', 'password', 'select'])
-        .isRequired,
+    type: PropTypes.oneOf([
+        'text',
+        'textarea',
+        'password',
+        'select',
+        'checkbox',
+    ]).isRequired,
     inputFieldName: PropTypes.string.isRequired,
     label: PropTypes.string,
     isLoading: PropTypes.bool,
