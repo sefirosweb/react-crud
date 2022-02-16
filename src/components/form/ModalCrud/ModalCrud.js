@@ -78,7 +78,7 @@ const ModalCrud = ({
                 break
             case 'UPDATE':
                 axios
-                    .put(`${url}`, modalDataToSend)
+                    .put(`${url}`, modalData)
                     .then(response)
                     .catch(catchError)
                     .then(completed)
