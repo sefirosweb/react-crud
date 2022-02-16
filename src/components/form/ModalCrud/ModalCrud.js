@@ -51,10 +51,20 @@ const ModalCrud = ({
             setIsLoading(false)
         }
 
+        const modalDataToSend = {}
+        fields
+            .filter((f) => f.editable)
+            .forEach((f) => {
+                modalDataToSend[f.accessor] =
+                    modalData[f.accessor] !== undefined
+                        ? modalData[f.accessor]
+                        : ''
+            })
+
         switch (crud) {
             case 'CREATE':
                 axios
-                    .post(`${url}`, modalData)
+                    .post(`${url}`, modalDataToSend)
                     .then(response)
                     .catch(catchError)
                     .then(completed)
@@ -68,7 +78,7 @@ const ModalCrud = ({
                 break
             case 'UPDATE':
                 axios
-                    .put(`${url}`, modalData)
+                    .put(`${url}`, modalDataToSend)
                     .then(response)
                     .catch(catchError)
                     .then(completed)
