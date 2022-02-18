@@ -12,6 +12,7 @@ const FormTypes = ({
     value,
     handleChange,
     selectOptionsUrl,
+    className,
 }) => {
     const mounted = useRef(false)
     useEffect(() => {
@@ -40,7 +41,7 @@ const FormTypes = ({
         }, [])
 
         return (
-            <Form.Group controlId={inputFieldName} className="mb-2">
+            <Form.Group controlId={inputFieldName} className={className}>
                 <Form.Label>{label}</Form.Label>
                 <Form.Select
                     value={value}
@@ -66,7 +67,7 @@ const FormTypes = ({
 
     if (type === 'textarea') {
         return (
-            <Form.Group controlId={inputFieldName} className="mb-2">
+            <Form.Group controlId={inputFieldName} className={className}>
                 <Form.Label>{label}</Form.Label>
                 <Form.Control
                     as="textarea"
@@ -82,7 +83,7 @@ const FormTypes = ({
 
     if (type === 'password' || type === 'text') {
         return (
-            <Form.Group controlId={inputFieldName} className="mb-2">
+            <Form.Group controlId={inputFieldName} className={className}>
                 <Form.Label>{label}</Form.Label>
                 <Form.Control
                     type={type}
@@ -108,7 +109,7 @@ const FormTypes = ({
                 : false
 
         return (
-            <Form.Group controlId={inputFieldName} className="mb-2">
+            <Form.Group controlId={inputFieldName} className={className}>
                 <Form.Check
                     type="switch"
                     disabled={isLoading}
@@ -156,6 +157,7 @@ FormTypes.propTypes = {
     handleChange: PropTypes.func,
     value: PropTypes.string,
     selectOptionsUrl: PropTypes.string,
+    className: PropTypes.string,
 }
 
 export { FormTypes }
