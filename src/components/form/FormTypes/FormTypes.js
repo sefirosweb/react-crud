@@ -81,7 +81,7 @@ const FormTypes = ({
         )
     }
 
-    if (type === 'password' || type === 'text') {
+    if (['password', 'text', 'number', 'date'].includes(type)) {
         return (
             <Form.Group controlId={inputFieldName} className={className}>
                 <Form.Label>{label}</Form.Label>
@@ -146,6 +146,8 @@ const FormTypes = ({
 FormTypes.propTypes = {
     type: PropTypes.oneOf([
         'text',
+        'number',
+        'date',
         'textarea',
         'password',
         'select',
