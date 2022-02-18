@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 import { CustomTable } from '../CustomTable'
 
 const Table = forwardRef((props, ref) => {
-    const { columns, data, filter, canSelectRow, isLoading } = props
+    const { columns, data, filter, canSelectRow, isLoading, className } = props
     return (
         <>
             <CustomTable
@@ -13,6 +13,7 @@ const Table = forwardRef((props, ref) => {
                 filter={filter}
                 canSelectRow={canSelectRow}
                 isLoading={isLoading}
+                className={className}
                 ref={ref}
             />
         </>
@@ -26,6 +27,7 @@ Table.propTypes = {
     isLoading: PropTypes.bool,
     canSelectRow: PropTypes.bool,
     filter: PropTypes.string,
+    className: PropTypes.string,
 }
 
 export { Table }

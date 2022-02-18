@@ -13,7 +13,7 @@ import { LoadingSpinner } from './../../icons/LoadingSpinner'
 import { IndeterminateCheckbox } from '../IndeterminateCheckbox'
 
 const CustomTable = forwardRef(
-    ({ columns, data, filter, canSelectRow, isLoading }, ref) => {
+    ({ columns, data, filter, canSelectRow, isLoading, className }, ref) => {
         const {
             getTableProps,
             headerGroups,
@@ -97,7 +97,7 @@ const CustomTable = forwardRef(
         return (
             <>
                 <table
-                    className="table bg-white rounded shadow-sm table-hover"
+                    className={`table bg-white rounded shadow-sm table-hover ${className}`}
                     {...getTableProps()}
                 >
                     <thead>
