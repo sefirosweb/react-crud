@@ -129,6 +129,7 @@ const ModalCrud = ({
                     if (field.editable) {
                         return (
                             <FormTypes
+                                className="mb-2"
                                 type={field.type ? field.type : 'text'}
                                 key={key}
                                 inputFieldName={field.accessor}
