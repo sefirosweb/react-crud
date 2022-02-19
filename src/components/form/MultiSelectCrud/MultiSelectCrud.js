@@ -6,6 +6,7 @@ import { Table } from './../Table'
 import { InputDataField } from './../InputDataField'
 import { EditButton } from './../../buttons/EditButton'
 import { DeleteButton } from './../../buttons/DeleteButton'
+import { FormTypes } from '../FormTypes'
 
 const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
     const [show, setShow] = useState(false)
@@ -14,14 +15,29 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
     const InputDataFieldRef = useRef()
     const newColumns = [...columns]
 
+    const [modalData, setModalData] = useState([])
+
     const refreshModalTable = (request) => {
         const { success } = request.data
         if (success) {
             InputDataFieldRef.current.clear()
+            setModalData({})
             loadTableModal()
         } else {
             setIsLoading(false)
         }
+    }
+
+    const handleChange = (e) => {
+        const fieldName = e.target.name
+        const fieldValue = e.target.value
+
+        const newFormData = {
+            ...modalData,
+        }
+
+        newFormData[fieldName] = fieldValue
+        setModalData(newFormData)
     }
 
     newColumns.push({
@@ -47,8 +63,7 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
                     setDataModal(responseData)
                 }
             })
-            .catch((error) => console.log(error))
-            .then(() => setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     const handleDelete = (id) => {
@@ -56,16 +71,49 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
         axios
             .delete(`${crudUrl}`, { data: { primaryKeyId, id } })
             .then(refreshModalTable)
-            .catch(() => setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     const onAcceptButton = (dataField) => {
+        const modalDataToSend = {}
+        inputfields.forEach((f) => {
+            modalDataToSend[f.accessor] =
+                modalData[f.accessor] !== undefined ? modalData[f.accessor] : ''
+        })
+
         setIsLoading(true)
         axios
-            .post(`${crudUrl}`, { name: dataField, primaryKeyId })
+            .post(`${crudUrl}`, {
+                name: dataField,
+                primaryKeyId,
+                pivots: modalDataToSend,
+            })
             .then(refreshModalTable)
             .catch(() => setIsLoading(false))
     }
+
+    const inputfields = columns.filter(
+        (c) => c.editable && c.type !== 'multiselect'
+    )
+    const fields = inputfields.map((field, key) => {
+        return (
+            <FormTypes
+                className="mt-2"
+                type={field.type ? field.type : 'text'}
+                key={key}
+                inputFieldName={field.accessor}
+                label={field.Header}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={
+                    modalData[field.accessor] ? modalData[field.accessor] : ''
+                }
+                selectOptionsUrl={
+                    field.selectOptionsUrl ? field.selectOptionsUrl : ''
+                }
+            />
+        )
+    })
 
     const body = (
         <>
@@ -75,8 +123,9 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
                 onAcceptButton={onAcceptButton}
                 isLoading={isLoading}
             />
+            {fields}
             <Table
-                className="mt-3"
+                className="mt-2"
                 columns={newColumns}
                 data={dataModal}
                 isLoading={isLoading}
@@ -94,6 +143,7 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
                 title="Titulo"
                 body={body}
                 isLoading={isLoading}
+                onExited={() => setModalData({})}
             />
         </>
     )

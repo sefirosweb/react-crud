@@ -72,7 +72,7 @@ AdvancedFields.args = {
             Header: 'Secret Label',
             accessor: 'sku_base',
             editable: true,
-            type: 'password',
+            type: 'number',
             sortable: true,
         },
         {
@@ -101,6 +101,7 @@ AdvancedFields.args = {
             Header: 'Multi Select',
             accessor: 'field_type_muliselect',
             type: 'multiselect',
+            editable: true,
             multiSelectOptionsUrl: `/api/multiselect`,
             multiSelectOptionsPrimaryKey: `id`,
             multiSelectOptionsColumns: [
@@ -109,15 +110,58 @@ AdvancedFields.args = {
                     accessor: 'id',
                 },
                 {
-                    Header: 'Campo',
-                    accessor: 'field',
+                    Header: 'Descripcion',
+                    accessor: 'description',
+                },
+            ],
+        },
+        {
+            titleOnCRUD: 'Multi Select With Pivot',
+            Header: 'Multi Select With Pivot',
+            accessor: 'field_type_muliselect_pivot',
+            type: 'multiselect',
+            editable: true,
+            multiSelectOptionsUrl: `/api/multiselect`,
+            multiSelectOptionsPrimaryKey: `id`,
+            multiSelectOptionsColumns: [
+                {
+                    Header: '#',
+                    accessor: 'id',
                 },
                 {
                     Header: 'Descripcion',
                     accessor: 'description',
                 },
+                {
+                    Header: 'Input Text',
+                    accessor: 'input_test_text',
+                    editable: true,
+                    type: 'text',
+                    visible: false,
+                },
+                {
+                    Header: 'Input Text Area',
+                    accessor: 'input_test_textarea',
+                    editable: true,
+                    type: 'textarea',
+                    visible: false,
+                },
+                {
+                    Header: 'Input Text Number',
+                    accessor: 'input_test_number',
+                    editable: true,
+                    type: 'number',
+                    visible: false,
+                },
+                {
+                    Header: 'Input Text Number',
+                    accessor: 'input_test_select',
+                    type: 'select',
+                    selectOptionsUrl: '/api/getSelectOptions',
+                    editable: true,
+                    sortable: true,
+                },
             ],
-            editable: true,
         },
     ],
 }
