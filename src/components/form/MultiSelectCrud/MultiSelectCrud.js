@@ -154,7 +154,23 @@ MultiSelectCrud.propTypes = {
     primaryKeyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         .isRequired,
     crudUrl: PropTypes.string.isRequired,
-    columns: PropTypes.array.isRequired,
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            accessor: PropTypes.string.isRequired,
+            Header: PropTypes.string.isRequired,
+            editable: PropTypes.bool,
+            type: PropTypes.oneOf([
+                'text',
+                'number',
+                'date',
+                'textarea',
+                'password',
+                'select',
+                'checkbox',
+            ]),
+            selectOptionsUrl: PropTypes.string,
+        })
+    ).isRequired,
 }
 
 export { MultiSelectCrud }
