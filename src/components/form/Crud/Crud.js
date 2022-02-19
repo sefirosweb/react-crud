@@ -385,6 +385,18 @@ Crud.propTypes = {
                 PropTypes.shape({
                     accessor: PropTypes.string.isRequired,
                     Header: PropTypes.string.isRequired,
+                    editable: PropTypes.bool,
+                    visible: PropTypes.bool,
+                    type: PropTypes.oneOf([
+                        'text',
+                        'number',
+                        'date',
+                        'textarea',
+                        'password',
+                        'select',
+                        'checkbox',
+                    ]),
+                    selectOptionsUrl: PropTypes.string,
                 })
             ),
         })
