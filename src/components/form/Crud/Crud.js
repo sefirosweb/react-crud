@@ -21,7 +21,6 @@ import preloadSelect from './../../../lib/preloadSelect'
 
 const Crud = forwardRef((props, ref) => {
     const {
-        options = {}, // Pending to check still exist old propieties
         canSearch = false,
         canRefresh = false,
         canEdit = false,
@@ -321,8 +320,8 @@ const Crud = forwardRef((props, ref) => {
                         data={dataTable}
                         columns={newColumns}
                         isLoading={isLoadingTable}
-                        defaultSort={options.defaultSort}
-                        defaultSortOrder={options.defaultSortOrder}
+                        // defaultSort={} // TODO PENDING TO CHECK
+                        // defaultSortOrder={} // TODO PENDING TO CHECK
                         filter={searchField}
                         canSelectRow={canSelectRow}
                         ref={tableRef}
@@ -401,8 +400,6 @@ Crud.propTypes = {
             ),
         })
     ).isRequired,
-
-    options: PropTypes.object, // TODO pending to delete
 }
 
 export { Crud }
