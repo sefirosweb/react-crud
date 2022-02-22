@@ -123,6 +123,9 @@ AdvancedFields.args = {
             editable: true,
             multiSelectOptionsUrl: `/api/multiselect`,
             multiSelectOptionsPrimaryKey: `id`,
+            onExitModal: () => {
+                console.log('saliendo del modal')
+            },
             multiSelectOptionsColumns: [
                 {
                     Header: '#',

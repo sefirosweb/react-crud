@@ -151,6 +151,7 @@ const Crud = forwardRef((props, ref) => {
                                 columns={
                                     row.cell.column.multiSelectOptionsColumns
                                 }
+                                onExitModal={c.onExitModal}
                             />
                         </div>
                     )
@@ -382,6 +383,7 @@ Crud.propTypes = {
             ]),
             selectOptionsUrl: PropTypes.string,
             multiSelectOptionsPrimaryKey: PropTypes.string,
+            onExitModal: PropTypes.func,
             multiSelectOptionsColumns: PropTypes.arrayOf(
                 PropTypes.shape({
                     accessor: PropTypes.string.isRequired,

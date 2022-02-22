@@ -8,7 +8,13 @@ import { EditButton } from './../../buttons/EditButton'
 import { DeleteButton } from './../../buttons/DeleteButton'
 import { FormTypes } from '../FormTypes'
 
-const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
+const MultiSelectCrud = ({
+    primaryKey,
+    primaryKeyId,
+    crudUrl,
+    columns,
+    onExitModal,
+}) => {
     const [show, setShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [dataModal, setDataModal] = useState([])
@@ -133,6 +139,17 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
         </>
     )
 
+    const onExited = () => {
+        setModalData({})
+
+        if (
+            onExitModal &&
+            {}.toString.call(onExitModal) === '[object Function]'
+        ) {
+            onExitModal()
+        }
+    }
+
     return (
         <>
             <EditButton onClick={() => setShow(true)} />
@@ -143,7 +160,7 @@ const MultiSelectCrud = ({ primaryKey, primaryKeyId, crudUrl, columns }) => {
                 title="Titulo"
                 body={body}
                 isLoading={isLoading}
-                onExited={() => setModalData({})}
+                onExited={onExited}
             />
         </>
     )
@@ -154,6 +171,7 @@ MultiSelectCrud.propTypes = {
     primaryKeyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         .isRequired,
     crudUrl: PropTypes.string.isRequired,
+    onExitModal: PropTypes.func,
     columns: PropTypes.arrayOf(
         PropTypes.shape({
             accessor: PropTypes.string.isRequired,
