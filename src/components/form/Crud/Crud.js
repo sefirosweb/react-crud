@@ -140,6 +140,28 @@ const Crud = forwardRef((props, ref) => {
         if (canEdit) {
             if (c.type === 'multiselect' && c.editable) {
                 const newCell = (row) => {
+                    let onExitModalMultiSelectCrud = undefined
+
+                    if (
+                        c.onExitModal &&
+                        {}.toString.call(c.onExitModal) === '[object Function]'
+                    ) {
+                        if (c.onExitModalRefresh) {
+                            onExitModalMultiSelectCrud = () => {
+                                loadTable()
+                                c.onExitModal()
+                            }
+                        } else {
+                            onExitModalMultiSelectCrud = () => {
+                                c.onExitModal()
+                            }
+                        }
+                    } else if (c.onExitModalRefresh) {
+                        onExitModalMultiSelectCrud = () => {
+                            loadTable()
+                        }
+                    }
+
                     return (
                         <div style={{ textAlign: 'center' }}>
                             <MultiSelectCrud
@@ -151,7 +173,7 @@ const Crud = forwardRef((props, ref) => {
                                 columns={
                                     row.cell.column.multiSelectOptionsColumns
                                 }
-                                onExitModal={c.onExitModal}
+                                onExitModal={onExitModalMultiSelectCrud}
                             />
                         </div>
                     )
@@ -384,6 +406,7 @@ Crud.propTypes = {
             selectOptionsUrl: PropTypes.string,
             multiSelectOptionsPrimaryKey: PropTypes.string,
             onExitModal: PropTypes.func,
+            onExitModalRefresh: PropTypes.bool,
             multiSelectOptionsColumns: PropTypes.arrayOf(
                 PropTypes.shape({
                     accessor: PropTypes.string.isRequired,

@@ -104,6 +104,7 @@ AdvancedFields.args = {
             editable: true,
             multiSelectOptionsUrl: `/api/multiselect`,
             multiSelectOptionsPrimaryKey: `id`,
+            onExitModalRefresh: true,
             multiSelectOptionsColumns: [
                 {
                     Header: '#',
