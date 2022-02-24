@@ -31,6 +31,7 @@ const Crud = forwardRef((props, ref) => {
         crudUrl,
         primaryKey,
         titleOnDelete,
+        handleSuccess,
         lazyLoad = false,
         customButtons = '',
     } = props
@@ -303,6 +304,17 @@ const Crud = forwardRef((props, ref) => {
         tableRef,
     }))
 
+    const handleSuccessModalCrud = (request, crud) => {
+        loadTable()
+
+        if (
+            handleSuccess &&
+            {}.toString.call(handleSuccess) === '[object Function]'
+        ) {
+            handleSuccess(request, crud)
+        }
+    }
+
     return (
         <div>
             <Row className="align-items-center">
@@ -361,7 +373,7 @@ const Crud = forwardRef((props, ref) => {
                 setModalData={setModalData}
                 crud={crud}
                 url={crudUrl}
-                handleSuccess={loadTable}
+                handleSuccess={handleSuccessModalCrud}
                 primaryKey={primaryKey}
                 titleOnDelete={titleOnDelete}
             />
@@ -383,6 +395,7 @@ Crud.propTypes = {
     crudUrl: PropTypes.string,
     createButtonTitle: PropTypes.string,
     customButtons: PropTypes.element,
+    handleSuccess: PropTypes.func,
 
     columns: PropTypes.arrayOf(
         PropTypes.shape({

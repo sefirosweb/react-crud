@@ -262,3 +262,41 @@ customButtons.args = {
         },
     ],
 }
+
+export const customReturnSuccess = Template.bind({})
+customReturnSuccess.args = {
+    lazyLoad: false,
+    canSearch: false,
+    canRefresh: false,
+
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
+    createButtonTitle: 'Create new registry',
+
+    canEdit: true,
+    canDelete: true,
+    crudUrl: `/api/crud`,
+
+    handleSuccess: (request, crud) => {
+        console.log(request)
+        console.log(crud)
+    },
+
+    columns: [
+        {
+            Header: '#',
+            accessor: 'id',
+        },
+        {
+            titleOnCRUD: 'Name',
+            Header: 'Item Type',
+            accessor: 'name',
+            editable: true,
+        },
+        {
+            Header: 'Secret Label',
+            accessor: 'sku_base',
+        },
+    ],
+}

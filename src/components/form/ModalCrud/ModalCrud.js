@@ -39,7 +39,13 @@ const ModalCrud = ({
             const { success } = request.data
             if (success) {
                 setShow(false)
-                handleSuccess(request)
+
+                if (
+                    handleSuccess &&
+                    {}.toString.call(handleSuccess) === '[object Function]'
+                ) {
+                    handleSuccess(request, crud)
+                }
             }
         }
 
@@ -177,6 +183,13 @@ ModalCrud.propTypes = {
     show: PropTypes.bool,
     setShow: PropTypes.func,
     title: PropTypes.string,
+    url: PropTypes.string,
+    handleSuccess: PropTypes.func,
+    modalData: PropTypes.object,
+    setModalData: PropTypes.func,
+    crud: PropTypes.oneOf(['CREATE', 'UPDATE', 'DELETE']).isRequired,
+    primaryKey: PropTypes.string.isRequired,
+    titleOnDelete: PropTypes.string,
     fields: PropTypes.arrayOf(
         PropTypes.shape({
             accessor: PropTypes.string.isRequired,
@@ -194,13 +207,6 @@ ModalCrud.propTypes = {
             selectOptionsUrl: PropTypes.string,
         })
     ),
-    url: PropTypes.string,
-    handleSuccess: PropTypes.func,
-    modalData: PropTypes.object,
-    setModalData: PropTypes.func,
-    crud: PropTypes.oneOf(['CREATE', 'UPDATE', 'DELETE']).isRequired,
-    primaryKey: PropTypes.string.isRequired,
-    titleOnDelete: PropTypes.string,
 }
 
 export { ModalCrud }
