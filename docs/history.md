@@ -12,3 +12,8 @@
 
 -   Added PropTypes on all components
 -   Added ESLINT & Prettier in precommit
+
+## 1.X
+
+-   Start first stable version
+-   Start to made a documentation
