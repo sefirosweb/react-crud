@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
-import { Form } from 'react-bootstrap'
-import getDataMemo from './../../../lib/getDataMemo'
+import FormTypeText from './FormTypeText'
+import FormTypeCheckbox from './FormTypeCheckbox'
+import FormTypeTextArea from './FormTypeTextArea'
+import FormTypeSelect from './FormTypeSelect'
 
 const FormTypes = ({
     type,
@@ -14,132 +15,70 @@ const FormTypes = ({
     selectOptionsUrl,
     className,
 }) => {
-    const mounted = useRef(false)
-    useEffect(() => {
-        mounted.current = true
-        return () => (mounted.current = false)
-    })
-
     if (type === 'select') {
-        const [selectOptions, setSelectOptions] = useState([])
-
-        useEffect(() => {
-            const cancelTokenSource = axios.CancelToken.source()
-            getDataMemo(selectOptionsUrl, cancelTokenSource)
-                .then(({ data, success }) => {
-                    if (mounted.current) {
-                        if (success) {
-                            setSelectOptions(data)
-                        }
-                    }
-                })
-                .catch((error) => console.log(error))
-
-            return () => {
-                cancelTokenSource.cancel()
-            }
-        }, [])
-
         return (
-            <Form.Group controlId={inputFieldName} className={className}>
-                <Form.Label>{label}</Form.Label>
-                <Form.Select
-                    value={value}
-                    name={inputFieldName}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                >
-                    <option value={''}></option>
-                    {selectOptions.map((option) => {
-                        return (
-                            <option
-                                key={option.value ? option.value : option}
-                                value={option.value ? option.value : option}
-                            >
-                                {option.name ? option.name : option}
-                            </option>
-                        )
-                    })}
-                </Form.Select>
-            </Form.Group>
+            <FormTypeSelect
+                inputFieldName={inputFieldName}
+                className={className}
+                label={label}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={value}
+                selectOptionsUrl={selectOptionsUrl}
+            />
         )
     }
 
     if (type === 'textarea') {
         return (
-            <Form.Group controlId={inputFieldName} className={className}>
-                <Form.Label>{label}</Form.Label>
-                <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={value}
-                    onChange={handleChange}
-                    name={inputFieldName}
-                    readOnly={isLoading}
-                />
-            </Form.Group>
-        )
-    }
-
-    if (['password', 'text', 'number', 'date'].includes(type)) {
-        return (
-            <Form.Group controlId={inputFieldName} className={className}>
-                <Form.Label>{label}</Form.Label>
-                <Form.Control
-                    type={type}
-                    readOnly={isLoading}
-                    name={inputFieldName}
-                    onChange={handleChange}
-                    value={value}
-                />
-            </Form.Group>
+            <FormTypeTextArea
+                inputFieldName={inputFieldName}
+                className={className}
+                label={label}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={value}
+            />
         )
     }
 
     if (type === 'checkbox') {
-        const checked =
-            value === true
-                ? true
-                : value === 'true'
-                ? true
-                : value === 1
-                ? true
-                : value === '1'
-                ? true
-                : false
-
         return (
-            <Form.Group controlId={inputFieldName} className={className}>
-                <Form.Check
-                    type="switch"
-                    disabled={isLoading}
-                    onChange={() => {
-                        handleChange({
-                            target: {
-                                name: inputFieldName,
-                                value: checked ? '0' : '1',
-                            },
-                        })
-                    }}
-                    checked={checked}
-                    label={label}
-                    name={inputFieldName}
-                />
-            </Form.Group>
+            <FormTypeCheckbox
+                inputFieldName={inputFieldName}
+                className={className}
+                label={label}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={value}
+            />
+        )
+    }
+
+    if (['password', 'number', 'date'].includes(type)) {
+        return (
+            <FormTypeText
+                inputFieldName={inputFieldName}
+                className={className}
+                label={label}
+                type={type}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={value}
+            />
         )
     }
 
     return (
-        <Form.Group controlId={inputFieldName}>
-            <Form.Label>{label}</Form.Label>
-            <Form.Control
-                type="text"
-                readOnly={isLoading}
-                name={inputFieldName}
-                onChange={handleChange}
-                value={value}
-            />
-        </Form.Group>
+        <FormTypeText
+            inputFieldName={inputFieldName}
+            className={className}
+            label={label}
+            type="text"
+            isLoading={isLoading}
+            handleChange={handleChange}
+            value={value}
+        />
     )
 }
 
@@ -154,10 +93,10 @@ FormTypes.propTypes = {
         'checkbox',
     ]).isRequired,
     inputFieldName: PropTypes.string.isRequired,
-    label: PropTypes.string,
     isLoading: PropTypes.bool,
-    handleChange: PropTypes.func,
-    value: PropTypes.string,
+    handleChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string,
     selectOptionsUrl: PropTypes.string,
     className: PropTypes.string,
 }
