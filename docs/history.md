@@ -21,3 +21,7 @@
 ## 1.1.3
 
 -   Added lazyLoad into InputDataField
+
+## 1.1.4
+
+-   Fix bug in InputDataField

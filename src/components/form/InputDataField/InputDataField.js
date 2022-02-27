@@ -82,11 +82,8 @@ const InputDataField = forwardRef((props, ref) => {
             params: { filter: tempFilters },
         }).then((request) => {
             if (mounted.current) {
-                const { data, success } = request.data
-                if (success) {
-                    console.log(data)
-                    setDataField(data)
-                }
+                const responseData = request.data
+                setDataField(responseData)
             }
         })
 
