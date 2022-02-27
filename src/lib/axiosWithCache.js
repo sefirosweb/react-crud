@@ -28,7 +28,8 @@ const storeCache = (url, params, data) => {
 
 const axiosWithCache = {
     getUrlCache: (url, params) => {
-        return getCache(url, params)
+        const param = params ? params : {}
+        return getCache(url, param)
     },
 
     get: (url, config) => {
