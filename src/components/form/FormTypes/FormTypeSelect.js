@@ -23,7 +23,9 @@ const FormTypeSelect = ({
 
     useEffect(() => {
         const cancelTokenSource = axios.CancelToken.source()
-        getDataMemo(selectOptionsUrl, cancelTokenSource).then((response) => {
+        getDataMemo(selectOptionsUrl, {
+            cancelToken: cancelTokenSource.token,
+        }).then((response) => {
             const { data, success } = response
             if (mounted.current) {
                 if (success) {

@@ -15,12 +15,14 @@ const InputDataField = forwardRef((props, ref) => {
     const {
         data = [],
         limit = 10,
+        lazyLoad = false,
         onAcceptButton,
         handleChangeFilter,
         url,
         isLoading,
     } = props
     const [filter, setFilter] = useState('')
+    const [tempFilters, setTempFilters] = useState('')
     const [dataField, setDataField] = useState(data)
     const mounted = useRef(false)
 
@@ -64,15 +66,26 @@ const InputDataField = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
+        if (!lazyLoad) return
+        const timer = setTimeout(() => {
+            setTempFilters(filter)
+        }, 400)
+        return () => clearTimeout(timer)
+    }, [filter, lazyLoad])
+
+    useEffect(() => {
         const cancelTokenSource = axios.CancelToken.source()
         if (!url) return
 
-        getDataMemo(url, cancelTokenSource).then((request) => {
+        getDataMemo(url, {
+            cancelToken: cancelTokenSource.token,
+            params: { filter: tempFilters },
+        }).then((request) => {
             if (mounted.current) {
-                const responseData = request.data
-                const success = request.success
+                const { data, success } = request.data
                 if (success) {
-                    setDataField(responseData)
+                    console.log(data)
+                    setDataField(data)
                 }
             }
         })
@@ -80,7 +93,7 @@ const InputDataField = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [url, setDataField])
+    }, [url, setDataField, tempFilters])
 
     const options = () => {
         const items = dataField.filter((i) => {
@@ -146,6 +159,7 @@ InputDataField.propTypes = {
     data: PropTypes.array,
     limit: PropTypes.number,
     isLoading: PropTypes.bool,
+    lazyLoad: PropTypes.bool,
     onAcceptButton: PropTypes.func,
     handleChangeFilter: PropTypes.func,
 }

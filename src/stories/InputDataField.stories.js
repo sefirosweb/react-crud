@@ -12,4 +12,10 @@ const Template = (args) => <InputDataField {...args} />
 export const Default = Template.bind({})
 Default.args = {
     url: '/api/getSelectOptionsWithValue',
+    lazyLoad: false,
+}
+export const LazyLoad = Template.bind({})
+LazyLoad.args = {
+    url: '/api/getSelectOptionsWithValueLazyLoad',
+    lazyLoad: true,
 }

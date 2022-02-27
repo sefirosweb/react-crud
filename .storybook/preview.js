@@ -3,7 +3,7 @@ import '../sass/app.scss'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-const TIMEOUT = 800
+const TIMEOUT = 200
 
 const mock = new MockAdapter(axios, {
     onNoMatch: 'passthrough',
@@ -20,6 +20,23 @@ const generateOptions = () => {
                 {
                     success: true,
                     data: options,
+                },
+            ])
+        }, TIMEOUT)
+    })
+}
+const generateOptionsLazyLoad = ({ params }) => {
+    return new Promise(function (resolve, reject) {
+        const newOptions = options.map((f) => {
+            return (f = `${f} - ${params.filter}`)
+        })
+
+        setTimeout(function () {
+            resolve([
+                200,
+                {
+                    success: true,
+                    data: newOptions,
                 },
             ])
         }, TIMEOUT)
@@ -139,6 +156,9 @@ mock.onGet('/api/getSelectOptions').reply(200, {
 })
 
 mock.onGet('/api/getSelectOptionsWithValue').reply(generateOptions)
+mock.onGet('/api/getSelectOptionsWithValueLazyLoad').reply(
+    generateOptionsLazyLoad
+)
 
 mock.onGet('/api/multiselect').reply(generateMultiSelectData)
 mock.onPost('/api/multiselect').reply(200, {
