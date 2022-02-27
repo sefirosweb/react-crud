@@ -32,7 +32,13 @@ const generateOptionsLazyLoad = ({ params }) => {
         })
 
         setTimeout(function () {
-            resolve([200, newOptions])
+            resolve([
+                200,
+                {
+                    success: true,
+                    data: newOptions,
+                },
+            ])
         }, TIMEOUT)
     })
 }

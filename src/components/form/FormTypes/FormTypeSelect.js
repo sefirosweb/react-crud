@@ -28,11 +28,9 @@ const FormTypeSelect = ({
                 cancelToken: cancelTokenSource.token,
             })
             .then((response) => {
-                const { data, success } = response
+                const { data } = response.data
                 if (mounted.current) {
-                    if (success) {
-                        setSelectOptions(data)
-                    }
+                    setSelectOptions(data)
                 }
             })
 
