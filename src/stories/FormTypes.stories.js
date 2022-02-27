@@ -15,6 +15,8 @@ Text.args = {
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,
+    handleChange: (e) => console.log(e),
+    value: '',
 }
 
 export const TextArea = Template.bind({})
@@ -24,6 +26,8 @@ TextArea.args = {
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,
+    handleChange: (e) => console.log(e),
+    value: '',
 }
 
 export const Password = Template.bind({})
@@ -33,6 +37,8 @@ Password.args = {
     inputFieldName: 'input_field_name',
     label: 'Insert text',
     isLoading: false,
+    handleChange: (e) => console.log(e),
+    value: '',
 }
 
 export const Select = Template.bind({})
@@ -42,6 +48,8 @@ Select.args = {
     inputFieldName: 'input_field_name',
     label: 'Select option',
     isLoading: false,
+    handleChange: (e) => console.log(e),
+    value: '',
 }
 
 export const Checkbox = Template.bind({})
@@ -51,4 +59,6 @@ Checkbox.args = {
     inputFieldName: 'input_field_name',
     label: 'Check option',
     isLoading: false,
+    handleChange: (e) => console.log(e),
+    value: '',
 }
