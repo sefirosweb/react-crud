@@ -16,3 +16,5 @@ export * from './components/form/InputDataField'
 export * from './components/form/MultiSelectCrud'
 
 export * from './components/form/Crud'
+
+export * from './lib'

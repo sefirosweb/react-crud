@@ -8,8 +8,8 @@ import React, {
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { Col, Form, InputGroup, Button, Row } from 'react-bootstrap'
-import getDataMemo from '../../../lib/getDataMemo'
 import toastr from 'toastr'
+import axiosWithCache from '../../../lib/axiosWithCache'
 
 const InputDataField = forwardRef((props, ref) => {
     const {
@@ -77,15 +77,17 @@ const InputDataField = forwardRef((props, ref) => {
         const cancelTokenSource = axios.CancelToken.source()
         if (!url) return
 
-        getDataMemo(url, {
-            cancelToken: cancelTokenSource.token,
-            params: { filter: tempFilters },
-        }).then((request) => {
-            if (mounted.current) {
-                const responseData = request.data
-                setDataField(responseData)
-            }
-        })
+        axiosWithCache
+            .get(url, {
+                cancelToken: cancelTokenSource.token,
+                params: { filter: tempFilters },
+            })
+            .then((request) => {
+                if (mounted.current) {
+                    const responseData = request.data
+                    setDataField(responseData)
+                }
+            })
 
         return () => {
             cancelTokenSource.cancel()

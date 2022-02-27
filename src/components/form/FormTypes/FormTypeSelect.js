@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-import getDataMemo from './../../../lib/getDataMemo'
+import axiosWithCache from './../../../lib/axiosWithCache'
 
 const FormTypeSelect = ({
     inputFieldName,
@@ -23,16 +23,18 @@ const FormTypeSelect = ({
 
     useEffect(() => {
         const cancelTokenSource = axios.CancelToken.source()
-        getDataMemo(selectOptionsUrl, {
-            cancelToken: cancelTokenSource.token,
-        }).then((response) => {
-            const { data, success } = response
-            if (mounted.current) {
-                if (success) {
-                    setSelectOptions(data)
+        axiosWithCache
+            .get(selectOptionsUrl, {
+                cancelToken: cancelTokenSource.token,
+            })
+            .then((response) => {
+                const { data, success } = response
+                if (mounted.current) {
+                    if (success) {
+                        setSelectOptions(data)
+                    }
                 }
-            }
-        })
+            })
 
         return () => {
             cancelTokenSource.cancel()
