@@ -25,3 +25,7 @@
 ## 1.1.4
 
 -   Fix bug in InputDataField
+
+## 1.1.5
+
+-   Full refactorized getDatamemo to axiosWithCache now can cache params received and nos is a public lib
