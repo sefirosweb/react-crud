@@ -33,3 +33,4 @@
 ## 1.1.7
 
 -   Added label to "Input data field"
+-   Fixed small bugs with FormTypes
