@@ -17,27 +17,29 @@ const Template = (/*args*/) => {
 
     const columns = [
         {
-            primaryKey: true,
             Header: '#',
             accessor: 'id',
         },
         {
-            titleOnDelete: true,
             titleOnCRUD: 'Item Type',
-            Header: 'Table Name',
             accessor: 'nombre',
             editable: true,
         },
         {
             titleOnCRUD: 'URL',
-            Header: 'URL',
             accessor: 'url',
             editable: true,
         },
         {
             titleOnCRUD: 'API KEY',
-            Header: 'API KEY',
             accessor: 'api_key',
+            type: 'password',
+            editable: true,
+        },
+        {
+            titleOnCRUD: 'Insert numner',
+            accessor: 'number_type_field',
+            type: 'number',
             editable: true,
         },
     ]
