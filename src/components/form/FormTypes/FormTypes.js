@@ -56,7 +56,7 @@ const FormTypes = ({
         )
     }
 
-    if (type === 'checkbox') {
+    if (type === 'number') {
         return (
             <FormTypeNumber
                 inputFieldName={inputFieldName}
