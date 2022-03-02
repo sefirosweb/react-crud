@@ -20,6 +20,8 @@ const InputDataField = forwardRef((props, ref) => {
         handleChangeFilter,
         url,
         isLoading,
+        label,
+        className,
     } = props
     const [filter, setFilter] = useState('')
     const [tempFilters, setTempFilters] = useState('')
@@ -126,24 +128,27 @@ const InputDataField = forwardRef((props, ref) => {
     return (
         <>
             <Form>
-                <Row className="mt-3">
+                <Row>
                     <Col>
-                        <InputGroup className="d-flex justify-content-end">
-                            <Form.Control
-                                list="data"
-                                onChange={onChangeFilter}
-                                value={filter}
-                                placeholder="Buscar"
-                                readOnly={isLoading}
-                            />
-                            <datalist id="data">{options()}</datalist>
-                            <Button
-                                onClick={handleOnAcceptButton}
-                                disabled={isLoading}
-                            >
-                                Añadir
-                            </Button>
-                        </InputGroup>
+                        <Form.Group className={className}>
+                            <Form.Label>{label}</Form.Label>
+                            <InputGroup className="d-flex justify-content-end">
+                                <Form.Control
+                                    list="data"
+                                    onChange={onChangeFilter}
+                                    value={filter}
+                                    placeholder="Buscar"
+                                    readOnly={isLoading}
+                                />
+                                <datalist id="data">{options()}</datalist>
+                                <Button
+                                    onClick={handleOnAcceptButton}
+                                    disabled={isLoading}
+                                >
+                                    Añadir
+                                </Button>
+                            </InputGroup>
+                        </Form.Group>
                     </Col>
                 </Row>
             </Form>
@@ -157,8 +162,10 @@ InputDataField.propTypes = {
     url: PropTypes.string,
     data: PropTypes.array,
     limit: PropTypes.number,
-    isLoading: PropTypes.bool,
+    label: PropTypes.string,
     lazyLoad: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    className: PropTypes.string,
     onAcceptButton: PropTypes.func,
     handleChangeFilter: PropTypes.func,
 }
