@@ -4,6 +4,7 @@ import FormTypeText from './FormTypeText'
 import FormTypeCheckbox from './FormTypeCheckbox'
 import FormTypeTextArea from './FormTypeTextArea'
 import FormTypeSelect from './FormTypeSelect'
+import FormTypeNumber from './FormTypeNumber'
 
 const FormTypes = ({
     type,
@@ -55,7 +56,21 @@ const FormTypes = ({
         )
     }
 
-    if (['password', 'number', 'date'].includes(type)) {
+    if (type === 'checkbox') {
+        return (
+            <FormTypeNumber
+                inputFieldName={inputFieldName}
+                className={className}
+                label={label}
+                type={type}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={value}
+            />
+        )
+    }
+
+    if (['password', 'date'].includes(type)) {
         return (
             <FormTypeText
                 inputFieldName={inputFieldName}
@@ -95,7 +110,7 @@ FormTypes.propTypes = {
     inputFieldName: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     label: PropTypes.string,
     selectOptionsUrl: PropTypes.string,
     className: PropTypes.string,

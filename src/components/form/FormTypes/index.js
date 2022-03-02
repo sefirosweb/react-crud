@@ -1,5 +1,6 @@
 export * from './FormTypes'
 export * from './FormTypeText'
+export * from './FormTypeNumber'
 export * from './FormTypeTextArea'
 export * from './FormTypeSelect'
 export * from './FormTypeCheckbox'

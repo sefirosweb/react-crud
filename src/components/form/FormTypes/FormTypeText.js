@@ -26,7 +26,7 @@ const FormTypeText = ({
 }
 
 FormTypeText.propTypes = {
-    type: PropTypes.oneOf(['text', 'number', 'date', 'password']).isRequired,
+    type: PropTypes.oneOf(['text', 'date', 'password']).isRequired,
     inputFieldName: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
