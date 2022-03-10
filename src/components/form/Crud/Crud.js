@@ -34,7 +34,7 @@ const Crud = forwardRef((props, ref) => {
         handleSuccess,
         lazyLoad = false,
         customButtons = '',
-        // filters = {},
+        filters,
     } = props
 
     const newColumns = columns.map((a) => Object.assign({}, a))
@@ -81,6 +81,15 @@ const Crud = forwardRef((props, ref) => {
         }, 400)
         return () => clearTimeout(timer)
     }, [tempFilters])
+
+    useEffect(() => {
+        console.log('updating filters')
+        if (!lazyLoad) return
+        setIsLoadingTable(true)
+
+        const newFilter = { ...inputFilters, ...filters }
+        setTempFilters(newFilter)
+    }, [filters])
 
     useEffect(() => {
         mounted.current = true
@@ -384,7 +393,7 @@ Crud.propTypes = {
     canSearch: PropTypes.bool,
     canRefresh: PropTypes.bool,
     canEdit: PropTypes.bool,
-    // filters: PropTypes.object,
+    filters: PropTypes.object,
     canDelete: PropTypes.bool,
     canSelectRow: PropTypes.bool,
     titleOnDelete: PropTypes.string,
