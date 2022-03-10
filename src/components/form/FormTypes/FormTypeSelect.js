@@ -67,7 +67,7 @@ const FormTypeSelect = ({
 FormTypeSelect.propTypes = {
     inputFieldName: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     selectOptionsUrl: PropTypes.string.isRequired,
     label: PropTypes.string,
     isLoading: PropTypes.bool,

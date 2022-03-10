@@ -62,7 +62,6 @@ const FormTypes = ({
                 inputFieldName={inputFieldName}
                 className={className}
                 label={label}
-                type={type}
                 isLoading={isLoading}
                 handleChange={handleChange}
                 value={value}
@@ -110,7 +109,11 @@ FormTypes.propTypes = {
     inputFieldName: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+    ]),
     label: PropTypes.string,
     selectOptionsUrl: PropTypes.string,
     className: PropTypes.string,

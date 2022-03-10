@@ -3,7 +3,6 @@ import { Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const FormTypeNumber = ({
-    type,
     inputFieldName,
     isLoading,
     label,
@@ -15,7 +14,7 @@ const FormTypeNumber = ({
         <Form.Group controlId={inputFieldName} className={className}>
             <Form.Label>{label}</Form.Label>
             <Form.Control
-                type={type}
+                type="number"
                 readOnly={isLoading}
                 name={inputFieldName}
                 onChange={handleChange}
@@ -26,10 +25,9 @@ const FormTypeNumber = ({
 }
 
 FormTypeNumber.propTypes = {
-    type: PropTypes.number.isRequired,
     inputFieldName: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     label: PropTypes.string,
     isLoading: PropTypes.bool,
     className: PropTypes.string,

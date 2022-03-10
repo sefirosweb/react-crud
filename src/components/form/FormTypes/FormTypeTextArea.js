@@ -28,7 +28,7 @@ const FormTypeTextArea = ({
 FormTypeTextArea.propTypes = {
     inputFieldName: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     label: PropTypes.string,
     isLoading: PropTypes.bool,
     className: PropTypes.string,

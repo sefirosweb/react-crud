@@ -15,7 +15,6 @@ Text.args = {
     label: 'Insert text',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
 }
 
 export const Number = Template.bind({})
@@ -25,7 +24,6 @@ Number.args = {
     label: 'Insert number',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
 }
 
 export const TextArea = Template.bind({})
@@ -35,7 +33,6 @@ TextArea.args = {
     label: 'Insert text area',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
 }
 
 export const Password = Template.bind({})
@@ -45,7 +42,6 @@ Password.args = {
     label: 'Insert password',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
 }
 
 export const Select = Template.bind({})
@@ -56,7 +52,6 @@ Select.args = {
     label: 'Select option',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
 }
 
 export const Checkbox = Template.bind({})
@@ -66,5 +61,5 @@ Checkbox.args = {
     label: 'Check option',
     isLoading: false,
     handleChange: (e) => console.log(e),
-    value: '',
+    value: true,
 }
