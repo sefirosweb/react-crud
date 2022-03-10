@@ -34,6 +34,7 @@ const Crud = forwardRef((props, ref) => {
         handleSuccess,
         lazyLoad = false,
         customButtons = '',
+        // filters = {},
     } = props
 
     const newColumns = columns.map((a) => Object.assign({}, a))
@@ -49,7 +50,7 @@ const Crud = forwardRef((props, ref) => {
     const [sendRequest, setSendRequest] = useState(false)
     const [isLoadingTable, setIsLoadingTable] = useState(false)
     const [tempFilters, setTempFilters] = useState({})
-    const [filters, setFilters] = useState({})
+    const [inputFilters, setInputFilters] = useState({})
 
     const handleGlobalSearchField = (e) => setSearchField(e.target.value)
 
@@ -57,7 +58,7 @@ const Crud = forwardRef((props, ref) => {
         if (!lazyLoad) return
         setIsLoadingTable(true)
 
-        const newFilter = { ...filters }
+        const newFilter = { ...inputFilters }
         newFilter[field] = value
         setTempFilters(newFilter)
     }
@@ -66,7 +67,7 @@ const Crud = forwardRef((props, ref) => {
         if (!lazyLoad) return
         setIsLoadingTable(true)
 
-        const newFilter = { ...filters }
+        const newFilter = { ...inputFilters }
         newFilter.global = searchField
         setTempFilters(newFilter)
     }, [searchField])
@@ -76,7 +77,7 @@ const Crud = forwardRef((props, ref) => {
         setIsLoadingTable(true)
 
         const timer = setTimeout(() => {
-            setFilters(tempFilters)
+            setInputFilters(tempFilters)
         }, 400)
         return () => clearTimeout(timer)
     }, [tempFilters])
@@ -234,20 +235,17 @@ const Crud = forwardRef((props, ref) => {
         })
     }
 
-    const createButton = () => {
-        if (createButtonTitle) {
-            return (
-                <Button
-                    crud="CREATE"
-                    variant="success"
-                    onClick={() => handleModalShow('CREATE')}
-                >
-                    {createButtonTitle}
-                </Button>
-            )
-        }
-        return ''
-    }
+    const createButton = !createButtonTitle ? (
+        ''
+    ) : (
+        <Button
+            crud="CREATE"
+            variant="success"
+            onClick={() => handleModalShow('CREATE')}
+        >
+            {createButtonTitle}
+        </Button>
+    )
 
     // Get data from backend using axios
 
@@ -267,7 +265,7 @@ const Crud = forwardRef((props, ref) => {
         axios
             .get(crudUrl, {
                 cancelToken: cancelTokenSource.token,
-                params: filters,
+                params: inputFilters,
             })
             .then((request) => {
                 if (mounted.current) {
@@ -292,7 +290,7 @@ const Crud = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [sendRequest, crudUrl, filters, lazyLoad])
+    }, [sendRequest, crudUrl, inputFilters, lazyLoad])
     const loadTable = () => setSendRequest(!sendRequest)
 
     useImperativeHandle(ref, () => ({
@@ -319,7 +317,7 @@ const Crud = forwardRef((props, ref) => {
         <div>
             <Row className="align-items-center">
                 <Col xs={12} md={6} className="mt-3">
-                    {createButton()}
+                    {createButton}
                     {customButtons}
                 </Col>
 
@@ -355,8 +353,6 @@ const Crud = forwardRef((props, ref) => {
                         data={dataTable}
                         columns={newColumns}
                         isLoading={isLoadingTable}
-                        // defaultSort={} // TODO PENDING TO CHECK
-                        // defaultSortOrder={} // TODO PENDING TO CHECK
                         filter={searchField}
                         canSelectRow={canSelectRow}
                         ref={tableRef}
@@ -388,6 +384,7 @@ Crud.propTypes = {
     canSearch: PropTypes.bool,
     canRefresh: PropTypes.bool,
     canEdit: PropTypes.bool,
+    // filters: PropTypes.object,
     canDelete: PropTypes.bool,
     canSelectRow: PropTypes.bool,
     titleOnDelete: PropTypes.string,

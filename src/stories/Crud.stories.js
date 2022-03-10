@@ -197,7 +197,6 @@ lazyLoad.args = {
             Header: 'Item Type',
             accessor: 'name',
             editable: true,
-            sortable: true,
             filter: true,
         },
         {
@@ -206,7 +205,6 @@ lazyLoad.args = {
             accessor: 'sku_base',
             editable: true,
             type: 'password',
-            sortable: true,
             filter: true,
         },
         {
