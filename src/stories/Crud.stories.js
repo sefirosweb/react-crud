@@ -328,6 +328,7 @@ externalFilters.args = {
             editable: true,
         },
         {
+            titleOnCRUD: 'Secret label',
             Header: 'Secret Label',
             accessor: 'sku_base',
             canSearch: true,

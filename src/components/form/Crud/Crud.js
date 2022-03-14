@@ -14,7 +14,7 @@ import { ModalCrud } from './../ModalCrud'
 
 import preloadSelect from './../../../lib/preloadSelect'
 import { TableToolbar } from './TableToolbar'
-import { AddColumns } from './helper'
+import AddColumns from './helper'
 
 const Crud = forwardRef((props, ref) => {
     const {
@@ -222,7 +222,7 @@ const Crud = forwardRef((props, ref) => {
                                     filterCallBack,
                                     loadTable
                                 ),
-                            []
+                            [dataTable]
                         )}
                         isLoading={isLoadingTable}
                         filter={searchField}
