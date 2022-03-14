@@ -197,7 +197,7 @@ lazyLoad.args = {
             Header: 'Item Type',
             accessor: 'name',
             editable: true,
-            filter: true,
+            canSearch: true,
         },
         {
             titleOnCRUD: 'Secret Label for passwords',
@@ -205,7 +205,7 @@ lazyLoad.args = {
             accessor: 'sku_base',
             editable: true,
             type: 'password',
-            filter: true,
+            canSearch: true,
         },
         {
             titleOnCRUD: 'Select Field Type',
@@ -295,6 +295,42 @@ customReturnSuccess.args = {
         {
             Header: 'Secret Label',
             accessor: 'sku_base',
+        },
+    ],
+}
+
+export const externalFilters = Template.bind({})
+externalFilters.args = {
+    lazyLoad: false,
+    canSearch: true,
+    canRefresh: true,
+
+    primaryKey: 'id',
+    titleOnDelete: 'name',
+
+    canEdit: true,
+    canDelete: true,
+    crudUrl: `/api/crud`,
+
+    filters: {
+        name: 'sa',
+    },
+
+    columns: [
+        {
+            Header: '#',
+            accessor: 'id',
+        },
+        {
+            titleOnCRUD: 'Name',
+            Header: 'Item Type',
+            accessor: 'name',
+            editable: true,
+        },
+        {
+            Header: 'Secret Label',
+            accessor: 'sku_base',
+            canSearch: true,
         },
     ],
 }

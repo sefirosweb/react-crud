@@ -7,17 +7,14 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { Button, Row, Col, Form, InputGroup } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 import { Table } from './../Table'
 import { ModalCrud } from './../ModalCrud'
-import { MultiSelectCrud } from './../MultiSelectCrud'
-
-import { EditButton } from './../../buttons/EditButton'
-import { DeleteButton } from './../../buttons/DeleteButton'
-import { RefreshButton } from './../../buttons/RefreshButton'
 
 import preloadSelect from './../../../lib/preloadSelect'
+import { TableToolbar } from './TableToolbar'
+import { AddColumns } from './helper'
 
 const Crud = forwardRef((props, ref) => {
     const {
@@ -26,14 +23,14 @@ const Crud = forwardRef((props, ref) => {
         canEdit = false,
         canDelete = false,
         canSelectRow = false,
-        createButtonTitle = false,
+        createButtonTitle,
         columns = [],
         crudUrl,
         primaryKey,
         titleOnDelete,
         handleSuccess,
         lazyLoad = false,
-        customButtons = '',
+        customButtons,
         filters,
     } = props
 
@@ -51,8 +48,6 @@ const Crud = forwardRef((props, ref) => {
     const [isLoadingTable, setIsLoadingTable] = useState(false)
     const [tempFilters, setTempFilters] = useState({})
     const [inputFilters, setInputFilters] = useState({})
-
-    const handleGlobalSearchField = (e) => setSearchField(e.target.value)
 
     const handleSearchField = (field, value) => {
         if (!lazyLoad) return
@@ -83,7 +78,6 @@ const Crud = forwardRef((props, ref) => {
     }, [tempFilters])
 
     useEffect(() => {
-        console.log('updating filters')
         if (!lazyLoad) return
         setIsLoadingTable(true)
 
@@ -133,130 +127,9 @@ const Crud = forwardRef((props, ref) => {
 
     // Add extra buttons depending of options
 
-    newColumns.forEach((c) => {
-        if (c.filter) {
-            c.Header = (
-                <>
-                    {c.Header}
-                    <Form.Control
-                        onChange={(e) => {
-                            handleSearchField(c.accessor, e.target.value)
-                        }}
-                        type="text"
-                    />
-                </>
-            )
-        }
-
-        if (canEdit) {
-            if (c.type === 'multiselect' && c.editable) {
-                const newCell = (row) => {
-                    let onExitModalMultiSelectCrud = undefined
-
-                    if (
-                        c.onExitModal &&
-                        {}.toString.call(c.onExitModal) === '[object Function]'
-                    ) {
-                        if (c.onExitModalRefresh) {
-                            onExitModalMultiSelectCrud = () => {
-                                loadTable()
-                                c.onExitModal()
-                            }
-                        } else {
-                            onExitModalMultiSelectCrud = () => {
-                                c.onExitModal()
-                            }
-                        }
-                    } else if (c.onExitModalRefresh) {
-                        onExitModalMultiSelectCrud = () => {
-                            loadTable()
-                        }
-                    }
-
-                    return (
-                        <div style={{ textAlign: 'center' }}>
-                            <MultiSelectCrud
-                                primaryKeyId={row.cell.row.original[primaryKey]}
-                                primaryKey={
-                                    row.cell.column.multiSelectOptionsPrimaryKey
-                                }
-                                crudUrl={row.cell.column.multiSelectOptionsUrl}
-                                columns={
-                                    row.cell.column.multiSelectOptionsColumns
-                                }
-                                onExitModal={onExitModalMultiSelectCrud}
-                            />
-                        </div>
-                    )
-                }
-                c.Cell = newCell
-            }
-        }
-    })
-
-    if (canEdit) {
-        newColumns.push({
-            Header: () => {
-                return (
-                    <div style={{ textAlign: 'center' }}>
-                        {canEdit === true ? 'Edit' : canEdit}
-                    </div>
-                )
-            },
-            accessor: 'Edit',
-            editable: false,
-            Cell: (row) => {
-                return (
-                    <div style={{ textAlign: 'center' }}>
-                        <EditButton
-                            onClick={() =>
-                                handleModalShow('UPDATE', row.cell.row.id)
-                            }
-                        />
-                    </div>
-                )
-            },
-        })
+    const filterCallBack = (accessor, e) => {
+        handleSearchField(accessor, e.target.value)
     }
-
-    if (canDelete) {
-        newColumns.push({
-            Header: () => {
-                return (
-                    <div style={{ textAlign: 'center' }}>
-                        {canDelete === true ? 'Delete' : canDelete}
-                    </div>
-                )
-            },
-            accessor: 'Delete',
-            editable: false,
-            Cell: (row) => {
-                return (
-                    <div style={{ textAlign: 'center' }}>
-                        <DeleteButton
-                            onClick={() =>
-                                handleModalShow('DELETE', row.cell.row.id)
-                            }
-                        />
-                    </div>
-                )
-            },
-        })
-    }
-
-    const createButton = !createButtonTitle ? (
-        ''
-    ) : (
-        <Button
-            crud="CREATE"
-            variant="success"
-            onClick={() => handleModalShow('CREATE')}
-        >
-            {createButtonTitle}
-        </Button>
-    )
-
-    // Get data from backend using axios
 
     useEffect(() => {
         if (!crudUrl) return
@@ -289,8 +162,7 @@ const Crud = forwardRef((props, ref) => {
                     }
                 }
             })
-            .catch((error) => console.log(error))
-            .then(() => {
+            .finally(() => {
                 if (mounted.current) {
                     setIsLoadingTable(false)
                 }
@@ -324,43 +196,34 @@ const Crud = forwardRef((props, ref) => {
 
     return (
         <div>
-            <Row className="align-items-center">
-                <Col xs={12} md={6} className="mt-3">
-                    {createButton}
-                    {customButtons}
-                </Col>
-
-                <Col
-                    xs={12}
-                    md={6}
-                    lg={{ span: 3, offset: 3 }}
-                    className="mt-3"
-                >
-                    <InputGroup className="d-flex justify-content-end">
-                        {canSearch ? (
-                            <Form.Control
-                                onChange={handleGlobalSearchField}
-                                value={searchField}
-                                placeholder="Buscar"
-                            />
-                        ) : (
-                            ''
-                        )}
-
-                        {canRefresh ? (
-                            <RefreshButton onClick={loadTable} />
-                        ) : (
-                            ''
-                        )}
-                    </InputGroup>
-                </Col>
-            </Row>
+            <TableToolbar
+                createButtonTitle={createButtonTitle}
+                handleModalShow={handleModalShow}
+                customButtons={customButtons}
+                canSearch={canSearch}
+                canRefresh={canRefresh}
+                globalFilter={searchField}
+                setGlobalFilter={setSearchField}
+                loadTable={loadTable}
+            />
 
             <Row className="mt-3">
                 <Col>
                     <Table
-                        data={dataTable}
-                        columns={newColumns}
+                        data={React.useMemo(() => dataTable, [dataTable])}
+                        columns={React.useMemo(
+                            () =>
+                                AddColumns(
+                                    newColumns,
+                                    canEdit,
+                                    canDelete,
+                                    handleModalShow,
+                                    primaryKey,
+                                    filterCallBack,
+                                    loadTable
+                                ),
+                            []
+                        )}
                         isLoading={isLoadingTable}
                         filter={searchField}
                         canSelectRow={canSelectRow}
@@ -411,7 +274,7 @@ Crud.propTypes = {
             editable: PropTypes.bool,
             sortable: PropTypes.bool,
             visible: PropTypes.bool,
-            filter: PropTypes.bool,
+            canSearch: PropTypes.bool,
             type: PropTypes.oneOf([
                 'text',
                 'number',

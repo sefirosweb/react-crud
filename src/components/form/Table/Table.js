@@ -26,8 +26,9 @@ Table.propTypes = {
     data: PropTypes.array,
     isLoading: PropTypes.bool,
     canSelectRow: PropTypes.bool,
-    filter: PropTypes.string,
+    canSearch: PropTypes.object,
     className: PropTypes.string,
+    filter: PropTypes.string,
 }
 
 export { Table }
