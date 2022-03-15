@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React from 'react'
-import { Form } from 'react-bootstrap'
 import { DeleteButton } from '../../buttons/DeleteButton'
 import { EditButton } from '../../buttons/EditButton'
+import FormTypeSelect from '../FormTypes/FormTypeSelect'
+import FormTypeText from '../FormTypes/FormTypeText'
 import { MultiSelectCrud } from './../MultiSelectCrud'
 
 export default function AddColumns(
@@ -113,9 +114,31 @@ export default function AddColumns(
 
         if (c.canSearch === true) {
             c.Filter = ({ column: { id, filterValue, setFilter } }) => {
+                if (c.type === 'select') {
+                    return (
+                        <FormTypeSelect
+                            inputFieldName={id}
+                            handleChange={(e) => {
+                                if (
+                                    filterCallBack &&
+                                    {}.toString.call(filterCallBack) ===
+                                        '[object Function]'
+                                ) {
+                                    filterCallBack(id, e)
+                                }
+
+                                setFilter(e.target.value || undefined)
+                            }}
+                            value={filterValue || ''}
+                            selectOptionsUrl={c.selectOptionsUrl}
+                        />
+                    )
+                }
+
                 return (
-                    <Form.Control
-                        onChange={(e) => {
+                    <FormTypeText
+                        inputFieldName={id}
+                        handleChange={(e) => {
                             if (
                                 filterCallBack &&
                                 {}.toString.call(filterCallBack) ===
@@ -126,7 +149,6 @@ export default function AddColumns(
 
                             setFilter(e.target.value || undefined)
                         }}
-                        type="text"
                         value={filterValue || ''}
                     />
                 )

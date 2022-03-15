@@ -79,13 +79,19 @@ const createData = () => {
     const random = Math.floor(Math.random() * 300) + 1
     const data = []
     for (var i = 0; i < random; i++) {
+
+        const field = optionsWithValue[Math.floor(Math.random() * options.length)]
+        const option = options[Math.floor(Math.random() * options.length)]
+
         data.push({
             id: makeRandomText(5),
             ean: makeRandomText(8),
             sku_base: makeRandomText(9),
             descripcion: makeRandomText(50),
             name: makeRandomText(7),
-            field_type: options[Math.floor(Math.random() * options.length)],
+            field_type: field.name,
+            field_type_id: field.value,
+            field_type_options: option,
             check_box: Math.random() > 0.5 ? 'true' : 'false',
         })
     }

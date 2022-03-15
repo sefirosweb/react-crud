@@ -12,7 +12,7 @@ const FormTypeNumber = ({
 }) => {
     return (
         <Form.Group controlId={inputFieldName} className={className}>
-            <Form.Label>{label}</Form.Label>
+            {label ? <Form.Label>{label}</Form.Label> : ''}
             <Form.Control
                 type="number"
                 readOnly={isLoading}
