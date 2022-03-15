@@ -180,6 +180,10 @@ const Crud = forwardRef((props, ref) => {
         },
         setDataTable,
         setIsLoadingTable,
+
+        inputFilters,
+        setInputFilters,
+
         tableRef,
     }))
 
