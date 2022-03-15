@@ -34,3 +34,9 @@
 
 -   Added label to "Input data field"
 -   Fixed small bugs with FormTypes
+
+## 1.2.0
+
+-   Added filters over tables
+-   Refactorized some components
+-   Small change in filter table changed "filter" to "canSearch" because "filter" is used by react-table

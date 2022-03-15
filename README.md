@@ -24,7 +24,6 @@ Import components whant you wish:
 
 ```js
 import { Crud } from "@sefirosweb/react-crud";
-
 ...
 
 // Columns to retrieve from backend
@@ -39,6 +38,7 @@ const columns = [
     Header: "Item Type", // Label in table
     accessor: "name", // field retreived from backend
     editable: true, // field can be editabled
+    canSearch: true, // Add filter over table for this column
   },
 ];
 
