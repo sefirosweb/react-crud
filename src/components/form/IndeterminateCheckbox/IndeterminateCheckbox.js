@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { useEffect, useRef } from 'react'
 
-const indeterminateCheckboxFunction = ({ indeterminate, ...rest }, ref) => {
+const IndeterminateCheckboxFunction = ({ indeterminate, ...rest }, ref) => {
     const defaultRef = useRef()
     const resolvedRef = ref || defaultRef
 
@@ -17,10 +16,10 @@ const indeterminateCheckboxFunction = ({ indeterminate, ...rest }, ref) => {
     )
 }
 
-const IndeterminateCheckbox = React.forwardRef(indeterminateCheckboxFunction)
+const IndeterminateCheckbox = forwardRef(IndeterminateCheckboxFunction)
 IndeterminateCheckbox.displayName = 'IndeterminateCheckbox'
 
-indeterminateCheckboxFunction.PropTypes = {
+IndeterminateCheckboxFunction.propTypes = {
     indeterminate: PropTypes.object,
     getToggleAllRowsSelectedProps: PropTypes.func,
 }

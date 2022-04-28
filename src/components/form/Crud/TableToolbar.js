@@ -19,7 +19,7 @@ const TableToolbar = (props) => {
     return (
         <Row className="align-items-center">
             <Col xs={12} md={6}>
-                {createButtonTitle == '' ? (
+                {createButtonTitle === '' ? (
                     ''
                 ) : (
                     <Button

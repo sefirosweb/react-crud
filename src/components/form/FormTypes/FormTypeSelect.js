@@ -37,7 +37,7 @@ const FormTypeSelect = ({
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [])
+    }, [selectOptionsUrl])
 
     return (
         <Form.Group controlId={inputFieldName} className={className}>

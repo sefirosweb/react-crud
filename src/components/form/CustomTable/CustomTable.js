@@ -87,7 +87,7 @@ const CustomTable = forwardRef((props, ref) => {
 
     useEffect(() => {
         setGlobalFilter(filter)
-    }, [filter, data])
+    }, [filter, data, setGlobalFilter])
 
     useImperativeHandle(ref, () => ({
         selectedFlatRows,

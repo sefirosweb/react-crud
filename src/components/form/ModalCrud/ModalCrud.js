@@ -129,8 +129,8 @@ const ModalCrud = ({
                             />
                         )
 
-                    if (crud == 'DELETE') return ''
-                    if (field.type == 'multiselect') return ''
+                    if (crud === 'DELETE') return ''
+                    if (field.type === 'multiselect') return ''
 
                     if (field.editable) {
                         return (

@@ -4,6 +4,7 @@ import React, {
     useImperativeHandle,
     useState,
     useRef,
+    useMemo,
 } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
@@ -65,7 +66,7 @@ const Crud = forwardRef((props, ref) => {
         const newFilter = { ...inputFilters }
         newFilter.global = searchField
         setTempFilters(newFilter)
-    }, [searchField])
+    }, [searchField, inputFilters, lazyLoad])
 
     useEffect(() => {
         if (!lazyLoad) return
@@ -75,7 +76,7 @@ const Crud = forwardRef((props, ref) => {
             setInputFilters(tempFilters)
         }, 400)
         return () => clearTimeout(timer)
-    }, [tempFilters])
+    }, [tempFilters, lazyLoad])
 
     useEffect(() => {
         if (!lazyLoad) return
@@ -83,7 +84,7 @@ const Crud = forwardRef((props, ref) => {
 
         const newFilter = { ...inputFilters, ...filters }
         setTempFilters(newFilter)
-    }, [filters])
+    }, [filters, lazyLoad, inputFilters])
 
     useEffect(() => {
         mounted.current = true
@@ -171,7 +172,8 @@ const Crud = forwardRef((props, ref) => {
         return () => {
             cancelTokenSource.cancel()
         }
-    }, [sendRequest, crudUrl, inputFilters, lazyLoad])
+    }, [sendRequest, crudUrl, inputFilters, lazyLoad, columns])
+
     const loadTable = () => setSendRequest(!sendRequest)
 
     useImperativeHandle(ref, () => ({
@@ -198,6 +200,30 @@ const Crud = forwardRef((props, ref) => {
         }
     }
 
+    const dataTableMemo = useMemo(() => dataTable, [dataTable])
+
+    const useColumnsMemp = useMemo(
+        () =>
+            AddColumns(
+                newColumns,
+                canEdit,
+                canDelete,
+                handleModalShow,
+                primaryKey,
+                filterCallBack,
+                loadTable
+            ),
+        [
+            canDelete,
+            canEdit,
+            filterCallBack,
+            handleModalShow,
+            loadTable,
+            newColumns,
+            primaryKey,
+        ]
+    )
+
     return (
         <div>
             <TableToolbar
@@ -214,20 +240,8 @@ const Crud = forwardRef((props, ref) => {
             <Row className="mt-3">
                 <Col>
                     <Table
-                        data={React.useMemo(() => dataTable, [dataTable])}
-                        columns={React.useMemo(
-                            () =>
-                                AddColumns(
-                                    newColumns,
-                                    canEdit,
-                                    canDelete,
-                                    handleModalShow,
-                                    primaryKey,
-                                    filterCallBack,
-                                    loadTable
-                                ),
-                            [dataTable]
-                        )}
+                        data={dataTableMemo}
+                        columns={useColumnsMemp}
                         isLoading={isLoadingTable}
                         filter={searchField}
                         canSelectRow={canSelectRow}

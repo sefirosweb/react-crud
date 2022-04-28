@@ -52,7 +52,7 @@ const InputDataField = forwardRef((props, ref) => {
     const handleOnAcceptButton = () => {
         const dataFound = dataField.find((d) => {
             const valueToFind = d.name ? d.name : d
-            return valueToFind == filter
+            return valueToFind === filter
         })
 
         if (!dataFound) {
