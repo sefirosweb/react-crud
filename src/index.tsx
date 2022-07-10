@@ -1,2 +1,2 @@
-export * from './Button';
-export * from './components/forms/Table/Table';
+export { Button } from './Button';
+export { Table } from './components/forms/Table';
