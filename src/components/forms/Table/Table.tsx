@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Button } from 'react-bootstrap'
+
 import {
     ColumnDef,
     flexRender,
@@ -21,7 +23,8 @@ export const Table = (props: Props) => {
     })
 
     return (
-        <div className="p-2">
+        <div>
+            <Button className='mb-3'>asd</Button>
             <table>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
@@ -54,7 +57,7 @@ export const Table = (props: Props) => {
             </table>
 
 
-        </div>
+        </div >
     )
 }
 
