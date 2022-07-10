@@ -27,6 +27,7 @@
     "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -e \"NODE_OPTIONS=--openssl-legacy-provider\" -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -p 3000:3000 -p 6006:6006 -u node node:18.5.0-bullseye /bin/bash"
   },
   "peerDependencies": {
+    "@tanstack/react-table": "^8.2.2",
     "react": ">=16"
   },
   "husky": {
@@ -59,6 +60,7 @@
     "@storybook/addon-links": "^6.5.9",
     "@storybook/addons": "^6.5.9",
     "@storybook/react": "^6.5.9",
+    "@tanstack/react-table": "^8.2.2",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "babel-loader": "^8.2.5",
