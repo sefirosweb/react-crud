@@ -1,77 +1,74 @@
 {
-  "name": "app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.43",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+  "name": "@sefirosweb/react-crud",
+  "version": "2.0.0",
+  "description": "Basic components for CRUD with react",
+  "homepage": "https://sefirosweb.github.io/react-crud",
+  "license": "MIT",
+  "author": "@Sefirosweb",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "ts-standard",
-    "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -p 3000:3000 -p 6006:6006 -u node node:18.5.0-bullseye /bin/bash",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -e \"NODE_OPTIONS=--openssl-legacy-provider\" -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -p 3000:3000 -p 6006:6006 -u node node:18.5.0-bullseye /bin/bash"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
+  "peerDependencies": {
+    "react": ">=16"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "module": "dist/my-components.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/my-components.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/my-components.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.9",
+    "@babel/core": "^7.18.6",
+    "@size-limit/preset-small-lib": "^7.0.8",
     "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^6.5.9",
-    "@storybook/builder-webpack5": "^6.5.9",
-    "@storybook/manager-webpack5": "^6.5.9",
-    "@storybook/node-logger": "^6.5.9",
-    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/addons": "^6.5.9",
     "@storybook/react": "^6.5.9",
-    "@storybook/testing-library": "^0.0.13",
-    "babel-plugin-named-exports-order": "^0.0.2",
-    "prop-types": "^15.8.1",
-    "ts-standard": "^11.0.0",
-    "webpack": "^5.73.0"
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "babel-loader": "^8.2.5",
+    "husky": "^8.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "size-limit": "^7.0.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
   }
 }
