@@ -16,11 +16,16 @@
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "ts-standard",
     "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -p 3000:3000 -p 6006:6006 -u node node:18.5.0-bullseye /bin/bash",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
@@ -66,6 +71,7 @@
     "@storybook/testing-library": "^0.0.13",
     "babel-plugin-named-exports-order": "^0.0.2",
     "prop-types": "^15.8.1",
+    "ts-standard": "^11.0.0",
     "webpack": "^5.73.0"
   }
 }
