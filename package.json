@@ -1,6 +1,6 @@
 {
   "name": "@sefirosweb/react-crud",
-  "version": "2.0.0",
+  "version": "2.3.0",
   "description": "Basic components for CRUD with react",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -41,6 +41,8 @@
     "@storybook/testing-library": "0.0.13",
     "@tanstack/react-table": "8.5.2",
     "@types/react": "18.0.15",
+    "@types/toastr": "2.1.39",
+    "axios": "0.27.2",
     "babel-loader": "8.2.5",
     "bootstrap": "5.2.0",
     "css-loader": "5.2.7",
@@ -55,10 +57,17 @@
     "sass": "1.54.0",
     "sass-loader": "10.1.1",
     "style-loader": "2.0.0",
+    "toastr": "2.1.4",
     "typescript": "4.7.4"
   },
   "peerDependencies": {
+    "@tanstack/react-table": "8.5.2",
+    "bootstrap": "5.2.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-bootstrap": "2.4.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
+    "toastr": "2.1.4",
+    "axios": "0.27.2"
   }
 }
