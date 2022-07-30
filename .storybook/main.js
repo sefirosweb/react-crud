@@ -6,7 +6,8 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+    "@storybook/addon-interactions",
+    "@storybook/preset-scss"
   ],
   "framework": "@storybook/react",
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
