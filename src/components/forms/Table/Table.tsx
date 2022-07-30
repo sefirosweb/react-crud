@@ -4,8 +4,8 @@ import React, {
   useEffect,
   useImperativeHandle,
   useState,
-} from 'react';
-import * as TableBootstrap from 'react-bootstrap';
+} from "react";
+import * as TableBootstrap from "react-bootstrap";
 
 import {
   ColumnDef,
@@ -18,17 +18,17 @@ import {
   getSortedRowModel,
   SortingState,
   Table as TableReactTable,
-  useReactTable
-} from '@tanstack/react-table';
+  useReactTable,
+} from "@tanstack/react-table";
 
-import { LoadingSpinner } from '../../icons/LoadingSpinner';
-import { fuzzyFilter } from './fuzzyFilter';
-import { ColumnDefinition, MultiSelectOptionsColumns } from '../../../types';
-import { FieldTypes } from '../../../types/FieldTypes';
-import { TableHeader } from './TableHeader';
-import { TableFooter } from './TableFooter';
-declare module '@tanstack/table-core' {
-  interface ColumnMeta {
+import { LoadingSpinner } from "../../icons/LoadingSpinner";
+import { fuzzyFilter } from "./fuzzyFilter";
+import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
+import { FieldTypes } from "../../../types/FieldTypes";
+import { TableHeader } from "./TableHeader";
+import { TableFooter } from "./TableFooter";
+declare module "@tanstack/table-core" {
+  interface ColumnMeta<TData, TValue> {
     fieldType?: FieldTypes;
     multiSelectOptions?: MultiSelectOptionsColumns<unknown, unknown>;
     selectOptionsUrl?: string;
@@ -81,11 +81,11 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
 
   useEffect(() => {
-    setGlobalFilter(globalFilterText ?? '');
+    setGlobalFilter(globalFilterText ?? "");
   }, [globalFilterText]);
 
   useEffect(() => {
@@ -96,8 +96,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   const columnsParsed = parseColumns(columns);
 
-  const storage = window.location.href + '_getSizeTable';
-  const pageSize = parseInt(localStorage.getItem(storage) ?? '15');
+  const storage = window.location.href + "_getSizeTable";
+  const pageSize = parseInt(localStorage.getItem(storage) ?? "15");
 
   const table = useReactTable({
     data: data,
