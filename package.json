@@ -9,7 +9,7 @@
     "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -e \"NODE_OPTIONS=--openssl-legacy-provider\" -p 6006:6006 -u node node:17.2.0-bullseye /bin/bash",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "rm dist/ -R && rollup -c",
+    "build": "rm dist/ -rf && rollup -c",
     "update": "npx npm-check-updates"
   },
   "repository": {
@@ -36,12 +36,9 @@
     "@storybook/manager-webpack4": "^6.5.9",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
-    "@tanstack/match-sorter-utils": "^8.1.1",
     "@tanstack/react-table": "^8.5.2",
     "@types/react": "^18.0.15",
-    "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
-    "bootstrap": "^5.2.0",
     "node-sass": "^7.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
@@ -51,17 +48,10 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-terser": "^7.0.2",
-    "toastr": "^2.1.4",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "@tanstack/react-table": "^8.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "axios": "^0.27.2",
-    "bootstrap": "^5.2.0",
-    "react-bootstrap": "^2.4.0",
-    "react-icons": "^4.4.0",
-    "toastr": "^2.1.4"
+    "react-dom": "^18.2.0"
   }
 }
