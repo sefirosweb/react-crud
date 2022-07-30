@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import { Page } from '../components/Page';
+import { Page } from '../src/components/Page';
 
 export default {
   title: 'Example/Page',
