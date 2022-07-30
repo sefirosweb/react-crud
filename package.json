@@ -2,12 +2,14 @@
   "name": "@sefirosweb/react-crud",
   "version": "2.0.0",
   "description": "Basic components for CRUD with react",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -e \"NODE_OPTIONS=--openssl-legacy-provider\" -p 6006:6006 -u node node:17.2.0-bullseye /bin/bash",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "build": "rollup -c",
     "update": "npx npm-check-updates"
   },
   "repository": {
@@ -22,6 +24,10 @@
   "homepage": "https://github.com/sefirosweb/react-crud#readme",
   "devDependencies": {
     "@babel/core": "^7.18.9",
+    "@babel/preset-react": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.4",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",
@@ -32,13 +38,17 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.15",
     "babel-loader": "^8.2.5",
+    "node-sass": "^7.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rollup": "^2.77.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "dependencies": {}
+  }
 }
