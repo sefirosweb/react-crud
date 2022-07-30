@@ -6,19 +6,24 @@ Normally you are interested to have a CRUD system for a lot of things, usually y
 
 It is made by bootstrap (react-bootstrap) you can modify colors and styles for these components
 
-Currently is in beta and it can have a lot of changes and add the functionalities
+Full writed in typescript
 
 # Start Production
-
-```
-Caution: the first version is unstable and must have a lot of refactors, check the latest version
-```
 
 Install:
 
 ```
 npm install --save-dev @sefirosweb/react-crud
 ```
+Add Bootstrap styling:\
+Create a .SCSS file and import them with:
+```scss
+// Fonts
+@import "~bootstrap/scss/bootstrap";
+@import "toastr";
+@import "~react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+```
+# Usage
 
 Import components whant you wish:
 
