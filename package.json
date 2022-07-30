@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker": "docker run --rm -it --name node-docker-storybook -v ~/.gitconfig:/etc/gitconfig -v ~/.gnupg:/home/node/.gnupg -v $PWD:/home/app -w /home/app -e \"NODE_OPTIONS=--openssl-legacy-provider\" -p 6006:6006 -u node node:17.2.0-bullseye /bin/bash",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "update": "npx npm-check-updates"
   },
   "repository": {
     "type": "git",
