@@ -1,16 +1,16 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { EditButton, Props } from '../src/components/buttons/EditButton';
+import { PlayButton, Props } from '../src/components/buttons/PlayButton';
 
 const meta: Meta = {
-  title: 'Buttons/EditButton',
-  component: EditButton,
+  title: 'Buttons/PlayButton',
+  component: PlayButton,
 };
 
 export default meta;
 
-const Template: Story<Props> = args => <EditButton {...args} />;
+const Template: Story<Props> = args => <PlayButton {...args} />;
 export const Active: Story<Props> = Template.bind({});
 Active.args = {
   disabled: false,

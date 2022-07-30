@@ -4,8 +4,8 @@ import React, {
   useEffect,
   useImperativeHandle,
   useState,
-} from "react";
-import * as TableBootstrap from "react-bootstrap";
+} from 'react';
+import * as TableBootstrap from 'react-bootstrap';
 
 import {
   ColumnDef,
@@ -18,10 +18,23 @@ import {
   getSortedRowModel,
   SortingState,
   Table as TableReactTable,
-  useReactTable,
-} from "@tanstack/react-table";
+  useReactTable
+} from '@tanstack/react-table';
 
-import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
+import { LoadingSpinner } from '../../icons/LoadingSpinner';
+import { fuzzyFilter } from './fuzzyFilter';
+import { ColumnDefinition, MultiSelectOptionsColumns } from '../../../types';
+import { FieldTypes } from '../../../types/FieldTypes';
+import { TableHeader } from './TableHeader';
+import { TableFooter } from './TableFooter';
+declare module '@tanstack/table-core' {
+  interface ColumnMeta {
+    fieldType?: FieldTypes;
+    multiSelectOptions?: MultiSelectOptionsColumns<unknown, unknown>;
+    selectOptionsUrl?: string;
+    dropdown?: boolean;
+  }
+}
 
 const parseColumns = (
   columns: Array<ColumnDefinition<any>>
@@ -68,11 +81,11 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
 
   useEffect(() => {
-    setGlobalFilter(globalFilterText ?? "");
+    setGlobalFilter(globalFilterText ?? '');
   }, [globalFilterText]);
 
   useEffect(() => {
@@ -83,8 +96,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   const columnsParsed = parseColumns(columns);
 
-  const storage = window.location.href + "_getSizeTable";
-  const pageSize = parseInt(localStorage.getItem(storage) ?? "15");
+  const storage = window.location.href + '_getSizeTable';
+  const pageSize = parseInt(localStorage.getItem(storage) ?? '15');
 
   const table = useReactTable({
     data: data,
@@ -110,6 +123,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: fuzzyFilter,
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -126,11 +140,13 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   return (
     <>
       <TableBootstrap.Table striped hover className={`${className}`}>
+        <TableHeader table={table} />
+
         {isLoading ? (
           <tbody>
             <tr>
               <td colSpan={100} className="text-center">
-                <span>Loading...</span>
+                <LoadingSpinner />
               </td>
             </tr>
           </tbody>
@@ -156,6 +172,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           </tbody>
         )}
       </TableBootstrap.Table>
+      <TableFooter table={table} />
     </>
   );
 });
