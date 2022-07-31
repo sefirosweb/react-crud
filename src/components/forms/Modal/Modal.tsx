@@ -11,7 +11,7 @@ export type Props = {
   title?: string;
   accept?: string;
   acceptVariant?: Variant;
-  onExited: Function;
+  onExited?: Function;
   onShow?: Function;
   isLoading?: boolean;
 };
