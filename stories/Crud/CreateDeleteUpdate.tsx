@@ -7,7 +7,7 @@ import { Product } from "../../models/Product";
 import { FieldTypes } from "../../src/types";
 
 const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
-  primaryKey: "id",
+  primaryKey: "uuid",
   url: "/api/sub_table",
   getDataUrl: "/api/get_options",
   lazyLoad: true,
