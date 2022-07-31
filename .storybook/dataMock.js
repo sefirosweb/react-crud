@@ -17,7 +17,12 @@ const mock = new MockAdapter(axios, {
 
 let generatedData = undefined // cached for same request all times
 export const createData = () => {
-    if (generatedData) return generatedData
+    if (generatedData) {
+        console.log({ generatedData })
+        generatedData.sort((a, b) => b.created_at - a.created_at)
+        return generatedData
+    }
+
     console.log('Generating mok data.. "generateData"')
     const random = Math.floor(Math.random() * 1000) + 1
     const data = []
