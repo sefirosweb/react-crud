@@ -93,10 +93,3 @@ npm start
 npm run build
 npm publish
 ```
-
-## Build and publish to GitHub Pages
-
-```
-npm run build-storybook
-npm run deploy-storybook
-```
