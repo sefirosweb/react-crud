@@ -22,7 +22,7 @@ import {
 import { TableToolbar } from './TableToolbar';
 import { EditButton } from '../../buttons/EditButton';
 import { DeleteButton } from '../../buttons/DeleteButton';
-import { FieldTypes } from '../../../types/FieldTypes';
+import { FieldTypes } from '../../../types';
 import { ShowMultiSelectCrud } from './ShowMultiSelectCrud';
 import {
   HandleModalShow,

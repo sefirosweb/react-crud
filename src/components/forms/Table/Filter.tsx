@@ -3,7 +3,7 @@ import { DebouncedInput } from './DebouncedInput';
 import { Column } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { FieldTypes } from '../../../types/FieldTypes';
+import { FieldTypes } from '../../../types';
 import { FormTypeSelect } from '../FormTypes/FormTypeSelect';
 
 type Props = {

@@ -4,7 +4,7 @@ import { Story } from '@storybook/react';
 import { Crud, Props } from '../../src/components/forms/Crud';
 import { ColumnDefinition, MultiSelectOptionsColumns } from '../../src/types';
 import { Product } from '../../models/Product';
-import { FieldTypes } from '../../src/types/FieldTypes';
+import { FieldTypes } from '../../src/types';
 
 const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
   primaryKey: 'id',

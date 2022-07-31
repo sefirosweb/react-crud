@@ -1,5 +1,5 @@
 import { ColumnDefinition } from '../src/types';
-import { FieldTypes } from '../src/types/FieldTypes';
+import { FieldTypes } from '../src/types';
 
 export type Product = {
   uuid: string;

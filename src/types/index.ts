@@ -1,5 +1,4 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { FieldTypes } from './FieldTypes';
 
 export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
   columns: Array<ColumnDef<TData, TValue>>;
@@ -14,11 +13,11 @@ export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
 
 type ExtendStandardFields = {
   fieldType?:
-    | FieldTypes.CHECKBOX
-    | FieldTypes.DATE
-    | FieldTypes.NUMBER
-    | FieldTypes.PASSWORD
-    | FieldTypes.TEXTAREA;
+  | FieldTypes.CHECKBOX
+  | FieldTypes.DATE
+  | FieldTypes.NUMBER
+  | FieldTypes.PASSWORD
+  | FieldTypes.TEXTAREA;
   dropdown?: never;
   multiSelectOptions?: never;
   selectOptionsUrl?: never;
@@ -73,3 +72,14 @@ export type Variant =
   | 'info'
   | 'danger'
   | 'warning';
+
+export enum FieldTypes {
+  TEXT = 'text',
+  NUMBER = 'number',
+  DATE = 'date',
+  TEXTAREA = 'textarea',
+  PASSWORD = 'password',
+  CHECKBOX = 'checkbox',
+  SELECT = 'select',
+  MULTISELECT = 'multiselect',
+}

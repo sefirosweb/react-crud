@@ -24,7 +24,7 @@ import {
 import { LoadingSpinner } from "../../icons/LoadingSpinner";
 import { fuzzyFilter } from "./fuzzyFilter";
 import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
-import { FieldTypes } from "../../../types/FieldTypes";
+import { FieldTypes } from "../../../types";
 import { TableHeader } from "./TableHeader";
 import { TableFooter } from "./TableFooter";
 declare module "@tanstack/table-core" {

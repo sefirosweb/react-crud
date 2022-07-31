@@ -5,7 +5,7 @@ import { Form } from 'react-bootstrap';
 import { Modal } from './../Modal';
 import { FormTypes } from './../FormTypes';
 import { ColumnDefinition, Variant } from '../../../types';
-import { FieldTypes } from '../../../types/FieldTypes';
+import { FieldTypes } from '../../../types';
 
 export type ModalData = {
   [key: string]: string | number | undefined;

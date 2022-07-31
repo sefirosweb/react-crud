@@ -6,7 +6,7 @@ import { FormTypeSelect } from './FormTypeSelect';
 import { FormTypeNumber } from './FormTypeNumber';
 import { FormTypeDate } from './FormTypeDate';
 import { FormTypePassword } from './FormTypePassword';
-import { FieldTypes } from '../../../types/FieldTypes';
+import { FieldTypes } from '../../../types';
 
 export type Props = {
   type?: FieldTypes;

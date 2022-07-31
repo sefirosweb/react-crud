@@ -4,7 +4,7 @@ import { Story } from '@storybook/react';
 import { Crud, Props, PropsRef } from '../../src/components/forms/Crud';
 import { ColumnDefinition } from '../../src/types';
 import { Product } from '../../models/Product';
-import { FieldTypes } from '../../src/types/FieldTypes';
+import { FieldTypes } from '../../src/types';
 import { FormTypeSelect } from '../../src/components/forms/FormTypes/FormTypeSelect';
 
 const columns: Array<ColumnDefinition<Product>> = [
