@@ -1,7 +1,7 @@
 name: Build and Deploy
 on:
   push:
-    branches: [create_storybook_ts]
+    branches: [master]
   pull_request:
 
 permissions:
