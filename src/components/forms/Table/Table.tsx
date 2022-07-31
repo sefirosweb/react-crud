@@ -139,7 +139,13 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   return (
     <>
-      <TableBootstrap.Table striped hover bordered className={`${className}`}>
+      <TableBootstrap.Table
+        striped
+        hover
+        bordered
+        responsive
+        className={`${className}`}
+      >
         <TableHeader table={table} />
 
         {isLoading ? (
