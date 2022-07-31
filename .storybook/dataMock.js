@@ -18,7 +18,6 @@ const mock = new MockAdapter(axios, {
 let generatedData = undefined // cached for same request all times
 export const createData = () => {
     if (generatedData) {
-        console.log({ generatedData })
         generatedData.sort((a, b) => b.created_at - a.created_at)
         return generatedData
     }
