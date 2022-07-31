@@ -1,71 +1,79 @@
-import React from 'react';
-import { Story } from '@storybook/react';
+import React from "react";
+import { Story } from "@storybook/react";
 
-import { Crud, Props } from '../../src/components/forms/Crud';
-import { ColumnDefinition, MultiSelectOptionsColumns } from '../../src/types';
-import { Product } from '../../models/Product';
-import { FieldTypes } from '../../src/types';
+import { Crud, Props } from "../../src/components/forms/Crud";
+import { ColumnDefinition, MultiSelectOptionsColumns } from "../../src/types";
+import { Product } from "../../models/Product";
+import { FieldTypes } from "../../src/types";
 
 const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
-  primaryKey: 'id',
-  url: '/api/sub_table',
-  getDataUrl: '/api/get_options',
+  primaryKey: "id",
+  url: "/api/sub_table",
+  getDataUrl: "/api/get_options",
   lazyLoad: true,
-  onExitModalRefresh: true,
   onExitModal: () => {
-    console.log('Log on exit modal');
+    console.log("Log on exit modal");
   },
-  title: 'Editing Table Multi Select',
+  title: "Editing Table Multi Select",
   columns: [
     {
-      accessorKey: 'uuid',
+      accessorKey: "uuid",
     },
     {
-      accessorKey: 'name',
+      accessorKey: "name",
     },
   ],
 };
 
 const columns: Array<ColumnDefinition<Product>> = [
   {
-    accessorKey: 'uuid',
+    accessorKey: "uuid",
     visible: false,
   },
   {
-    accessorKey: 'ean',
+    accessorKey: "ean",
     enableSorting: true,
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     editable: true,
     enableSorting: true,
   },
   {
-    accessorKey: 'category_id',
-    header: 'Cat.',
+    accessorKey: "category_id",
+    header: "Cat.",
     cell: (props) => props.row.original.category,
     editable: true,
     fieldType: FieldTypes.SELECT,
-    selectOptionsUrl: '/api/get_options',
+    selectOptionsUrl: "/api/get_options",
   },
   {
-    header: 'Desc',
-    titleOnCRUD: 'Description',
-    accessorKey: 'description',
+    header: "Desc",
+    titleOnCRUD: "Description",
+    accessorKey: "description",
     editable: true,
   },
   {
-    accessorKey: 'price',
-    header: '€',
+    accessorKey: "price",
+    header: "€",
     editable: true,
     fieldType: FieldTypes.NUMBER,
   },
   {
-    id: 'multi_select',
-    header: 'Multi Select',
+    id: "multi_select",
+    header: "Multi Select",
     editable: true,
     fieldType: FieldTypes.MULTISELECT,
     multiSelectOptions: multiSelectOptionsColumnsValues,
+  },
+  {
+    header: "Created",
+    accessorKey: "created_at",
+    enableSorting: true,
+    cell: (props) => {
+      const d = new Date(props.getValue() as string);
+      return d.toLocaleString();
+    },
   },
 ];
 
@@ -78,7 +86,7 @@ CreateDeleteUpdate.args = {
   crudUrl: `/api/crud`,
   canDelete: true,
   canEdit: true,
-  primaryKey: 'uuid',
-  createButtonTitle: 'Create a new record',
-  titleOnDelete: 'name',
+  primaryKey: "uuid",
+  createButtonTitle: "Create a new record",
+  titleOnDelete: "name",
 };

@@ -7,7 +7,7 @@ import {
 } from '../../src/components/forms/ModalCrud';
 import { Button } from 'react-bootstrap';
 import { Story } from '@storybook/react';
-import { generateOptionsValue } from '../../.storybook/preview';
+import { generateOptionsValue } from '../../.storybook/dataMock';
 import { TestColumnsModel } from '../../models/Product';
 
 
