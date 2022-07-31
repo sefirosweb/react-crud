@@ -120,8 +120,14 @@ const generateDataSubtable = () => {
 }
 
 // Simple CRUD
-mock.onGet('/api/crud').reply(generateData)
+mock.onGet('/api/crud').reply(() => {
+    console.log(`Axios request: '/api/crud' GET`)
+    return generateData()
+})
+
 mock.onPost('/api/crud').reply((request) => {
+    console.log(`Axios request: '/api/crud' POST`)
+
     const requestData = JSON.parse(request.data)
     const data = createData()
 
@@ -138,6 +144,8 @@ mock.onPost('/api/crud').reply((request) => {
 })
 
 mock.onPut('/api/crud').reply((request) => {
+    console.log(`Axios request: '/api/crud' PUT`)
+
     const updateData = JSON.parse(request.data)
     const uuid = JSON.parse(request.data).uuid
     const data = createData()
@@ -159,6 +167,8 @@ mock.onPut('/api/crud').reply((request) => {
 })
 
 mock.onDelete('/api/crud').reply((request) => {
+    console.log(`Axios request: '/api/crud' DELETE`)
+
     const uuid = JSON.parse(request.data).uuid
     const data = createData()
     const findData = data.findIndex(i => i.uuid === uuid)
@@ -171,12 +181,31 @@ mock.onDelete('/api/crud').reply((request) => {
 })
 // End Simple Crud
 
-mock.onGet('/api/get_options').reply(generateDataOptions)
+mock.onGet('/api/get_options').reply(() => {
+    console.log(`Axios request: '/api/get_options' GET`)
+    return generateDataOptions()
+})
 
 // Crud for list table
-mock.onGet('/api/sub_table').reply(generateDataSubtable)
-mock.onPost('/api/sub_table').reply((request) => generateCrudResponse(request, 'Added to table'))
-mock.onDelete('/api/sub_table').reply((request) => generateCrudResponse(request, 'Deleted from table'))
+mock.onGet('/api/sub_table').reply(() => {
+    console.log(`Axios request: '/api/sub_table' GET`)
+    return generateDataSubtable()
+})
 
-mock.onGet('/api/sub_table/get_array').reply(generateDataOptions)
+mock.onPost('/api/sub_table').reply((request) => {
+    console.log(`Axios request: '/api/sub_table' POST`)
+    return generateCrudResponse(request, 'Added to table')
+})
+mock.onDelete('/api/sub_table').reply((request) => {
+    console.log(`Axios request: '/api/sub_table' DELETE`)
+    return generateCrudResponse(request, 'Deleted from table')
+})
+
+mock.onGet('/api/sub_table/get_array').reply(() => {
+    console.log(`Axios request: '/api/sub_table/get_array' GET`)
+    return generateDataOptions()
+})
 // END Crud for list table
+
+
+/** Console logs is for detect multiple request on axios and optimize them **/
