@@ -1,9 +1,9 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
-import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import { axiosWithCache } from './../../../lib/axiosWithCache';
-import { SelectOption } from '../../../types';
+import React from "react";
+import { Form } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { axiosWithCache } from "./../../../lib/axiosWithCache";
+import { SelectOption } from "../../../types";
 
 export type Props = {
   inputFieldName: string;
@@ -30,7 +30,7 @@ export const FormTypeSelect = (props: Props) => {
 
   const [isLoadingInternal, setIsLoadingInternal] = useState(false);
   const [selectOptions, setSelectOptions] = useState<SelectOption[]>([]);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -38,16 +38,16 @@ export const FormTypeSelect = (props: Props) => {
     return () => {
       mounted.current = false;
     };
-  });
+  }, []);
 
   useEffect(() => {
-    if (typeof isLoading !== 'undefined') {
+    if (typeof isLoading !== "undefined") {
       setIsLoadingInternal(isLoading);
     }
   }, [isLoading]);
 
   useEffect(() => {
-    if (typeof options !== 'undefined') {
+    if (typeof options !== "undefined") {
       setSelectOptions(options);
     }
   }, [options]);
@@ -77,10 +77,10 @@ export const FormTypeSelect = (props: Props) => {
 
   useEffect(() => {
     if (value === undefined) {
-      setSelectedOption('');
+      setSelectedOption("");
     } else {
       const realValue =
-        typeof value === 'string' || typeof value === 'number'
+        typeof value === "string" || typeof value === "number"
           ? value
           : value.value;
       setSelectedOption(realValue);
@@ -89,7 +89,7 @@ export const FormTypeSelect = (props: Props) => {
 
   return (
     <Form.Group controlId={inputFieldName} className={className}>
-      {label ? <Form.Label>{label}</Form.Label> : ''}
+      {label ? <Form.Label>{label}</Form.Label> : ""}
       <Form.Select
         value={selectedOption}
         name={inputFieldName}
@@ -99,9 +99,9 @@ export const FormTypeSelect = (props: Props) => {
         }}
         disabled={isLoadingInternal}
       >
-        <option value={''}></option>
+        <option value={""}></option>
         {selectOptions.map((option) => {
-          if (typeof option === 'string' || typeof option === 'number') {
+          if (typeof option === "string" || typeof option === "number") {
             return (
               <option key={option} value={option}>
                 {option}

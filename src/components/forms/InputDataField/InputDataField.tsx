@@ -5,13 +5,13 @@ import React, {
   useState,
   forwardRef,
   Ref,
-} from 'react';
-import axios from 'axios';
-import { Col, Form, InputGroup, Button, Row } from 'react-bootstrap';
-import toastr from 'toastr';
-import { axiosWithCache } from '../../../lib/axiosWithCache';
-import { matchString } from '../../../lib/matchStrings';
-import { SelectOption } from '../../../types';
+} from "react";
+import axios from "axios";
+import { Col, Form, InputGroup, Button, Row } from "react-bootstrap";
+import toastr from "toastr";
+import { axiosWithCache } from "../../../lib/axiosWithCache";
+import { matchString } from "../../../lib/matchStrings";
+import { SelectOption } from "../../../types";
 
 export type PropsRef = {
   clear: Function;
@@ -33,7 +33,7 @@ const parse = (dataToParse: SelectOption[] | string[]) => {
   const result: SelectOption[] = [];
 
   dataToParse.forEach((i: SelectOption | string) => {
-    if (typeof i === 'string') {
+    if (typeof i === "string") {
       result.push({
         name: i,
         value: i,
@@ -62,8 +62,8 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     className,
   } = props;
 
-  const [filter, setFilter] = useState('');
-  const [tempFilters, setTempFilters] = useState('');
+  const [filter, setFilter] = useState("");
+  const [tempFilters, setTempFilters] = useState("");
   const [dataField, setDataField] = useState<SelectOption[]>(parse(data));
   const mounted = useRef(false);
 
@@ -72,11 +72,11 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     return () => {
       mounted.current = false;
     };
-  });
+  }, []);
 
   useImperativeHandle(ref, () => ({
     clear() {
-      setFilter('');
+      setFilter("");
     },
   }));
 
@@ -84,7 +84,7 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     setFilter(e.target.value);
     if (
       handleChangeFilter &&
-      {}.toString.call(handleChangeFilter) === '[object Function]'
+      {}.toString.call(handleChangeFilter) === "[object Function]"
     ) {
       handleChangeFilter(filter);
     }
@@ -97,13 +97,13 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     });
 
     if (!dataFound) {
-      toastr.warning('The selected is not correct');
+      toastr.warning("The selected is not correct");
       return;
     }
 
     if (
       onAcceptButton &&
-      {}.toString.call(onAcceptButton) === '[object Function]'
+      {}.toString.call(onAcceptButton) === "[object Function]"
     ) {
       onAcceptButton(dataFound.value);
     }

@@ -5,34 +5,34 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
-} from 'react';
-import { Col, Row } from 'react-bootstrap';
+} from "react";
+import { Col, Row } from "react-bootstrap";
 import {
   Table,
   Props as TableProps,
   PropsRef as TablePropsRef,
-} from '../Table';
-import { IndeterminateCheckbox } from '../Table/IndeterminateCheckbox';
-import axios from 'axios';
+} from "../Table";
+import { IndeterminateCheckbox } from "../Table/IndeterminateCheckbox";
+import axios from "axios";
 import {
   ColumnFiltersState,
   Row as RowTanStack,
   Table as TableReactTable,
-} from '@tanstack/react-table';
-import { TableToolbar } from './TableToolbar';
-import { EditButton } from '../../buttons/EditButton';
-import { DeleteButton } from '../../buttons/DeleteButton';
-import { FieldTypes } from '../../../types';
-import { ShowMultiSelectCrud } from './ShowMultiSelectCrud';
+} from "@tanstack/react-table";
+import { TableToolbar } from "./TableToolbar";
+import { EditButton } from "../../buttons/EditButton";
+import { DeleteButton } from "../../buttons/DeleteButton";
+import { FieldTypes } from "../../../types";
+import { ShowMultiSelectCrud } from "./ShowMultiSelectCrud";
 import {
   HandleModalShow,
   PropsRef as HandleModalShowPropsRef,
-} from './HandleModalShow';
+} from "./HandleModalShow";
 
 export interface Props
   extends Omit<
     TableProps,
-    'globalFilterText' | 'isLoading' | 'setColumnFiltersFields' | 'data'
+    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   data?: Array<any>;
   canSelectRow?: boolean;
@@ -85,7 +85,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [dataTable, setDataTable] = useState(data);
   const [reactTableFilters, setReactTableFilters] = useState({});
   const [inputFilters, setInputFilters] = useState({});
-  const [globalFilterText, setGlobalFilterText] = useState('');
+  const [globalFilterText, setGlobalFilterText] = useState("");
   const [sendRequest, setSendRequest] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [externalFilters, setExternalFilters] = useState<newInputFilters>({});
@@ -125,13 +125,15 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const newColumns = [...columns];
 
   useEffect(() => {
+    console.log("crud is mounted");
     mounted.current = true;
     return () => {
       mounted.current = false;
     };
-  });
+  }, []);
 
   useEffect(() => {
+    console.log("crud golbal or column filter");
     if (!lazyLoad) return;
 
     const reactTableFilters: newInputFilters = {
@@ -146,6 +148,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilterText, columnFilters, lazyLoad]);
 
   useEffect(() => {
+    console.log("crud external filter");
     const timer = setTimeout(() => {
       if (firstLoad.current) {
         firstLoad.current = false;
@@ -161,6 +164,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [externalFilters, reactTableFilters]);
 
   useEffect(() => {
+    console.log("crud load table");
     if (!crudUrl) return;
 
     const cancelTokenSource = axios.CancelToken.source();
@@ -196,7 +200,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   if (canSelectRow === true) {
     newColumns.unshift({
-      id: 'select',
+      id: "select",
       header: ({ table }) => (
         <IndeterminateCheckbox
           {...{
@@ -222,14 +226,14 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   if (canEdit) {
     newColumns.push({
-      header: 'Edit',
-      id: 'edit_crud',
+      header: "Edit",
+      id: "edit_crud",
       cell: (row) => {
         return (
           <EditButton
             onClick={() => {
               handleModalShowRef.current?.handleModalShow(
-                'UPDATE',
+                "UPDATE",
                 parseInt(row.cell.row.id)
               );
             }}
@@ -241,15 +245,15 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   if (canDelete) {
     newColumns.push({
-      header: 'Delete',
-      id: 'edit_crid',
+      header: "Delete",
+      id: "edit_crid",
       editable: false,
       cell: (row) => {
         return (
           <DeleteButton
             onClick={() =>
               handleModalShowRef.current?.handleModalShow(
-                'DELETE',
+                "DELETE",
                 parseInt(row.cell.row.id)
               )
             }
@@ -279,15 +283,15 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           return (
             <ShowMultiSelectCrud
               crudUrl={
-                props.column.columnDef.meta?.multiSelectOptions?.url ?? ''
+                props.column.columnDef.meta?.multiSelectOptions?.url ?? ""
               }
               getDataUrl={
                 props.column.columnDef.meta?.multiSelectOptions?.getDataUrl ??
-                ''
+                ""
               }
               primaryKey={
                 props.column.columnDef.meta?.multiSelectOptions?.primaryKey ??
-                ''
+                ""
               }
               primaryKeyId={props.cell.row.original[primaryKey]}
               columns={
@@ -317,7 +321,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           loadTable={loadTable}
           customButtons={customButtons}
           handleModalShow={() =>
-            handleModalShowRef.current?.handleModalShow('CREATE')
+            handleModalShowRef.current?.handleModalShow("CREATE")
           }
         />
         <Row>
@@ -336,7 +340,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
       <HandleModalShow
         columns={columns}
-        url={crudUrl ?? ''}
+        url={crudUrl ?? ""}
         dataTable={dataTable}
         primaryKey={primaryKey}
         titleOnDelete={titleOnDelete}
