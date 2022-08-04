@@ -1,61 +1,76 @@
-import React, { useRef, useState } from 'react';
-import { Story } from '@storybook/react';
+import React, { useRef, useState } from "react";
+import { Story } from "@storybook/react";
 
-import { Crud, Props, PropsRef } from '../../src/components/forms/Crud';
-import { ColumnDefinition } from '../../src/types';
-import { Product, data } from '../../models/Product';
-import { ColumnFilter, ColumnFiltersState } from '@tanstack/react-table';
-import { FormTypeSelect } from '../../src/components/forms/FormTypes/FormTypeSelect';
+import { Crud, Props, PropsRef } from "../../src/components/forms/Crud";
+import { ColumnDefinition, FieldTypes } from "../../src/types";
+import { Product, data } from "../../models/Product";
+import { ColumnFilter, ColumnFiltersState } from "@tanstack/react-table";
+import { FormTypeSelect } from "../../src/components/forms/FormTypes/FormTypeSelect";
+import { useEffect } from "@storybook/addons";
 
 const columns: Array<ColumnDefinition<Product>> = [
   {
-    accessorKey: 'uuid',
+    accessorKey: "uuid",
     enableColumnFilter: true,
     enableSorting: true,
     dropdown: true,
   },
   {
-    accessorKey: 'ean',
+    accessorKey: "ean",
   },
   {
-    accessorKey: 'name',
-    header: 'Edad',
+    accessorKey: "name",
+    header: "Edad",
   },
   {
-    accessorKey: 'description',
-    header: 'Desc.',
+    accessorKey: "description",
+    header: "Desc.",
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'price',
+    accessorKey: "price",
+    enableColumnFilter: true,
   },
   {
-    accessorKey: 'category',
+    accessorKey: "category_id",
+    header: "Cat.",
+    cell: (props) => props.row.original.category,
+    enableColumnFilter: true,
+    fieldType: FieldTypes.SELECT,
+    selectOptionsUrl: "/api/get_options",
   },
 ];
 
 const Template = (props: Props) => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
 
     const updateData: ColumnFilter = {
-      id: 'category', // must be exist key
+      id: "category_id", // must be exist key
       value: e.target.value,
     };
     const upd: ColumnFiltersState = [updateData];
     crudRef.current.table.setColumnFilters(upd);
   };
 
-  const categories = ['Category Type A', 'Category Type C'];
-
   const customButtons = (
     <>
       <FormTypeSelect
         handleChange={handleChange}
-        inputFieldName={'Test change'}
+        inputFieldName={"Test change"}
+        selectOptionsUrl={"/api/get_options"}
         value={selectedValue}
-        options={categories}
+        label={"This is a external filter"}
       />
     </>
   );

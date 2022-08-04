@@ -85,12 +85,10 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   useEffect(() => {
-    console.log('table global filter');
     setGlobalFilter(globalFilterText ?? "");
   }, [globalFilterText]);
 
   useEffect(() => {
-    console.log('table column filter');
     if (setColumnFiltersFields) {
       setColumnFiltersFields(columnFilters);
     }

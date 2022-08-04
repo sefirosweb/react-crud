@@ -11,9 +11,9 @@ export type Props = {
   label?: string;
   isLoading?: boolean;
   handleChange: React.ChangeEventHandler<HTMLSelectElement>;
-  value?: any;
+  value?: string | number | SelectOption;
   selectOptionsUrl?: string;
-  options?: SelectOption[];
+  options?: SelectOption[] | string[];
 };
 
 export const FormTypeSelect = (props: Props) => {
@@ -33,6 +33,19 @@ export const FormTypeSelect = (props: Props) => {
   const [selectedOption, setSelectedOption] = useState("");
   const mounted = useRef(false);
 
+  const parseOptions = (options: SelectOption[] | string[]): SelectOption[] => {
+    return options.map((o) => {
+      if (typeof o === "string") {
+        return {
+          name: o,
+          value: o,
+        };
+      } else {
+        return o;
+      }
+    });
+  };
+
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -48,7 +61,7 @@ export const FormTypeSelect = (props: Props) => {
 
   useEffect(() => {
     if (typeof options !== "undefined") {
-      setSelectOptions(options);
+      setSelectOptions(parseOptions(options));
     }
   }, [options]);
 
@@ -63,8 +76,8 @@ export const FormTypeSelect = (props: Props) => {
       })
       .then((response) => {
         if (!mounted.current) return;
-        const data = response.data.data as SelectOption[];
-        setSelectOptions(data);
+        const data = response.data.data as SelectOption[] | string[];
+        setSelectOptions(parseOptions(data));
       })
       .finally(() => {
         setIsLoadingInternal(false);
@@ -79,11 +92,16 @@ export const FormTypeSelect = (props: Props) => {
     if (value === undefined) {
       setSelectedOption("");
     } else {
-      const realValue =
-        typeof value === "string" || typeof value === "number"
-          ? value
-          : value.value;
-      setSelectedOption(realValue);
+      if (typeof value === "string") {
+        setSelectedOption(value);
+        return;
+      }
+      if (typeof value === "number") {
+        setSelectedOption(value.toString());
+        return;
+      }
+
+      setSelectedOption(value.value);
     }
   }, [value]);
 
@@ -101,19 +119,11 @@ export const FormTypeSelect = (props: Props) => {
       >
         <option value={""}></option>
         {selectOptions.map((option) => {
-          if (typeof option === "string" || typeof option === "number") {
-            return (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            );
-          } else {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            );
-          }
+          return (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          );
         })}
       </Form.Select>
     </Form.Group>

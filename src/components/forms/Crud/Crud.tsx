@@ -51,7 +51,7 @@ export interface Props
 }
 
 export type PropsRef = {
-  loadTable: () => void;
+  refreshTable: () => void;
   table: TableReactTable<any> | undefined;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
@@ -96,12 +96,12 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const tableRef = useRef<TablePropsRef>(null);
   const handleModalShowRef = useRef<HandleModalShowPropsRef>(null);
 
-  const loadTable = () => setSendRequest(!sendRequest);
+  const refreshTable = () => setSendRequest(!sendRequest);
 
   useImperativeHandle(ref, () => ({
     lazyFilters: externalFilters,
     setLazyilters: setExternalFilters,
-    loadTable,
+    refreshTable,
     table: tableRef.current?.table,
     setIsLoading: (isLoading) => {
       setIsLoading(isLoading);
@@ -130,7 +130,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const newColumns = [...columns];
 
   useEffect(() => {
-    console.log("crud is mounted");
     mounted.current = true;
     return () => {
       mounted.current = false;
@@ -138,7 +137,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, []);
 
   useEffect(() => {
-    console.log("crud golbal or column filter");
     if (!lazyLoad) return;
 
     const reactTableFilters: newInputFilters = {
@@ -153,7 +151,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilterText, columnFilters, lazyLoad]);
 
   useEffect(() => {
-    console.log("crud external filter");
     const timer = setTimeout(() => {
       if (firstLoad.current) {
         firstLoad.current = false;
@@ -169,7 +166,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [externalFilters, reactTableFilters]);
 
   useEffect(() => {
-    console.log("crud load table");
     if (!crudUrl) return;
 
     const cancelTokenSource = axios.CancelToken.source();
@@ -281,7 +277,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               props.column.columnDef.meta?.multiSelectOptions
                 ?.onExitModalRefresh
             ) {
-              loadTable();
+              refreshTable();
             }
           };
 
@@ -323,7 +319,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           setGlobalFilterText={setGlobalFilterText}
           createButtonTitle={createButtonTitle}
           canRefresh={canRefresh}
-          loadTable={loadTable}
+          refreshTable={refreshTable}
           customButtons={customButtons}
           handleModalShow={() =>
             handleModalShowRef.current?.handleModalShow("CREATE")
@@ -349,7 +345,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         dataTable={dataTable}
         primaryKey={primaryKey}
         titleOnDelete={titleOnDelete}
-        loadTable={loadTable}
+        refreshTable={refreshTable}
         handleSuccess={handleSuccess}
         ref={handleModalShowRef}
       />

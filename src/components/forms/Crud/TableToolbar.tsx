@@ -9,7 +9,7 @@ type Props = {
   globalFilterText: string;
   canRefresh?: boolean;
   setGlobalFilterText: React.Dispatch<React.SetStateAction<string>>;
-  loadTable?: () => void;
+  refreshTable?: () => void;
   handleModalShow: () => void;
   customButtons?: JSX.Element;
 };
@@ -21,7 +21,7 @@ export const TableToolbar = (props: Props) => {
     enableGlobalFilter,
     setGlobalFilterText,
     canRefresh,
-    loadTable,
+    refreshTable,
     handleModalShow,
     customButtons,
   } = props;
@@ -52,8 +52,8 @@ export const TableToolbar = (props: Props) => {
           {canRefresh && (
             <RefreshButton
               onClick={() => {
-                if (typeof loadTable !== "undefined") {
-                  loadTable();
+                if (typeof refreshTable !== "undefined") {
+                  refreshTable();
                 }
               }}
             />

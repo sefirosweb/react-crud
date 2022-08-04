@@ -1,10 +1,10 @@
-import { DebouncedInput } from './DebouncedInput';
+import { DebouncedInput } from "./DebouncedInput";
 
-import { Column } from '@tanstack/react-table';
-import React, { useMemo } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { FieldTypes } from '../../../types';
-import { FormTypeSelect } from '../FormTypes/FormTypeSelect';
+import { Column } from "@tanstack/react-table";
+import React, { useMemo } from "react";
+import { Row, Col } from "react-bootstrap";
+import { FieldTypes } from "../../../types";
+import { FormTypeSelect } from "../FormTypes/FormTypeSelect";
 
 type Props = {
   column: Column<any, unknown>;
@@ -32,9 +32,9 @@ export function Filter(props: Props) {
             <Col>
               <DebouncedInput
                 type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-                value={(columnFilterValue as [number, number])?.[0] ?? ''}
+                min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
+                max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
+                value={(columnFilterValue as [number, number])?.[0] ?? ""}
                 onChange={(value) =>
                   column.setFilterValue((old: [number, number]) => [
                     value,
@@ -50,9 +50,9 @@ export function Filter(props: Props) {
             <Col>
               <DebouncedInput
                 type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-                value={(columnFilterValue as [number, number])?.[1] ?? ''}
+                min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
+                max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
+                value={(columnFilterValue as [number, number])?.[1] ?? ""}
                 onChange={(value) =>
                   column.setFilterValue((old: [number, number]) => [
                     old?.[0],
@@ -74,9 +74,9 @@ export function Filter(props: Props) {
       <>
         <FormTypeSelect
           handleChange={(e) => column.setFilterValue(e.target.value)}
-          inputFieldName={column.id + '_select'}
+          inputFieldName={column.id + "_select"}
           selectOptionsUrl={column.columnDef.meta?.selectOptionsUrl}
-          value={columnFilterValue ?? ''}
+          value={(columnFilterValue as string | number) ?? ""}
         />
         <div className="h-1" />
       </>
@@ -85,7 +85,7 @@ export function Filter(props: Props) {
   return (
     <>
       {column.columnDef.meta?.dropdown && (
-        <datalist id={column.id + '_list'}>
+        <datalist id={column.id + "_list"}>
           {sortedUniqueValues.slice(0, 100).map((value: any) => (
             <option value={value} key={value} />
           ))}
@@ -94,11 +94,11 @@ export function Filter(props: Props) {
 
       <DebouncedInput
         type="text"
-        value={(columnFilterValue ?? '') as string}
+        value={(columnFilterValue ?? "") as string}
         onChange={(value) => column.setFilterValue(value)}
         placeholder={`Search...`}
         className="form-control"
-        list={column.id + '_list'}
+        list={column.id + "_list"}
       />
       <div className="h-1" />
     </>

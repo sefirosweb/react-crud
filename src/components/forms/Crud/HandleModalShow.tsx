@@ -10,7 +10,7 @@ export type PropsRef = {
 
 export type Props = {
   columns: ColumnDefinition<any, unknown>[];
-  loadTable: () => void;
+  refreshTable: () => void;
   url: string;
   primaryKey: string;
   titleOnDelete?: string;
@@ -23,7 +23,7 @@ export const HandleModalShow = forwardRef(
     const {
       columns,
       url,
-      loadTable,
+      refreshTable,
       primaryKey,
       titleOnDelete,
       dataTable,
@@ -38,7 +38,7 @@ export const HandleModalShow = forwardRef(
       request: AxiosResponse<any, any>,
       crud: CrudType
     ) => {
-      loadTable();
+      refreshTable();
 
       if (
         handleSuccess &&
