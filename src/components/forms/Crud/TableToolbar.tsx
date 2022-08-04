@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Col, InputGroup, Row } from 'react-bootstrap';
-import { RefreshButton } from '../../buttons/RefreshButton';
-import { DebouncedInput } from '../Table/DebouncedInput';
+import React from "react";
+import { Button, Col, InputGroup, Row } from "react-bootstrap";
+import { RefreshButton } from "../../buttons/RefreshButton";
+import { DebouncedInput } from "../Table/DebouncedInput";
 
 type Props = {
   enableGlobalFilter?: boolean;
@@ -9,8 +9,8 @@ type Props = {
   globalFilterText: string;
   canRefresh?: boolean;
   setGlobalFilterText: React.Dispatch<React.SetStateAction<string>>;
-  loadTable?: Function;
-  handleModalShow: Function;
+  loadTable?: () => void;
+  handleModalShow: () => void;
   customButtons?: JSX.Element;
 };
 
@@ -52,7 +52,7 @@ export const TableToolbar = (props: Props) => {
           {canRefresh && (
             <RefreshButton
               onClick={() => {
-                if (typeof loadTable !== 'undefined') {
+                if (typeof loadTable !== "undefined") {
                   loadTable();
                 }
               }}

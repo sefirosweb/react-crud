@@ -16,7 +16,7 @@ export type Props = {
   getDataUrl: string;
   lazyLoad?: boolean;
   columns: Array<ColumnDefinition<any>>;
-  onExitModal?: Function;
+  onExitModal?: () => void;
   title?: string;
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;

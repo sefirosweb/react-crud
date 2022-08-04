@@ -13,7 +13,7 @@ import {
   PropsRef as TablePropsRef,
 } from "../Table";
 import { IndeterminateCheckbox } from "../Table/IndeterminateCheckbox";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import {
   ColumnFiltersState,
   Row as RowTanStack,
@@ -28,6 +28,7 @@ import {
   HandleModalShow,
   PropsRef as HandleModalShowPropsRef,
 } from "./HandleModalShow";
+import { CrudType } from "../ModalCrud";
 
 export interface Props
   extends Omit<
@@ -43,19 +44,20 @@ export interface Props
   canRefresh?: boolean;
   canDelete?: boolean;
   canEdit?: boolean;
-  handleSuccess?: Function;
+  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
   primaryKey: string;
   titleOnDelete?: string;
   customButtons?: JSX.Element;
 }
 
 export type PropsRef = {
-  loadTable: Function;
+  loadTable: () => void;
   table: TableReactTable<any> | undefined;
-  getSelectedRows: Function;
-  getselectedIds: Function;
+  getSelectedRows: <T>() => Array<T>;
+  getselectedIds: () => Array<string>;
   lazyFilters: newInputFilters;
   setLazyilters: React.Dispatch<React.SetStateAction<newInputFilters>>;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
 interface newInputFilters {
@@ -101,7 +103,10 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     setLazyilters: setExternalFilters,
     loadTable,
     table: tableRef.current?.table,
-    getSelectedRows: () => {
+    setIsLoading: (isLoading) => {
+      setIsLoading(isLoading);
+    },
+    getSelectedRows: (): Array<any> => {
       if (!tableRef.current) return [];
       return tableRef.current.table
         .getSelectedRowModel()
@@ -116,7 +121,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         );
     },
 
-    getselectedIds: () => {
+    getselectedIds: (): Array<string> => {
       if (!tableRef.current) return [];
       return Object.keys(tableRef.current.table.getState().rowSelection);
     },

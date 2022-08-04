@@ -14,7 +14,7 @@ import { matchString } from "../../../lib/matchStrings";
 import { SelectOption } from "../../../types";
 
 export type PropsRef = {
-  clear: Function;
+  clear: () => void;
 };
 
 export type Props = {
@@ -24,8 +24,8 @@ export type Props = {
   className?: string;
   limit?: number;
   lazyLoad?: boolean;
-  onAcceptButton: Function;
-  handleChangeFilter?: Function;
+  onAcceptButton: (value: string) => void;
+  handleChangeFilter?: (filter: string) => void;
   isLoading?: boolean;
 };
 

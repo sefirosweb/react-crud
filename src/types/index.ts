@@ -8,7 +8,7 @@ export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
   lazyLoad?: boolean;
   primaryKey: keyof TData;
   onExitModalRefresh?: boolean;
-  onExitModal?: Function;
+  onExitModal?: () => void;
 };
 
 type ExtendStandardFields = {

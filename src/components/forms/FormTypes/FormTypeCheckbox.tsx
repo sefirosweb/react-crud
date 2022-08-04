@@ -1,25 +1,32 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
+import React from "react";
+import { Form } from "react-bootstrap";
+
+type HandleChange = {
+  target: {
+    name: string;
+    value: "0" | "1";
+  };
+};
 
 export type Props = {
   inputFieldName: string;
   className?: string;
   label?: string;
   isLoading?: boolean;
-  handleChange: Function;
+  handleChange: (handle: HandleChange) => void;
   value?: any;
 };
 
 const parser = (value: unknown): boolean => {
-  if (typeof value === 'string') {
-    return value === '1' || value === 'true';
+  if (typeof value === "string") {
+    return value === "1" || value === "true";
   }
 
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     return value === 1;
   }
 
-  if (typeof value === 'boolean') {
+  if (typeof value === "boolean") {
     return value;
   }
 
@@ -41,7 +48,7 @@ export const FormTypeCheckbox = (props: Props) => {
           handleChange({
             target: {
               name: inputFieldName,
-              value: checked ? '0' : '1',
+              value: checked ? "0" : "1",
             },
           });
         }}

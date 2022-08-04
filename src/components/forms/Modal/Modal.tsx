@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Modal as BootstrapModal } from 'react-bootstrap';
-import { Variant } from '../../../types';
-import { LoadingButton } from './../../buttons/LoadingButton';
+import React from "react";
+import { Button, Modal as BootstrapModal } from "react-bootstrap";
+import { Variant } from "../../../types";
+import { LoadingButton } from "./../../buttons/LoadingButton";
 
 export type Props = {
   show: boolean;
@@ -11,8 +11,8 @@ export type Props = {
   title?: string;
   accept?: string;
   acceptVariant?: Variant;
-  onExited?: Function;
-  onShow?: Function;
+  onExited?: () => void;
+  onShow?: () => void;
   isLoading?: boolean;
 };
 
@@ -24,7 +24,7 @@ export const Modal = (props: Props) => {
     body,
     title,
     accept,
-    acceptVariant = 'primary',
+    acceptVariant = "primary",
     onExited,
     onShow,
     isLoading,
@@ -39,9 +39,7 @@ export const Modal = (props: Props) => {
         onHide={handleClose}
         backdrop="static"
         keyboard={!isLoading}
-        // @ts-ignore: Unreachable code error bug from react boostrap
         onExited={onExited}
-        // @ts-ignore: Unreachable code error bug from react boostrap
         onShow={onShow}
       >
         <BootstrapModal.Header>

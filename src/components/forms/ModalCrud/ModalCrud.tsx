@@ -19,7 +19,7 @@ export type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
   url: string;
-  handleSuccess?: Function;
+  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
   crud: CrudType;
   titleOnDelete?: string; // TODO: This must be relationshop pf "<Array<Fields"
   primaryKey: string; // TODO: This must be relationshop pf "<Array<Fields"

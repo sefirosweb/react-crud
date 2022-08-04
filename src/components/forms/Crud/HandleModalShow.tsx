@@ -1,20 +1,20 @@
-import React, { forwardRef, Ref, useImperativeHandle } from 'react';
-import { AxiosResponse } from 'axios';
-import { useState } from 'react';
-import { ColumnDefinition } from '../../../types';
-import { CrudType, ModalCrud, ModalData } from '../ModalCrud';
+import React, { forwardRef, Ref, useImperativeHandle } from "react";
+import { AxiosResponse } from "axios";
+import { useState } from "react";
+import { ColumnDefinition } from "../../../types";
+import { CrudType, ModalCrud, ModalData } from "../ModalCrud";
 
 export type PropsRef = {
-  handleModalShow: Function;
+  handleModalShow: (type: CrudType, key?: number) => void;
 };
 
 export type Props = {
   columns: ColumnDefinition<any, unknown>[];
-  loadTable: Function;
+  loadTable: () => void;
   url: string;
   primaryKey: string;
   titleOnDelete?: string;
-  handleSuccess?: Function;
+  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
   dataTable: any[];
 };
 
@@ -29,9 +29,9 @@ export const HandleModalShow = forwardRef(
       dataTable,
       handleSuccess,
     } = props;
-    const [crud, setCrud] = useState<CrudType>('CREATE');
+    const [crud, setCrud] = useState<CrudType>("CREATE");
     const [modalData, setModalData] = useState<ModalData>({});
-    const [modalTitle, setModalTitle] = useState('');
+    const [modalTitle, setModalTitle] = useState("");
     const [show, setShow] = useState(false);
 
     const handleSuccessModalCrud = (
@@ -42,7 +42,7 @@ export const HandleModalShow = forwardRef(
 
       if (
         handleSuccess &&
-        {}.toString.call(handleSuccess) === '[object Function]'
+        {}.toString.call(handleSuccess) === "[object Function]"
       ) {
         handleSuccess(request, crud);
       }
@@ -55,7 +55,7 @@ export const HandleModalShow = forwardRef(
 
       let findDataCanBeEdit: ModalData = {};
 
-      if (type !== 'CREATE' && key !== undefined) {
+      if (type !== "CREATE" && key !== undefined) {
         findDataCanBeEdit = Object.keys(dataTable[key]).reduce(
           (returnData, column) => {
             if (fieldsCanBeEdit.includes(column) || column === primaryKey) {

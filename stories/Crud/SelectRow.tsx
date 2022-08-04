@@ -1,34 +1,34 @@
-import React from 'react';
-import { Story } from '@storybook/react';
+import React from "react";
+import { Story } from "@storybook/react";
 
-import { Crud, Props, PropsRef } from '../../src/components/forms/Crud';
-import { ColumnDefinition } from '../../src/types';
-import { Product, data } from '../../models/Product';
-import { Button } from 'react-bootstrap';
-import { useRef } from '@storybook/addons';
+import { Crud, Props, PropsRef } from "../../src/components/forms/Crud";
+import { ColumnDefinition } from "../../src/types";
+import { Product, data } from "../../models/Product";
+import { Button } from "react-bootstrap";
+import { useRef } from "@storybook/addons";
 
 const columns: ColumnDefinition<Product>[] = [
   {
-    accessorKey: 'uuid',
+    accessorKey: "uuid",
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'ean',
+    accessorKey: "ean",
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
   },
   {
-    accessorKey: 'description',
-    header: 'Desc.',
+    accessorKey: "description",
+    header: "Desc.",
   },
   {
-    accessorKey: 'price',
-    header: '€',
+    accessorKey: "price",
+    header: "€",
   },
   {
-    accessorKey: 'category',
-    header: 'Cat.',
+    accessorKey: "category",
+    header: "Cat.",
   },
 ];
 
@@ -36,6 +36,8 @@ const Template = (props: Props) => {
   const handleClick = () => {
     console.log(crudRef.current.getselectedIds());
     console.log(crudRef.current.getSelectedRows());
+    const eans = crudRef.current.getSelectedRows<Product>().map((o) => o.ean);
+    console.log(eans);
   };
 
   const customButtons = (
