@@ -7,7 +7,7 @@ export type Props = {
   label?: string;
   isLoading?: boolean;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
-  value?: any;
+  value?: string;
 };
 
 export const FormTypeDate = (props: Props) => {

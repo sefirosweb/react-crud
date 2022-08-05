@@ -91,16 +91,11 @@ export const FormTypeSelect = (props: Props) => {
   useEffect(() => {
     if (value === undefined) {
       setSelectedOption("");
+    } else if (typeof value === "string") {
+      setSelectedOption(value);
+    } else if (typeof value === "number") {
+      setSelectedOption(value.toString());
     } else {
-      if (typeof value === "string") {
-        setSelectedOption(value);
-        return;
-      }
-      if (typeof value === "number") {
-        setSelectedOption(value.toString());
-        return;
-      }
-
       setSelectedOption(value.value);
     }
   }, [value]);

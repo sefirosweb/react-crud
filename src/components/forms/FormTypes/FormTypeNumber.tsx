@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
+import React from "react";
+import { Form } from "react-bootstrap";
 
 export type Props = {
   inputFieldName: string;
@@ -7,7 +7,7 @@ export type Props = {
   label?: string;
   isLoading?: boolean;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
-  value?: any;
+  value?: string | number;
 };
 
 export const FormTypeNumber = (props: Props) => {
@@ -16,7 +16,7 @@ export const FormTypeNumber = (props: Props) => {
 
   return (
     <Form.Group controlId={inputFieldName} className={className}>
-      {label ? <Form.Label>{label}</Form.Label> : ''}
+      {label ? <Form.Label>{label}</Form.Label> : ""}
       <Form.Control
         type="number"
         readOnly={isLoading}

@@ -7,7 +7,7 @@ export type Props = {
   label?: string;
   isLoading?: boolean;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
-  value?: any;
+  value?: string;
   rows?: number;
 };
 
@@ -19,7 +19,7 @@ export const FormTypeTextArea = (props: Props) => {
     value,
     handleChange,
     className,
-    rows = 3,
+    rows = 4,
   } = props;
   return (
     <Form.Group controlId={inputFieldName} className={className}>

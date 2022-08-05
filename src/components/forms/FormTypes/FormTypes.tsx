@@ -1,118 +1,148 @@
-import React from 'react';
-import { FormTypeText } from './FormTypeText';
-import { FormTypeCheckbox } from './FormTypeCheckbox';
-import { FormTypeTextArea } from './FormTypeTextArea';
-import { FormTypeSelect } from './FormTypeSelect';
-import { FormTypeNumber } from './FormTypeNumber';
-import { FormTypeDate } from './FormTypeDate';
-import { FormTypePassword } from './FormTypePassword';
-import { FieldTypes } from '../../../types';
+import React from "react";
+import { FormTypeText } from "./FormTypeText";
+import { FormTypeCheckbox } from "./FormTypeCheckbox";
+import { FormTypeTextArea } from "./FormTypeTextArea";
+import { FormTypeSelect } from "./FormTypeSelect";
+import { FormTypeNumber } from "./FormTypeNumber";
+import { FormTypeDate } from "./FormTypeDate";
+import { FormTypePassword } from "./FormTypePassword";
+import { FieldTypes, SelectOption } from "../../../types";
 
-export type Props = {
-  type?: FieldTypes;
-  inputFieldName: string;
-  className?: string;
-  label?: string;
-  isLoading?: boolean;
-  handleChange: any;
-  value?: any;
-  selectOptionsUrl?: string;
-};
+type ValidFieldTypes = Exclude<FieldTypes, FieldTypes.MULTISELECT>;
+
+type Props<Field extends ValidFieldTypes = ValidFieldTypes> = {
+  [field in Field]: {
+    type: field;
+    inputFieldName: string;
+    className?: string;
+    label?: string;
+    isLoading?: boolean;
+    handleChange?: any;
+
+    value?: {
+      text: string;
+      number: string | number;
+      date: string;
+      textarea: string;
+      password: string;
+      checkbox: string | boolean | number;
+      multiselect: string;
+      select: string | number | SelectOption;
+    }[field];
+
+    options?: {
+      text: never;
+      number: never;
+      date: never;
+      textarea: never;
+      password: never;
+      checkbox: never;
+      multiselect: never;
+      select: SelectOption[] | string[];
+    }[field];
+
+    selectOptionsUrl?: {
+      text: never;
+      number: never;
+      date: never;
+      textarea: never;
+      password: never;
+      checkbox: never;
+      multiselect: never;
+      select: string;
+    }[field];
+  };
+}[Field];
+
+function hasField<F extends FieldTypes>(
+  props: Props,
+  type: F
+): props is Props<Extract<ValidFieldTypes, F>> {
+  return props.type === type;
+}
 
 export const FormTypes = (props: Props): JSX.Element => {
-  const {
-    type = 'text',
-    inputFieldName,
-    isLoading,
-    label,
-    value,
-    handleChange,
-    selectOptionsUrl,
-    className,
-  } = props;
-
-  if (type === FieldTypes.SELECT)
+  if (hasField(props, FieldTypes.SELECT))
     return (
       <FormTypeSelect
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
-        selectOptionsUrl={selectOptionsUrl}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
+        selectOptionsUrl={props.selectOptionsUrl}
       />
     );
 
-  if (type === FieldTypes.TEXTAREA)
+  if (hasField(props, FieldTypes.TEXTAREA))
     return (
       <FormTypeTextArea
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
       />
     );
 
-  if (type === FieldTypes.CHECKBOX) {
+  if (hasField(props, FieldTypes.CHECKBOX))
     return (
       <FormTypeCheckbox
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
       />
     );
-  }
 
-  if (type === FieldTypes.NUMBER)
+  if (hasField(props, FieldTypes.NUMBER))
     return (
       <FormTypeNumber
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
       />
     );
 
-  if (type === FieldTypes.DATE)
+  if (hasField(props, FieldTypes.DATE))
     return (
       <FormTypeDate
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
       />
     );
 
-  if (type === FieldTypes.PASSWORD)
+  if (hasField(props, FieldTypes.PASSWORD))
     return (
       <FormTypePassword
-        inputFieldName={inputFieldName}
-        className={className}
-        label={label}
-        isLoading={isLoading}
-        handleChange={handleChange}
-        value={value}
+        inputFieldName={props.inputFieldName}
+        className={props.className}
+        label={props.label}
+        isLoading={props.isLoading}
+        handleChange={props.handleChange}
+        value={props.value}
       />
     );
 
   return (
     <FormTypeText
-      inputFieldName={inputFieldName}
-      className={className}
-      label={label}
-      isLoading={isLoading}
-      handleChange={handleChange}
-      value={value}
+      inputFieldName={props.inputFieldName}
+      className={props.className}
+      label={props.label}
+      isLoading={props.isLoading}
+      handleChange={props.handleChange}
+      value={props.value}
     />
   );
 };

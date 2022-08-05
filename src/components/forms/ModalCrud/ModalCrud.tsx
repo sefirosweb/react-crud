@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import toastr from 'toastr';
-import { Form } from 'react-bootstrap';
-import { Modal } from './../Modal';
-import { FormTypes } from './../FormTypes';
-import { ColumnDefinition, Variant } from '../../../types';
-import { FieldTypes } from '../../../types';
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import toastr from "toastr";
+import { Form } from "react-bootstrap";
+import { Modal } from "./../Modal";
+import { FormTypes } from "./../FormTypes";
+import { ColumnDefinition, Variant } from "../../../types";
+import { FieldTypes } from "../../../types";
 
 export type ModalData = {
   [key: string]: string | number | undefined;
 };
 
-export type CrudType = 'CREATE' | 'UPDATE' | 'DELETE';
+export type CrudType = "CREATE" | "UPDATE" | "DELETE";
 
 export type Props = {
   accept?: string;
@@ -32,7 +32,7 @@ export const ModalCrud = (props: Props) => {
     show,
     setShow,
     title,
-    accept = 'Accept',
+    accept = "Accept",
     fields,
     url,
     handleSuccess,
@@ -43,7 +43,7 @@ export const ModalCrud = (props: Props) => {
   } = props;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [variantButton, setVariantButton] = useState<Variant>('info');
+  const [variantButton, setVariantButton] = useState<Variant>("info");
   const [modalData, setModalData] = useState<ModalData>(data);
   const onExited = () => setModalData({});
 
@@ -53,14 +53,14 @@ export const ModalCrud = (props: Props) => {
 
   useEffect(() => {
     switch (crud) {
-      case 'CREATE':
-        setVariantButton('success');
+      case "CREATE":
+        setVariantButton("success");
         break;
-      case 'UPDATE':
-        setVariantButton('warning');
+      case "UPDATE":
+        setVariantButton("warning");
         break;
-      case 'DELETE':
-        setVariantButton('danger');
+      case "DELETE":
+        setVariantButton("danger");
         break;
     }
   }, [crud]);
@@ -85,7 +85,7 @@ export const ModalCrud = (props: Props) => {
 
       if (
         handleSuccess &&
-        {}.toString.call(handleSuccess) === '[object Function]'
+        {}.toString.call(handleSuccess) === "[object Function]"
       ) {
         handleSuccess(request, crud);
       }
@@ -100,31 +100,31 @@ export const ModalCrud = (props: Props) => {
       .filter((f) => f.editable)
       .forEach((f) => {
         if (f.accessorKey) {
-          modalDataToSend[f.accessorKey] = modalData[f.accessorKey] ?? '';
+          modalDataToSend[f.accessorKey] = modalData[f.accessorKey] ?? "";
         }
       });
 
     switch (crud) {
-      case 'CREATE':
+      case "CREATE":
         axios.post(url, modalDataToSend).then(response).finally(completed);
         break;
-      case 'DELETE':
+      case "DELETE":
         axios
           .delete(url, { data: modalData })
           .then(response)
           .finally(completed);
         break;
-      case 'UPDATE':
+      case "UPDATE":
         axios.put(url, modalData).then(response).finally(completed);
         break;
       default:
-        toastr.warning('Error on crud', 'No selected correct CRUD petitin');
+        toastr.warning("Error on crud", "No selected correct CRUD petitin");
         setIsLoading(false);
     }
   };
 
   const titleOnCRUD = () => {
-    if (crud === 'DELETE') {
+    if (crud === "DELETE") {
       return (
         <span>
           <p>Seguro que quieres el registro: {modalData[primaryKey]}</p>
@@ -148,25 +148,43 @@ export const ModalCrud = (props: Props) => {
                 key={field.accessorKey}
                 type="hidden"
                 name="primaryKey"
-                value={modalData[field.accessorKey] ?? ''}
+                value={modalData[field.accessorKey] ?? ""}
               />
             );
 
-          if (crud === 'DELETE') return null;
+          if (crud === "DELETE") return null;
 
           if (field.fieldType === FieldTypes.MULTISELECT) return null;
 
+          const value = modalData[field.accessorKey] ?? "";
+          const valueStr = typeof value === "number" ? value.toString() : value;
+
+          if (field.fieldType === FieldTypes.SELECT) {
+            return (
+              <FormTypes
+                type={field.fieldType}
+                key={field.accessorKey}
+                inputFieldName={field.accessorKey}
+                label={field.titleOnCRUD ?? field.accessorKey}
+                isLoading={isLoading}
+                handleChange={handleChange}
+                value={valueStr}
+                selectOptionsUrl={field.selectOptionsUrl ?? ""}
+                className="mb-2"
+              />
+            );
+          }
+
           return (
             <FormTypes
-              className="mb-2"
               type={field.fieldType ?? FieldTypes.TEXT}
               key={field.accessorKey}
               inputFieldName={field.accessorKey}
               label={field.titleOnCRUD ?? field.accessorKey}
               isLoading={isLoading}
               handleChange={handleChange}
-              value={modalData[field.accessorKey] ?? ''}
-              selectOptionsUrl={field.selectOptionsUrl ?? ''}
+              value={valueStr}
+              className="mb-2"
             />
           );
         })}
@@ -184,7 +202,7 @@ export const ModalCrud = (props: Props) => {
         title={title}
         onExited={onExited}
         isLoading={isLoading}
-        accept={accept ? accept : 'Accept'}
+        accept={accept ? accept : "Accept"}
         acceptVariant={variantButton}
       />
     </>

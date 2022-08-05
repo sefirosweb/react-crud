@@ -14,7 +14,7 @@ export type Props = {
   label?: string;
   isLoading?: boolean;
   handleChange: (handle: HandleChange) => void;
-  value?: any;
+  value?: string | number | boolean;
 };
 
 const parser = (value: unknown): boolean => {
