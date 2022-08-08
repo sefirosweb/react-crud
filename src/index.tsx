@@ -6,8 +6,11 @@ export { PlayButton } from "./components/buttons/PlayButton";
 export { RefreshButton } from "./components/buttons/RefreshButton";
 
 export { Crud, PropsRef as CrudPropsRef } from "./components/forms/Crud";
-export { FormTypes } from "./components/forms/FormTypes";
-export { InputDataField, PropsRef as InputDataFieldPropsRef } from "./components/forms/InputDataField";
+export * from "./components/forms/FormTypes";
+export {
+  InputDataField,
+  PropsRef as InputDataFieldPropsRef,
+} from "./components/forms/InputDataField";
 export { Modal } from "./components/forms/Modal";
 export { ModalCrud } from "./components/forms/ModalCrud";
 export { MultiSelectCrud } from "./components/forms/MultiSelectCrud";
