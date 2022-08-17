@@ -62,22 +62,6 @@ export const generateOptionsValue = () => {
     return optionsWithValue
 }
 
-
-const generateData = (data) => {
-
-    return new Promise(function (resolve) {
-        const data = createData()
-        resolve([
-            200,
-            {
-                success: true,
-                data,
-            },
-        ])
-    })
-}
-
-
 const generateCrudResponse = (request, message) => {
     return new Promise(function (resolve) {
         resolve([
@@ -119,10 +103,74 @@ const generateDataSubtable = () => {
     })
 }
 
-// Simple CRUD
-mock.onGet('/api/crud').reply(() => {
+
+const matchGlobalFilter = (row, valueParam) => {
+    if (valueParam === '') return true
+    let result = false
+    Object.entries(row).every((entry) => {
+
+        const value = typeof entry[1] === 'number' ? entry[1].toString() : entry[1]
+        if (typeof value === 'string') {
+            if (value.includes(valueParam)) {
+                result = true
+                return false
+            }
+        }
+
+        return true
+
+    })
+
+    return result
+}
+
+const filterData = (row, params) => {
+    let result = true
+    let globalFilter = false
+    Object.entries(params).every(paramEntry => {
+
+        const keyParam = paramEntry[0]
+        const valueParam = paramEntry[1]
+
+        console.log({ keyParam })
+
+        if (keyParam === 'globalFilter') {
+            if (valueParam === '') {
+                globalFilter = true
+            } else if (matchGlobalFilter(row, valueParam)) {
+                globalFilter = true
+            }
+        } else if (!row[keyParam].includes(valueParam)) {
+            result = false
+            return false
+        }
+
+        return true
+    })
+
+    return globalFilter && result
+}
+
+mock.onGet('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' GET`)
-    return generateData()
+    return new Promise(function (resolve) {
+        const data = createData()
+
+        const filteredData = data.filter(row => {
+            if (!request.params) return true
+            if (Object.keys(request.params).length === 0) return true
+
+            return filterData(row, request.params)
+        })
+
+        resolve([
+            200,
+            {
+                success: true,
+                data: filteredData,
+            },
+        ])
+    })
 })
 
 mock.onPost('/api/crud').reply((request) => {
