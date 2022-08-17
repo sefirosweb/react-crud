@@ -110,15 +110,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       if (!tableRef.current) return [];
       return tableRef.current.table
         .getSelectedRowModel()
-        .flatRows.map((c: RowTanStack<any>) =>
-          c.getAllCells().reduce((b, i) => {
-            const newData: newInputFilters = {
-              ...b,
-            };
-            newData[i.column.id] = i.getValue();
-            return newData;
-          }, {})
-        );
+        .flatRows.map((f) => f.original);
     },
 
     getselectedIds: (): Array<string> => {
