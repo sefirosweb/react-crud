@@ -51,9 +51,13 @@ export const generateOptionsValue = () => {
     if (optionsWithValue) return optionsWithValue
     const data = []
     for (var i = 0; i < 5; i++) {
+        const cat = faker.commerce.department()
         data.push({
-            name: faker.commerce.department(),
-            value: faker.datatype.number({ min: 1, max: 10000 }).toString()
+            name: cat,
+            category: cat,
+            value: faker.datatype.number({ min: 1, max: 10000 }).toString(),
+            uuid: faker.datatype.uuid(),
+            description: faker.commerce.productDescription(),
         })
     }
 

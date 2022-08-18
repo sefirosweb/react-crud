@@ -83,3 +83,10 @@ export enum FieldTypes {
   SELECT = 'select',
   MULTISELECT = 'multiselect',
 }
+
+export type CrudType = "CREATE" | "UPDATE" | "DELETE";
+
+export type DataField = {
+  value: string;
+  name: string;
+} & Record<string, any>;

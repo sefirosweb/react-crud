@@ -11,7 +11,7 @@ import { Col, Form, InputGroup, Button, Row } from "react-bootstrap";
 import toastr from "toastr";
 import { axiosWithCache } from "../../../lib/axiosWithCache";
 import { matchString } from "../../../lib/matchStrings";
-import { SelectOption } from "../../../types";
+import { SelectOption, DataField } from "../../../types";
 
 export type PropsRef = {
   clear: () => void;
@@ -24,7 +24,7 @@ export type Props = {
   className?: string;
   limit?: number;
   lazyLoad?: boolean;
-  onAcceptButton: (value: string) => void;
+  onAcceptButton: (value: DataField) => void;
   handleChangeFilter?: (filter: string) => void;
   isLoading?: boolean;
 };
@@ -39,10 +39,7 @@ const parse = (dataToParse: SelectOption[] | string[]) => {
         value: i,
       });
     } else {
-      result.push({
-        name: i.name,
-        value: i.value,
-      });
+      result.push(i);
     }
   });
 
@@ -91,7 +88,7 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   };
 
   const handleOnAcceptButton = () => {
-    const dataFound = dataField.find((d) => {
+    const dataFound: DataField | undefined = dataField.find((d) => {
       const valueToFind = d.name;
       return valueToFind === filter;
     });
@@ -105,7 +102,7 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       onAcceptButton &&
       {}.toString.call(onAcceptButton) === "[object Function]"
     ) {
-      onAcceptButton(dataFound.value);
+      onAcceptButton(dataFound);
     }
   };
 
@@ -162,7 +159,7 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         <Row>
           <Col>
             <Form.Group className={className}>
-              <Form.Label>{label}</Form.Label>
+              {label && <Form.Label>{label}</Form.Label>}
               <InputGroup className="d-flex justify-content-end">
                 <Form.Control
                   list="data"

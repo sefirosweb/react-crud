@@ -1,12 +1,6 @@
-import React, { useRef, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import React, { useState } from "react";
 import { Modal } from "./../Modal";
-import { Table } from "./../Table";
-import {
-  InputDataField,
-  PropsRef as InputDataFieldPropsRef,
-} from "./../InputDataField";
-import { DeleteButton } from "./../../buttons/DeleteButton";
+
 import { ColumnDefinition } from "../../../types";
 import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
 

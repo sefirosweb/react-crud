@@ -1,8 +1,8 @@
 import React, { forwardRef, Ref, useImperativeHandle } from "react";
 import { AxiosResponse } from "axios";
 import { useState } from "react";
-import { ColumnDefinition } from "../../../types";
-import { CrudType, ModalCrud, ModalData } from "../ModalCrud";
+import { ColumnDefinition, CrudType } from "../../../types";
+import { ModalCrud, ModalData } from "../ModalCrud";
 
 export type PropsRef = {
   handleModalShow: (type: CrudType, key?: number) => void;

@@ -11,13 +11,12 @@ import { ColumnDefinition } from "../../src/types";
 const TestColumnsModel: ColumnDefinition<Product>[] = [
   {
     accessorKey: "uuid",
-    enableHiding: true,
-  },
-  {
-    accessorKey: "name",
   },
   {
     accessorKey: "category",
+  },
+  {
+    accessorKey: "description",
   },
 ];
 

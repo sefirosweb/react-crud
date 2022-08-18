@@ -16,19 +16,17 @@ import { IndeterminateCheckbox } from "../Table/IndeterminateCheckbox";
 import axios, { AxiosResponse } from "axios";
 import {
   ColumnFiltersState,
-  Row as RowTanStack,
   Table as TableReactTable,
 } from "@tanstack/react-table";
 import { TableToolbar } from "./TableToolbar";
 import { EditButton } from "../../buttons/EditButton";
 import { DeleteButton } from "../../buttons/DeleteButton";
-import { FieldTypes } from "../../../types";
+import { FieldTypes, CrudType } from "../../../types";
 import { ShowMultiSelectCrud } from "./ShowMultiSelectCrud";
 import {
   HandleModalShow,
   PropsRef as HandleModalShowPropsRef,
 } from "./HandleModalShow";
-import { CrudType } from "../ModalCrud";
 
 export interface Props
   extends Omit<

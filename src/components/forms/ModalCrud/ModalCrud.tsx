@@ -5,13 +5,12 @@ import { Form } from "react-bootstrap";
 import { Modal } from "./../Modal";
 import { FormTypes } from "./../FormTypes";
 import { ColumnDefinition, Variant } from "../../../types";
-import { FieldTypes } from "../../../types";
+import { FieldTypes, CrudType } from "../../../types";
+import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
 
 export type ModalData = {
   [key: string]: string | number | undefined;
 };
-
-export type CrudType = "CREATE" | "UPDATE" | "DELETE";
 
 export type Props = {
   accept?: string;
@@ -137,59 +136,79 @@ export const ModalCrud = (props: Props) => {
 
   const bodyFields = () => {
     return (
-      <Form>
-        {fields.map((field) => {
-          if (!field.accessorKey) return null;
-          if (!field.editable) return null;
+      <>
+        <Form>
+          {fields.map((field) => {
+            if (!field.accessorKey) return null;
+            if (!field.editable) return null;
 
-          if (field.accessorKey === primaryKey)
-            return (
-              <Form.Control
-                key={field.accessorKey}
-                type="hidden"
-                name="primaryKey"
-                value={modalData[field.accessorKey] ?? ""}
-              />
-            );
+            if (field.accessorKey === primaryKey)
+              return (
+                <Form.Control
+                  key={field.accessorKey}
+                  type="hidden"
+                  name="primaryKey"
+                  value={modalData[field.accessorKey] ?? ""}
+                />
+              );
 
-          if (crud === "DELETE") return null;
+            if (crud === "DELETE") return null;
 
-          if (field.fieldType === FieldTypes.MULTISELECT) return null;
+            if (field.fieldType === FieldTypes.MULTISELECT) return null;
 
-          const value = modalData[field.accessorKey] ?? "";
-          const valueStr = typeof value === "number" ? value.toString() : value;
+            const value = modalData[field.accessorKey] ?? "";
+            const valueStr =
+              typeof value === "number" ? value.toString() : value;
 
-          if (field.fieldType === FieldTypes.SELECT) {
+            if (field.fieldType === FieldTypes.SELECT) {
+              return (
+                <FormTypes
+                  type={field.fieldType}
+                  key={field.accessorKey}
+                  inputFieldName={field.accessorKey}
+                  label={field.titleOnCRUD ?? field.accessorKey}
+                  isLoading={isLoading}
+                  handleChange={handleChange}
+                  value={valueStr}
+                  selectOptionsUrl={field.selectOptionsUrl ?? ""}
+                  className="mb-2"
+                />
+              );
+            }
+
             return (
               <FormTypes
-                type={field.fieldType}
+                type={field.fieldType ?? FieldTypes.TEXT}
                 key={field.accessorKey}
                 inputFieldName={field.accessorKey}
                 label={field.titleOnCRUD ?? field.accessorKey}
                 isLoading={isLoading}
                 handleChange={handleChange}
                 value={valueStr}
-                selectOptionsUrl={field.selectOptionsUrl ?? ""}
                 className="mb-2"
               />
             );
-          }
+          })}
+          {titleOnCRUD()}
+        </Form>
 
-          return (
-            <FormTypes
-              type={field.fieldType ?? FieldTypes.TEXT}
-              key={field.accessorKey}
-              inputFieldName={field.accessorKey}
-              label={field.titleOnCRUD ?? field.accessorKey}
-              isLoading={isLoading}
-              handleChange={handleChange}
-              value={valueStr}
-              className="mb-2"
-            />
-          );
-        })}
-        {titleOnCRUD()}
-      </Form>
+        {fields
+          .filter((f) => f.fieldType === FieldTypes.MULTISELECT)
+          .map((field) => {
+            return (
+              <MultiSelectCrudTable
+                label={field.titleOnCRUD ?? field.accessorKey}
+                key={field.accessorKey}
+                columns={[]}
+                crudUrl=""
+                getDataUrl=""
+                primaryKey=""
+                primaryKeyId=""
+                lazyLoad
+              />
+            );
+          })}
+      </>
     );
   };
   return (
