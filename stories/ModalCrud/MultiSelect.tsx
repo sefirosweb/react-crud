@@ -28,9 +28,8 @@ const Template = (props: Props) => {
 
   const [show, setShow] = useState(false);
 
-  const onExitModal = (e: any, f: any) => {
-    console.log(f);
-    console.log(e);
+  const onExitModal = () => {
+    console.log('Exiting modal');
   };
 
   return (

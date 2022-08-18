@@ -14,6 +14,7 @@ export {
 export { Modal } from "./components/forms/Modal";
 export { ModalCrud } from "./components/forms/ModalCrud";
 export { MultiSelectCrud } from "./components/forms/MultiSelectCrud";
+export { MultiSelectCrudTable } from "./components/forms/MultiSelectCrudTable";
 export { Table, PropsRef as TablePropsRef } from "./components/forms/Table";
 
 export { LoadingSpinner } from "./components/icons/LoadingSpinner";

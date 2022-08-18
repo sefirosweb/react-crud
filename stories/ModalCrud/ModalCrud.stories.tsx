@@ -9,3 +9,4 @@ const meta: Meta = {
 export default meta;
 export * from './StandardModal';
 export * from './MultiSelect';
+export * from './MultiSelectTable';
