@@ -2,7 +2,7 @@ import React, { forwardRef, Ref, useImperativeHandle } from "react";
 import { AxiosResponse } from "axios";
 import { useState } from "react";
 import { ColumnDefinition, CrudType } from "../../../types";
-import { ModalCrud, ModalData } from "../ModalCrud";
+import { ModalCrud } from "../ModalCrud";
 
 export type PropsRef = {
   handleModalShow: (type: CrudType, key?: number) => void;
@@ -30,9 +30,9 @@ export const HandleModalShow = forwardRef(
       handleSuccess,
     } = props;
     const [crud, setCrud] = useState<CrudType>("CREATE");
-    const [modalData, setModalData] = useState<ModalData>({});
     const [modalTitle, setModalTitle] = useState("");
     const [show, setShow] = useState(false);
+    const [modalData, setModalData] = useState(columns);
 
     const handleSuccessModalCrud = (
       request: AxiosResponse<any, any>,
@@ -50,25 +50,19 @@ export const HandleModalShow = forwardRef(
 
     const handleModalShow = (type: CrudType, key?: number) => {
       const fieldsCanBeEdit = columns
-        .filter((column) => column.editable)
-        .map((column) => column.accessorKey);
-
-      let findDataCanBeEdit: ModalData = {};
-
-      if (type !== "CREATE" && key !== undefined) {
-        findDataCanBeEdit = Object.keys(dataTable[key]).reduce(
-          (returnData, column) => {
-            if (fieldsCanBeEdit.includes(column) || column === primaryKey) {
-              returnData[column] = dataTable[key][column];
-            }
-            return returnData;
-          },
-          findDataCanBeEdit
-        );
-      }
+        .filter((column) => (column.editable && column.accessorKey) || column.accessorKey === primaryKey)
+        .map((column) => {
+          if (!column.accessorKey) return column;
+          if (type === "CREATE" || key === undefined) {
+            column.data = "";
+          } else {
+            column.data = dataTable[key][column.accessorKey];
+          }
+          return column;
+        });
 
       setCrud(type);
-      setModalData(findDataCanBeEdit);
+      setModalData(fieldsCanBeEdit);
       setModalTitle(type); // TODO change title
 
       setShow(true);
@@ -82,9 +76,8 @@ export const HandleModalShow = forwardRef(
       <ModalCrud
         show={show}
         setShow={setShow}
-        fields={columns}
+        fields={modalData}
         title={modalTitle}
-        data={modalData}
         crud={crud}
         url={url}
         handleSuccess={handleSuccessModalCrud}

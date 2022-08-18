@@ -23,14 +23,16 @@ export const createData = () => {
     }
 
     console.log('Generating mok data.. "generateData"')
-    const random = Math.floor(Math.random() * 1000) + 1
+    const random = Math.floor(Math.random() * 100) + 1
     const data = []
     for (var i = 0; i < random; i++) {
 
         const category = get_random(generateOptionsValue())
 
+        const uuid = faker.datatype.uuid()
         data.push({
-            uuid: faker.datatype.uuid(),
+            uuid: uuid,
+            value: uuid,
             ean: faker.datatype.number({ min: 8000000, max: 9000000 }),
             name: faker.commerce.product(),
             description: faker.commerce.productDescription(),
@@ -144,7 +146,7 @@ const filterData = (row, params) => {
             } else if (matchGlobalFilter(row, valueParam)) {
                 globalFilter = true
             }
-        } else if (!row[keyParam].includes(valueParam)) {
+        } else if (typeof row[keyParam] === 'string' && !row[keyParam].includes(valueParam)) {
             result = false
             return false
         }
@@ -181,6 +183,7 @@ mock.onPost('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' POST`)
 
     const requestData = JSON.parse(request.data)
+    console.log({ requestData })
     const data = createData()
 
     const categories = generateOptionsValue()
@@ -199,6 +202,7 @@ mock.onPut('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' PUT`)
 
     const updateData = JSON.parse(request.data)
+    console.log({ updateData })
     const uuid = JSON.parse(request.data).uuid
     const data = createData()
     const findData = data.findIndex(i => i.uuid === uuid)

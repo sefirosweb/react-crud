@@ -21,17 +21,9 @@ const TestColumnsModel: ColumnDefinition<Product>[] = [
 ];
 
 const Template = (props: Props) => {
-  const { primaryKey, primaryKeyId, crudUrl, columns, getDataUrl } = props;
-
   return (
     <>
-      <MultiSelectCrudTable
-        columns={columns}
-        crudUrl={crudUrl}
-        primaryKey={primaryKey}
-        primaryKeyId={primaryKeyId}
-        getDataUrl={getDataUrl}
-      />
+      <MultiSelectCrudTable {...props} />
     </>
   );
 };
@@ -40,7 +32,8 @@ export const MultiSelectTable: Story<Props> = Template.bind({});
 MultiSelectTable.args = {
   primaryKey: "uuid",
   primaryKeyId: "1",
-  crudUrl: "/api/sub_table",
+  crudUrl: "",
+  autoSave: true,
   getDataUrl: "/api/sub_table/get_array",
   columns: TestColumnsModel,
 };

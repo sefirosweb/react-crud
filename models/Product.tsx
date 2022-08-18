@@ -11,6 +11,7 @@ export type Product = {
   category: string;
   category_id: string;
   created_at: string;
+  category_list: string;
 };
 
 export const data: Product[] = createData().splice(0, 6);

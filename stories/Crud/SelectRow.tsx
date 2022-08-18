@@ -34,10 +34,7 @@ const columns: ColumnDefinition<Product>[] = [
 
 const Template = (props: Props) => {
   const handleClick = () => {
-    console.log(crudRef.current.getselectedIds());
-    console.log(crudRef.current.getSelectedRows());
     const eans = crudRef.current.getSelectedRows<Product>().map((o) => o.ean);
-    console.log(eans);
   };
 
   const customButtons = (

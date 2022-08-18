@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
-  columns: Array<ColumnDef<TData, TValue>>;
+  columns: Array<ColumnDefinition<TData, TValue>>;
   url: string;
   title?: string;
   getDataUrl: string;
@@ -21,6 +21,7 @@ type ExtendStandardFields = {
   dropdown?: never;
   multiSelectOptions?: never;
   selectOptionsUrl?: never;
+  data?: string | number
 };
 
 type ExtendTextField = {
@@ -28,6 +29,7 @@ type ExtendTextField = {
   dropdown?: boolean;
   multiSelectOptions?: never;
   selectOptionsUrl?: never;
+  data?: string | number
 };
 
 type ExtendMultiSelectField = {
@@ -35,6 +37,7 @@ type ExtendMultiSelectField = {
   dropdown?: never;
   multiSelectOptions: MultiSelectOptionsColumns<any, any>;
   selectOptionsUrl?: never;
+  data?: Array<string> | Array<number>
 };
 
 type ExtendSelectField = {
@@ -42,6 +45,7 @@ type ExtendSelectField = {
   fieldType?: FieldTypes.SELECT;
   selectOptionsUrl: string;
   multiSelectOptions?: never;
+  data?: string | number
 };
 
 export type ColumnDefinition<TData, TValue = unknown> = ColumnDef<

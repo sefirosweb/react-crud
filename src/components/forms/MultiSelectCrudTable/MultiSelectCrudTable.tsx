@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  Ref,
+  useImperativeHandle,
+} from "react";
 import axios, { AxiosResponse } from "axios";
 import { Table } from "./../Table";
 import {
@@ -12,140 +19,164 @@ export type Props = {
   label?: string;
   primaryKey: string;
   primaryKeyId: string;
-  crudUrl: string;
+  crudUrl?: string;
   getDataUrl: string;
   lazyLoad?: boolean;
   autoSave?: boolean;
   columns: Array<ColumnDefinition<any>>;
   handleIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  handleChange?: (dataModal: Array<DataField>) => void;
 };
 
-export const MultiSelectCrudTable = (props: Props) => {
-  const {
-    autoSave = false,
-    label,
-    primaryKey,
-    primaryKeyId,
-    crudUrl,
-    columns,
-    getDataUrl,
-    lazyLoad,
-    handleIsLoading,
-  } = props;
+export type PropsRef = {
+  getIds: () => Array<string>;
+  getTableData: () => Array<DataField>;
+};
 
-  const newLazyLoad = autoSave ? lazyLoad : false;
+export const MultiSelectCrudTable = forwardRef(
+  (props: Props, ref: Ref<PropsRef>) => {
+    const {
+      autoSave = true,
+      label,
+      primaryKey,
+      primaryKeyId,
+      crudUrl,
+      columns,
+      getDataUrl,
+      lazyLoad,
+      handleIsLoading,
+      handleChange,
+    } = props;
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [dataModal, setDataModal] = useState<Array<DataField>>([]);
-  const InputDataFieldRef = useRef<InputDataFieldPropsRef>(null);
-  const newColumns = [...columns];
+    const newLazyLoad = autoSave ? lazyLoad : false;
 
-  useEffect(() => {
-    loadTableModal();
-  }, []);
+    const [isLoading, setIsLoading] = useState(false);
+    const [dataModal, setDataModal] = useState<Array<DataField>>([]);
+    const InputDataFieldRef = useRef<InputDataFieldPropsRef>(null);
+    const newColumns = [...columns];
 
-  useEffect(() => {
-    if (handleIsLoading) {
-      handleIsLoading(isLoading);
-    }
-  }, [isLoading]);
+    useImperativeHandle(ref, () => ({
+      getIds() {
+        return dataModal.map((d) => d[primaryKey]);
+      },
+      getTableData() {
+        return dataModal;
+      },
+    }));
 
-  const refreshModalTable = (request: AxiosResponse) => {
-    const { success } = request.data;
-    if (success) {
-      InputDataFieldRef.current?.clear();
+    useEffect(() => {
+      if (handleChange) {
+        handleChange(dataModal);
+      }
+    }, [dataModal]);
+    useEffect(() => {
       loadTableModal();
-    } else {
-      setIsLoading(false);
-    }
-  };
+    }, []);
 
-  newColumns.push({
-    header: "Borrar",
-    id: "delete_crud",
-    cell: (props) => {
-      return (
-        <DeleteButton
-          disabled={isLoading}
-          onClick={() => handleDelete(props.row.original[primaryKey])}
-        />
-      );
-    },
-  });
+    useEffect(() => {
+      if (handleIsLoading) {
+        handleIsLoading(isLoading);
+      }
+    }, [isLoading]);
 
-  const loadTableModal = () => {
-    setDataModal([]);
-    setIsLoading(true);
-    axios
-      .get(`${crudUrl}`, { params: { primaryKeyId } })
-      .then((request) => {
-        const responseData = request.data.data;
-        const success = request.data.success;
-        if (success) {
-          setDataModal(responseData);
-        }
-      })
-      .finally(() => setIsLoading(false));
-  };
+    const refreshModalTable = (request: AxiosResponse) => {
+      const { success } = request.data;
+      if (success) {
+        InputDataFieldRef.current?.clear();
+        loadTableModal();
+      } else {
+        setIsLoading(false);
+      }
+    };
 
-  const handleDelete = (idDataField: string) => {
-    if (autoSave) {
+    newColumns.push({
+      header: "Borrar",
+      id: "delete_crud",
+      cell: (props) => {
+        return (
+          <DeleteButton
+            disabled={isLoading}
+            onClick={() => handleDelete(props.row.original[primaryKey])}
+          />
+        );
+      },
+    });
+
+    const loadTableModal = () => {
+      if (!crudUrl) return;
+      setDataModal([]);
       setIsLoading(true);
       axios
-        .delete(`${crudUrl}`, { data: { primaryKeyId, idDataField } })
-        .then(refreshModalTable)
-        .catch(() => setIsLoading(false));
-    } else {
-      console.log(idDataField);
-      console.log({ idDataField });
-      const newDataModal = dataModal.filter((d) => {
-        return d[primaryKey] != idDataField;
-      });
-      setDataModal(newDataModal);
-    }
-  };
-
-  const onAcceptButton = (dataField: DataField) => {
-    if (autoSave) {
-      setIsLoading(true);
-      axios
-        .post(`${crudUrl}`, {
-          name: dataField,
-          primaryKeyId,
+        .get(`${crudUrl}`, { params: { primaryKeyId } })
+        .then((request) => {
+          const responseData = request.data.data;
+          const success = request.data.success;
+          if (success) {
+            setDataModal(responseData);
+          }
         })
-        .then(refreshModalTable)
-        .catch(() => setIsLoading(false));
-    } else {
-      const newDataModal = [...dataModal];
+        .finally(() => setIsLoading(false));
+    };
 
-      const indexOf = newDataModal.findIndex(
-        (f) => f[primaryKey] == dataField[primaryKey]
-      );
+    const handleDelete = (idDataField: string) => {
+      if (autoSave) {
+        if (!crudUrl) return;
+        setIsLoading(true);
+        axios
+          .delete(`${crudUrl}`, { data: { primaryKeyId, idDataField } })
+          .then(refreshModalTable)
+          .catch(() => setIsLoading(false));
+      } else {
+        const newDataModal = dataModal.filter((d) => {
+          return d[primaryKey] != idDataField;
+        });
+        setDataModal(newDataModal);
+      }
+    };
 
-      InputDataFieldRef.current?.clear();
+    const onAcceptButton = (dataField: DataField) => {
+      if (autoSave) {
+        if (!crudUrl) return;
+        setIsLoading(true);
+        axios
+          .post(`${crudUrl}`, {
+            name: dataField,
+            primaryKeyId,
+          })
+          .then(refreshModalTable)
+          .catch(() => setIsLoading(false));
+      } else {
+        const newDataModal = [...dataModal];
 
-      if (indexOf >= 0) return;
-      newDataModal.push(dataField);
-      setDataModal(newDataModal);
-    }
-  };
+        const indexOf = newDataModal.findIndex(
+          (f) => f[primaryKey] == dataField[primaryKey]
+        );
 
-  return (
-    <>
-      <InputDataField
-        label={label}
-        ref={InputDataFieldRef}
-        url={getDataUrl}
-        lazyLoad={newLazyLoad}
-        onAcceptButton={onAcceptButton}
-        isLoading={isLoading}
-      />
-      <Table
-        className="mt-2"
-        columns={newColumns}
-        data={dataModal}
-        isLoading={isLoading}
-      />
-    </>
-  );
-};
+        InputDataFieldRef.current?.clear();
+
+        if (indexOf >= 0) return;
+        newDataModal.push(dataField);
+        setDataModal(newDataModal);
+      }
+    };
+
+    return (
+      <>
+        <InputDataField
+          label={label}
+          ref={InputDataFieldRef}
+          url={getDataUrl}
+          lazyLoad={newLazyLoad}
+          onAcceptButton={onAcceptButton}
+          isLoading={isLoading}
+        />
+        <Table
+          className="mt-2"
+          columns={newColumns}
+          data={dataModal}
+          isLoading={isLoading}
+        />
+      </>
+    );
+  }
+);
