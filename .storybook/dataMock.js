@@ -138,8 +138,6 @@ const filterData = (row, params) => {
         const keyParam = paramEntry[0]
         const valueParam = paramEntry[1]
 
-        console.log({ keyParam })
-
         if (keyParam === 'globalFilter') {
             if (valueParam === '') {
                 globalFilter = true
