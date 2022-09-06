@@ -26,6 +26,7 @@ import {
 } from "./HandleModalShow";
 import NewColumns from "./NewColumns";
 
+type newInputFilters = Record<string, unknown>;
 export interface Props
   extends Omit<
     TableProps,
@@ -55,10 +56,6 @@ export type PropsRef = {
   setLazyilters: React.Dispatch<React.SetStateAction<newInputFilters>>;
   setIsLoading: (isLoading: boolean) => void;
 };
-
-interface newInputFilters {
-  [key: string]: unknown;
-}
 
 export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const {
