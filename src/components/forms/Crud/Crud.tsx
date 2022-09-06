@@ -12,21 +12,19 @@ import {
   Props as TableProps,
   PropsRef as TablePropsRef,
 } from "../Table";
-import { IndeterminateCheckbox } from "../Table/IndeterminateCheckbox";
 import axios, { AxiosResponse } from "axios";
 import {
   ColumnFiltersState,
   Table as TableReactTable,
 } from "@tanstack/react-table";
 import { TableToolbar } from "./TableToolbar";
-import { EditButton } from "../../buttons/EditButton";
-import { DeleteButton } from "../../buttons/DeleteButton";
-import { FieldTypes, CrudType } from "../../../types";
-import { ShowMultiSelectCrud } from "./ShowMultiSelectCrud";
+import { CrudType } from "../../../types";
+
 import {
   HandleModalShow,
   PropsRef as HandleModalShowPropsRef,
 } from "./HandleModalShow";
+import NewColumns from "./NewColumns";
 
 export interface Props
   extends Omit<
@@ -117,8 +115,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     },
   }));
 
-  const newColumns = [...columns];
-
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -189,116 +185,15 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     };
   }, [crudUrl, inputFilters, sendRequest]);
 
-  if (canSelectRow === true) {
-    newColumns.unshift({
-      id: "select",
-      header: ({ table }) => (
-        <IndeterminateCheckbox
-          {...{
-            checked: table.getIsAllRowsSelected(),
-            indeterminate: table.getIsSomeRowsSelected(),
-            onChange: table.getToggleAllRowsSelectedHandler(),
-          }}
-        />
-      ),
-      cell: ({ row }) => (
-        <div className="px-1">
-          <IndeterminateCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
-            }}
-          />
-        </div>
-      ),
-    });
-  }
-
-  if (canEdit) {
-    newColumns.push({
-      header: "Edit",
-      id: "edit_crud",
-      cell: (row) => {
-        return (
-          <EditButton
-            onClick={() => {
-              handleModalShowRef.current?.handleModalShow(
-                "UPDATE",
-                parseInt(row.cell.row.id)
-              );
-            }}
-          />
-        );
-      },
-    });
-  }
-
-  if (canDelete) {
-    newColumns.push({
-      header: "Delete",
-      id: "edit_crid",
-      editable: false,
-      cell: (row) => {
-        return (
-          <DeleteButton
-            onClick={() =>
-              handleModalShowRef.current?.handleModalShow(
-                "DELETE",
-                parseInt(row.cell.row.id)
-              )
-            }
-          />
-        );
-      },
-    });
-  }
-
-  if (canEdit) {
-    newColumns.forEach((c) => {
-      if (c.fieldType === FieldTypes.MULTISELECT && c.editable) {
-        c.cell = (props) => {
-          const onExitModal = () => {
-            if (props.column.columnDef.meta?.multiSelectOptions?.onExitModal) {
-              props.column.columnDef.meta.multiSelectOptions.onExitModal();
-            }
-
-            if (
-              props.column.columnDef.meta?.multiSelectOptions
-                ?.onExitModalRefresh
-            ) {
-              refreshTable();
-            }
-          };
-
-          return (
-            <ShowMultiSelectCrud
-              crudUrl={
-                props.column.columnDef.meta?.multiSelectOptions?.url ?? ""
-              }
-              getDataUrl={
-                props.column.columnDef.meta?.multiSelectOptions?.getDataUrl ??
-                ""
-              }
-              primaryKey={
-                props.column.columnDef.meta?.multiSelectOptions?.primaryKey ??
-                ""
-              }
-              primaryKeyId={props.cell.row.original[primaryKey]}
-              columns={
-                props.column.columnDef.meta?.multiSelectOptions?.columns ?? []
-              }
-              title={props.column.columnDef.meta?.multiSelectOptions?.title}
-              onExitModal={onExitModal}
-              lazyLoad={
-                props.column.columnDef.meta?.multiSelectOptions?.lazyLoad
-              }
-            />
-          );
-        };
-      }
-    });
-  }
+  const newColumns = NewColumns({
+    columns,
+    canEdit,
+    canDelete,
+    canSelectRow,
+    handleModalShowRef: handleModalShowRef,
+    primaryKey,
+    refreshTable,
+  });
 
   return (
     <>
