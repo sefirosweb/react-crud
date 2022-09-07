@@ -1,6 +1,6 @@
-import { flexRender, Table } from '@tanstack/react-table';
-import React from 'react';
-import { Filter } from './Filter';
+import { flexRender, Table } from "@tanstack/react-table";
+import React from "react";
+import { Filter } from "./Filter";
 
 type Props = {
   table: Table<any>;
@@ -21,8 +21,8 @@ export const TableHeader = (props: Props) => {
                     <div
                       {...{
                         className: header.column.getCanSort()
-                          ? 'cursor-pointer select-none'
-                          : '',
+                          ? "cursor-pointer select-none"
+                          : "",
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
@@ -33,9 +33,9 @@ export const TableHeader = (props: Props) => {
 
                       {header.column.getCanSort()
                         ? {
-                            asc: ' 🔼',
-                            desc: ' 🔽',
-                          }[header.column.getIsSorted() as string] ?? ' -'
+                            asc: " 🔼",
+                            desc: " 🔽",
+                          }[header.column.getIsSorted() as string] ?? " -"
                         : null}
                     </div>
                   )}
@@ -43,13 +43,13 @@ export const TableHeader = (props: Props) => {
               ))}
             </tr>
 
-            {headerGroup.headers.find((header) =>
-              header.column.getCanFilter()
+            {headerGroup.headers.find(
+              (header) => header.column.columnDef.enableColumnFilter
             ) && (
               <tr>
                 {headerGroup.headers.map((header) => (
                   <th key={header.id}>
-                    {header.column.getCanFilter() && (
+                    {header.column.columnDef.enableColumnFilter && (
                       <div>
                         <Filter column={header.column} />
                       </div>
