@@ -7,7 +7,7 @@ type Props = {
   enableGlobalFilter?: boolean;
   createButtonTitle?: string;
   canRefresh?: boolean;
-  setGlobalFilterText: React.Dispatch<React.SetStateAction<string>>;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
   refreshTable?: () => void;
   handleModalShow: () => void;
   customButtons?: JSX.Element;
@@ -17,7 +17,7 @@ export const TableToolbar = (props: Props) => {
   const {
     createButtonTitle,
     enableGlobalFilter,
-    setGlobalFilterText,
+    setGlobalFilter,
     canRefresh,
     refreshTable,
     handleModalShow,
@@ -26,7 +26,7 @@ export const TableToolbar = (props: Props) => {
 
   const [filter, setFilter] = useState("");
   useEffect(() => {
-    setGlobalFilterText(filter);
+    setGlobalFilter(filter);
   }, [filter]);
 
   return (

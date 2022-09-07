@@ -81,6 +81,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [reactTableFilters, setReactTableFilters] = useState({});
   const [inputFilters, setInputFilters] = useState({});
   const [globalFilterText, setGlobalFilterText] = useState("");
+  const [globalFilter, setGlobalFilter] = useState("");
   const [sendRequest, setSendRequest] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [externalFilters, setExternalFilters] = useState<newInputFilters>({});
@@ -131,7 +132,12 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     });
 
     setReactTableFilters(reactTableFilters);
-  }, [globalFilterText, columnFilters, lazyLoad]);
+  }, [globalFilter, columnFilters, lazyLoad]);
+
+  useEffect(() => {
+    if (lazyLoad) return;
+    setGlobalFilterText(globalFilter);
+  }, [globalFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -197,7 +203,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       <div className={className}>
         <TableToolbar
           enableGlobalFilter={enableGlobalFilter}
-          setGlobalFilterText={setGlobalFilterText}
+          setGlobalFilter={setGlobalFilter}
           createButtonTitle={createButtonTitle}
           canRefresh={canRefresh}
           refreshTable={refreshTable}
