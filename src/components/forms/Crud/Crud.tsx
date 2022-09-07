@@ -214,7 +214,9 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               ref={tableRef}
               isLoading={isLoading}
               globalFilterText={globalFilterText}
+              columnFiltersFields={columnFilters}
               setColumnFiltersFields={setColumnFilters}
+              enableColumnFilters={!lazyLoad}
             />
           </Col>
         </Row>

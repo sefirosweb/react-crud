@@ -59,6 +59,8 @@ export interface Props {
   className?: string;
   isLoading?: boolean;
   globalFilterText?: string;
+  enableColumnFilters?: boolean;
+  columnFiltersFields?: ColumnFiltersState;
   setColumnFiltersFields?: React.Dispatch<
     React.SetStateAction<ColumnFiltersState>
   >;
@@ -77,6 +79,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     className,
     isLoading,
     globalFilterText,
+    enableColumnFilters = true,
+    columnFiltersFields,
     setColumnFiltersFields,
   } = props;
 
@@ -87,12 +91,6 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   useEffect(() => {
     setGlobalFilter(globalFilterText ?? "");
   }, [globalFilterText]);
-
-  useEffect(() => {
-    if (setColumnFiltersFields) {
-      setColumnFiltersFields(columnFilters);
-    }
-  }, [columnFilters, setColumnFiltersFields]);
 
   const columnsParsed = parseColumns(columns);
 
@@ -146,7 +144,12 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         responsive
         className={`${className}`}
       >
-        <TableHeader table={table} />
+        <TableHeader
+          table={table}
+          enableColumnFilters={enableColumnFilters}
+          columnFiltersFields={columnFiltersFields}
+          setColumnFiltersFields={setColumnFiltersFields}
+        />
 
         {isLoading ? (
           <tbody>

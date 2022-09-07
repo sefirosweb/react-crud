@@ -1,13 +1,23 @@
-import { flexRender, Table } from "@tanstack/react-table";
+import { ColumnFiltersState, flexRender, Table } from "@tanstack/react-table";
 import React from "react";
 import { Filter } from "./Filter";
 
 type Props = {
   table: Table<any>;
+  enableColumnFilters: boolean;
+  columnFiltersFields?: ColumnFiltersState;
+  setColumnFiltersFields?: React.Dispatch<
+    React.SetStateAction<ColumnFiltersState>
+  >;
 };
 
 export const TableHeader = (props: Props) => {
-  const { table } = props;
+  const {
+    table,
+    enableColumnFilters = true,
+    columnFiltersFields,
+    setColumnFiltersFields,
+  } = props;
 
   return (
     <>
@@ -51,7 +61,38 @@ export const TableHeader = (props: Props) => {
                   <th key={header.id}>
                     {header.column.columnDef.enableColumnFilter && (
                       <div>
-                        <Filter column={header.column} />
+                        <Filter
+                          column={header.column}
+                          setColumnFilter={(filter) => {
+                            if (enableColumnFilters) {
+                              header.column.setFilterValue(filter);
+                            } else {
+                              if (
+                                header.column.id &&
+                                columnFiltersFields &&
+                                setColumnFiltersFields
+                              ) {
+                                const newColumnFiltersFields = [
+                                  ...columnFiltersFields,
+                                ];
+                                const filteredValue =
+                                  newColumnFiltersFields.find(
+                                    (f) => f.id === header.column.id
+                                  );
+                                if (filteredValue) {
+                                  filteredValue.value = filter;
+                                } else {
+                                  newColumnFiltersFields.push({
+                                    id: header.column.id,
+                                    value: filter,
+                                  });
+                                }
+
+                                setColumnFiltersFields(newColumnFiltersFields);
+                              }
+                            }
+                          }}
+                        />
                       </div>
                     )}
                   </th>

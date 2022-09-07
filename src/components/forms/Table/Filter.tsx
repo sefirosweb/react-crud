@@ -1,20 +1,25 @@
 import { DebouncedInput } from "./DebouncedInput";
 
 import { Column } from "@tanstack/react-table";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { FieldTypes } from "../../../types";
 import { FormTypeSelect } from "../FormTypes/FormTypeSelect";
 
 type Props = {
   column: Column<any, unknown>;
+  setColumnFilter: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export function Filter(props: Props) {
-  const { column } = props;
+  const { column, setColumnFilter } = props;
   const firstValue = column.columnDef.meta?.fieldType ?? FieldTypes.TEXT;
 
-  const columnFilterValue = column.getFilterValue();
+  const [filter, setFilter] = useState<any>("");
+
+  useEffect(() => {
+    setColumnFilter(filter);
+  }, [filter]);
 
   const sortedUniqueValues = useMemo(
     () =>
@@ -34,12 +39,9 @@ export function Filter(props: Props) {
                 type="number"
                 min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
                 max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-                value={(columnFilterValue as [number, number])?.[0] ?? ""}
+                value={(filter as [number, number])?.[0] ?? ""}
                 onChange={(value) =>
-                  column.setFilterValue((old: [number, number]) => [
-                    value,
-                    old?.[1],
-                  ])
+                  setFilter((old: [number, number]) => [value, old?.[1]])
                 }
                 placeholder="Min"
                 className="form-control"
@@ -52,12 +54,9 @@ export function Filter(props: Props) {
                 type="number"
                 min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
                 max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-                value={(columnFilterValue as [number, number])?.[1] ?? ""}
+                value={(filter as [number, number])?.[1] ?? ""}
                 onChange={(value) =>
-                  column.setFilterValue((old: [number, number]) => [
-                    old?.[0],
-                    value,
-                  ])
+                  setFilter((old: [number, number]) => [old?.[0], value])
                 }
                 placeholder="Max"
                 className="form-control"
@@ -73,10 +72,10 @@ export function Filter(props: Props) {
     return (
       <>
         <FormTypeSelect
-          handleChange={(e) => column.setFilterValue(e.target.value)}
+          handleChange={(e) => setFilter(e.target.value)}
           inputFieldName={column.id + "_select"}
           selectOptionsUrl={column.columnDef.meta?.selectOptionsUrl}
-          value={(columnFilterValue as string | number) ?? ""}
+          value={(filter as string | number) ?? ""}
         />
         <div className="h-1" />
       </>
@@ -94,8 +93,8 @@ export function Filter(props: Props) {
 
       <DebouncedInput
         type="text"
-        value={(columnFilterValue ?? "") as string}
-        onChange={(value) => column.setFilterValue(value)}
+        value={(filter ?? "") as string}
+        onChange={(value) => setFilter(value)}
         placeholder={`Search...`}
         className="form-control"
         list={column.id + "_list"}
