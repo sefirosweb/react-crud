@@ -1,64 +1,70 @@
-import React, { useRef } from 'react';
-import { Story } from '@storybook/react';
+import React, { useRef } from "react";
+import { Story } from "@storybook/react";
 
-import { Crud, Props, PropsRef } from '../../src/components/forms/Crud';
-import { ColumnDefinition } from '../../src/types';
-import { Product } from '../../models/Product';
-import { FieldTypes } from '../../src/types';
-import { FormTypeSelect } from '../../src/components/forms/FormTypes/FormTypeSelect';
-import { useState } from '@storybook/addons';
+import { Crud, Props, PropsRef } from "../../src/components/forms/Crud";
+import { ColumnDefinition } from "../../src/types";
+import { Product } from "../../models/Product";
+import { FieldTypes } from "../../src/types";
+import { FormTypeSelect } from "../../src/components/forms/FormTypes/FormTypeSelect";
+import { useState } from "@storybook/addons";
 
 const columns: Array<ColumnDefinition<Product>> = [
   {
-    accessorKey: 'uuid',
+    accessorKey: "uuid",
     enableColumnFilter: true,
     dropdown: true,
   },
   {
-    accessorKey: 'ean',
+    accessorKey: "ean",
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
   },
   {
-    accessorKey: 'description',
-    header: 'Desc.',
+    accessorKey: "description",
+    header: "Desc.",
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'price',
-    header: '€',
+    accessorKey: "price",
+    header: "€",
     enableColumnFilter: true,
     fieldType: FieldTypes.NUMBER,
   },
   {
-    accessorKey: 'category_id',
-    header: 'Cat.',
+    accessorKey: "category_id",
+    header: "Cat.",
     cell: (props) => props.row.original.category,
     enableColumnFilter: true,
     fieldType: FieldTypes.SELECT,
-    selectOptionsUrl: '/api/get_options',
+    selectOptionsUrl: "/api/get_options",
   },
 ];
 
 const Template = (props: Props) => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
 
-    const lazyFilter = {
+    const lazyFilter: Record<string, any> = {
       custom_lazy_filter: e.target.value,
     };
 
-    crudRef.current.setLazyilters(lazyFilter);
+    if (lazyFilter.custom_lazy_filter === "") {
+      delete lazyFilter.custom_lazy_filter;
+    }
+
+    if (crudRef.current) {
+      crudRef.current.setLazyilters(lazyFilter);
+    }
   };
 
   const customButtons = (
     <>
       <FormTypeSelect
         handleChange={handleChange}
-        inputFieldName={'Test change'}
-        selectOptionsUrl={'/api/get_options'}
+        inputFieldName={"Test change"}
+        selectOptionsUrl={"/api/get_options"}
         value={selectedValue}
       />
     </>
