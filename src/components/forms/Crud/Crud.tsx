@@ -196,7 +196,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     <>
       <div className={className}>
         <TableToolbar
-          globalFilterText={globalFilterText}
           enableGlobalFilter={enableGlobalFilter}
           setGlobalFilterText={setGlobalFilterText}
           createButtonTitle={createButtonTitle}

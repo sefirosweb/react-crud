@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, InputGroup, Row } from "react-bootstrap";
 import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
@@ -6,7 +6,6 @@ import { DebouncedInput } from "../Table/DebouncedInput";
 type Props = {
   enableGlobalFilter?: boolean;
   createButtonTitle?: string;
-  globalFilterText: string;
   canRefresh?: boolean;
   setGlobalFilterText: React.Dispatch<React.SetStateAction<string>>;
   refreshTable?: () => void;
@@ -16,7 +15,6 @@ type Props = {
 
 export const TableToolbar = (props: Props) => {
   const {
-    globalFilterText,
     createButtonTitle,
     enableGlobalFilter,
     setGlobalFilterText,
@@ -25,6 +23,12 @@ export const TableToolbar = (props: Props) => {
     handleModalShow,
     customButtons,
   } = props;
+
+  const [filter, setFilter] = useState("");
+  useEffect(() => {
+    setGlobalFilterText(filter);
+  }, [filter]);
+
   return (
     <Row>
       <Col lg={9} md={8} xs={12} className="mb-3">
@@ -42,8 +46,8 @@ export const TableToolbar = (props: Props) => {
           {enableGlobalFilter && (
             <DebouncedInput
               type="text"
-              value={globalFilterText as string}
-              onChange={(value) => setGlobalFilterText(String(value))}
+              value={filter}
+              onChange={(value) => setFilter(String(value))}
               placeholder={`Search...`}
               className="form-control"
             />
