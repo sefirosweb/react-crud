@@ -12,21 +12,41 @@ export const fuzzyFilter: FilterFn<any> = (
   //   itemRank,
   // });
   // return itemRank.passed;
-  const text = row.getValue(columnId) as string;
+  const text = row.getValue(columnId);
 
-  const result = text
-    .toString()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .match(
-      value
-        .toString()
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-    );
+  if (typeof text === "string") {
+    const result = text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .match(
+        value
+          .toString()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+      );
 
-  if (result) return true;
+    if (result) return true;
+    return false;
+  }
+
+  if (typeof text === "number") {
+    const result = text
+      .toString()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .match(
+        value
+          .toString()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+      );
+    if (result) return true;
+    return false;
+  }
+
   return false;
 };
