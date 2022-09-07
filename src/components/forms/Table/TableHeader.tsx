@@ -53,7 +53,7 @@ export const TableHeader = (props: Props) => {
         }
 
         if (fIndex >= 0 && validValude) {
-          newColumnFiltersFields[fIndex] = validValude;
+          newColumnFiltersFields[fIndex].value = validValude;
         }
 
         if (fIndex >= 0 && !validValude) {
