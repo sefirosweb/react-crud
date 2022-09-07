@@ -75,17 +75,28 @@ export const TableHeader = (props: Props) => {
                                 const newColumnFiltersFields = [
                                   ...columnFiltersFields,
                                 ];
-                                const filteredValue =
-                                  newColumnFiltersFields.find(
-                                    (f) => f.id === header.column.id
-                                  );
-                                if (filteredValue) {
-                                  filteredValue.value = filter;
+                                const fIndex = newColumnFiltersFields.findIndex(
+                                  (f) => f.id === header.column.id
+                                );
+                                if (fIndex >= 0) {
+                                  if (
+                                    typeof filter === "string" &&
+                                    filter === ""
+                                  ) {
+                                    newColumnFiltersFields.splice(fIndex, 1);
+                                  } else {
+                                    newColumnFiltersFields[fIndex] = filter;
+                                  }
                                 } else {
-                                  newColumnFiltersFields.push({
-                                    id: header.column.id,
-                                    value: filter,
-                                  });
+                                  if (
+                                    typeof filter !== "string" ||
+                                    filter !== ""
+                                  ) {
+                                    newColumnFiltersFields.push({
+                                      id: header.column.id,
+                                      value: filter,
+                                    });
+                                  }
                                 }
 
                                 setColumnFiltersFields(newColumnFiltersFields);
