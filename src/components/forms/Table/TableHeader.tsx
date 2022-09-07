@@ -1,4 +1,9 @@
-import { ColumnFiltersState, flexRender, Table } from "@tanstack/react-table";
+import {
+  ColumnFiltersState,
+  flexRender,
+  Header,
+  Table,
+} from "@tanstack/react-table";
 import React from "react";
 import { Filter } from "./Filter";
 
@@ -18,6 +23,47 @@ export const TableHeader = (props: Props) => {
     columnFiltersFields,
     setColumnFiltersFields,
   } = props;
+
+  const filterField = (filter: any, header: Header<any, unknown>) => {
+    if (enableColumnFilters) {
+      header.column.setFilterValue(filter);
+    } else {
+      if (header.column.id && columnFiltersFields && setColumnFiltersFields) {
+        const newColumnFiltersFields = [...columnFiltersFields];
+        const fIndex = newColumnFiltersFields.findIndex(
+          (f) => f.id === header.column.id
+        );
+
+        let validValude;
+
+        if (
+          (typeof filter === "string" && filter === "") ||
+          (Array.isArray(filter) && filter[0] === "" && filter[1] === "")
+        ) {
+          validValude = false;
+        } else {
+          validValude = filter;
+        }
+
+        if (fIndex < 0 && validValude) {
+          newColumnFiltersFields.push({
+            id: header.column.id,
+            value: validValude,
+          });
+        }
+
+        if (fIndex >= 0 && validValude) {
+          newColumnFiltersFields[fIndex] = validValude;
+        }
+
+        if (fIndex >= 0 && !validValude) {
+          newColumnFiltersFields.splice(fIndex, 1);
+        }
+
+        setColumnFiltersFields(newColumnFiltersFields);
+      }
+    }
+  };
 
   return (
     <>
@@ -63,46 +109,9 @@ export const TableHeader = (props: Props) => {
                       <div>
                         <Filter
                           column={header.column}
-                          setColumnFilter={(filter) => {
-                            if (enableColumnFilters) {
-                              header.column.setFilterValue(filter);
-                            } else {
-                              if (
-                                header.column.id &&
-                                columnFiltersFields &&
-                                setColumnFiltersFields
-                              ) {
-                                const newColumnFiltersFields = [
-                                  ...columnFiltersFields,
-                                ];
-                                const fIndex = newColumnFiltersFields.findIndex(
-                                  (f) => f.id === header.column.id
-                                );
-                                if (fIndex >= 0) {
-                                  if (
-                                    typeof filter === "string" &&
-                                    filter === ""
-                                  ) {
-                                    newColumnFiltersFields.splice(fIndex, 1);
-                                  } else {
-                                    newColumnFiltersFields[fIndex] = filter;
-                                  }
-                                } else {
-                                  if (
-                                    typeof filter !== "string" ||
-                                    filter !== ""
-                                  ) {
-                                    newColumnFiltersFields.push({
-                                      id: header.column.id,
-                                      value: filter,
-                                    });
-                                  }
-                                }
-
-                                setColumnFiltersFields(newColumnFiltersFields);
-                              }
-                            }
-                          }}
+                          setColumnFilter={(filter) =>
+                            filterField(filter, header)
+                          }
                         />
                       </div>
                     )}

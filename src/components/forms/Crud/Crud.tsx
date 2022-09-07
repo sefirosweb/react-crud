@@ -122,10 +122,10 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   useEffect(() => {
     if (!lazyLoad) return;
-
-    const reactTableFilters: newInputFilters = {
-      globalFilter: globalFilterText,
-    };
+    const reactTableFilters: newInputFilters = {};
+    if (globalFilter !== "") {
+      reactTableFilters["globalFilter"] = globalFilter;
+    }
 
     columnFilters.forEach((columnFilter) => {
       reactTableFilters[columnFilter.id] = columnFilter.value;
