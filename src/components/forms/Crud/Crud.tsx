@@ -15,6 +15,7 @@ import {
 import axios, { AxiosResponse } from "axios";
 import {
   ColumnFiltersState,
+  Row as RowTanstack,
   Table as TableReactTable,
 } from "@tanstack/react-table";
 import { TableToolbar } from "./TableToolbar";
@@ -29,8 +30,8 @@ import NewColumns from "./NewColumns";
 type newInputFilters = Record<string, unknown>;
 export interface Props
   extends Omit<
-    TableProps,
-    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
+  TableProps,
+  "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   data?: Array<any>;
   canSelectRow?: boolean;
@@ -55,6 +56,8 @@ export type PropsRef = {
   lazyFilters: newInputFilters;
   setLazyilters: React.Dispatch<React.SetStateAction<newInputFilters>>;
   setIsLoading: (isLoading: boolean) => void;
+  getRowStyles?: (row: RowTanstack<any>) => React.CSSProperties;
+  getRowClass?: (row: RowTanstack<any>) => string;
 };
 
 export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
@@ -74,6 +77,8 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     primaryKey,
     titleOnDelete,
     customButtons,
+    getRowStyles,
+    getRowClass
   } = props;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -223,6 +228,8 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               columnFiltersFields={columnFilters}
               setColumnFiltersFields={setColumnFilters}
               enableColumnFilters={!lazyLoad}
+              getRowClass={getRowClass}
+              getRowStyles={getRowStyles}
             />
           </Col>
         </Row>

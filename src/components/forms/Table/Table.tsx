@@ -16,6 +16,8 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  Row,
+  RowData,
   SortingState,
   Table as TableReactTable,
   useReactTable,
@@ -33,6 +35,11 @@ declare module "@tanstack/table-core" {
     multiSelectOptions?: MultiSelectOptionsColumns<unknown, unknown>;
     selectOptionsUrl?: string;
     dropdown?: boolean;
+  }
+
+  interface TableMeta<TData extends RowData> {
+    getRowStyles?: (row: Row<TData>) => React.CSSProperties;
+    getRowClass?: (row: Row<TData>) => string;
   }
 }
 
@@ -64,6 +71,8 @@ export interface Props {
   setColumnFiltersFields?: React.Dispatch<
     React.SetStateAction<ColumnFiltersState>
   >;
+  getRowStyles?: (row: Row<any>) => React.CSSProperties;
+  getRowClass?: (row: Row<any>) => string;
 }
 
 export type PropsRef = {
@@ -82,6 +91,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     enableColumnFilters = true,
     columnFiltersFields,
     setColumnFiltersFields,
+    getRowStyles,
+    getRowClass
   } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -116,6 +127,11 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       pagination: {
         pageSize: pageSize,
       },
+    },
+
+    meta: {
+      getRowStyles,
+      getRowClass
     },
 
     getCoreRowModel: getCoreRowModel(),
@@ -170,7 +186,11 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         ) : (
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr
+                key={row.id}
+                style={table.options.meta?.getRowStyles ? table.options.meta.getRowStyles(row) : {}}
+                className={table.options.meta?.getRowClass ? table.options.meta.getRowClass(row) : ''}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

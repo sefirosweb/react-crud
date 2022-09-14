@@ -18,7 +18,9 @@ const columns: ColumnDefinition<Product>[] = [
   },
   {
     accessorKey: 'name',
-    cell: (info) => <i>{info.getValue()}</i>,
+    cell: (info) => {
+      return <i>{info.cell.row.original.name}</i>
+    },
     header: () => <span>Last Name</span>,
   },
   {
@@ -40,6 +42,11 @@ export const Default: Story<Props> = Template.bind({});
 Default.args = {
   columns: columns,
   data: data,
+  getRowStyles(row) {
+    return {
+      backgroundColor: (Math.floor(Math.random() * 2) + 1) > 1 ? '#f7cbcb' : '#e8e8ff'
+    }
+  },
 };
 
 export const Loading: Story<Props> = Template.bind({});
