@@ -60,7 +60,9 @@ const Template = (props: Props) => {
       value: e.target.value,
     };
     const upd: ColumnFiltersState = [updateData];
-    crudRef.current.table.setColumnFilters(upd);
+    if (crudRef.current?.table) {
+      crudRef.current?.table.setColumnFilters(upd);
+    }
   };
 
   const customButtons = (
