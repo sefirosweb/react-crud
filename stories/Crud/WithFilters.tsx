@@ -38,6 +38,7 @@ const columns: Array<ColumnDefinition<Product>> = [
     enableColumnFilter: true,
     fieldType: FieldTypes.SELECT,
     selectOptionsUrl: "/api/get_options",
+    visible: false
   },
 ];
 

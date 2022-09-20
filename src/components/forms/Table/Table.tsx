@@ -47,7 +47,6 @@ const parseColumns = (
   columns: Array<ColumnDefinition<any>>
 ): Array<ColumnDef<any>> => {
   return columns
-    .filter((c) => c.visible !== false)
     .map((c) => {
       return {
         ...c,
@@ -95,9 +94,23 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     getRowClass
   } = props;
 
+  const visibleColumns = () => {
+    const hidenColumns: Record<string, boolean> = {}
+    columns
+      .filter((c) => c.visible === false && c.accessorKey)
+      .forEach(c => {
+        if (c.accessorKey) {
+          hidenColumns[c.accessorKey] = false
+        }
+      })
+    return hidenColumns
+  }
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState(visibleColumns());
+
 
   useEffect(() => {
     setGlobalFilter(globalFilterText ?? "");
@@ -113,6 +126,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     columns: columnsParsed,
     enableColumnFilters: true,
     state: {
+      columnVisibility,
       columnFilters,
       globalFilter,
       sorting,
@@ -143,6 +157,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    onColumnVisibilityChange: setColumnVisibility,
   });
 
   useImperativeHandle(ref, () => ({
