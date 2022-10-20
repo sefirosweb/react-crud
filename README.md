@@ -15,14 +15,16 @@ Install:
 ```
 npm install --save-dev @sefirosweb/react-crud
 ```
+
 Add Bootstrap styling:\
 Create a .SCSS file and import them with:
+
 ```scss
 // Fonts
 @import "~bootstrap/scss/bootstrap";
 @import "toastr";
-@import "~react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 ```
+
 # Usage
 
 Import components whant you wish:

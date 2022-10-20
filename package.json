@@ -44,7 +44,6 @@
     "@tanstack/match-sorter-utils": "8.1.1",
     "@tanstack/react-table": "8.5.13",
     "@types/react": "18.0.21",
-    "@types/react-draft-wysiwyg": "1.13.4",
     "@types/toastr": "2.1.40",
     "axios": "0.27.2",
     "axios-mock-adapter": "1.21.2",
@@ -55,7 +54,6 @@
     "react": "18.2.0",
     "react-bootstrap": "2.5.0",
     "react-dom": "18.2.0",
-    "react-draft-wysiwyg": "1.15.0",
     "react-icons": "4.6.0",
     "rollup": "3.2.3",
     "rollup-plugin-peer-deps-external": "2.2.4",
@@ -75,7 +73,6 @@
     "react": "18.2.0",
     "react-bootstrap": "2.5.0",
     "react-dom": "18.2.0",
-    "react-draft-wysiwyg": "1.15.0",
     "react-icons": "^4.6.0",
     "toastr": "2.1.4",
     "lodash": "4.17.21"
@@ -88,7 +85,6 @@
     "react": "18.2.0",
     "react-bootstrap": "2.5.0",
     "react-dom": "18.2.0",
-    "react-draft-wysiwyg": "1.15.0",
     "react-icons": "^4.6.0",
     "toastr": "2.1.4",
     "lodash": "4.17.21"
