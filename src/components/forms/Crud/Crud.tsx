@@ -33,7 +33,7 @@ export interface Props
   TableProps,
   "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
-  data?: Array<unknown>;
+  data?: Array<any>;
   canSelectRow?: boolean;
   enableGlobalFilter?: boolean;
   crudUrl?: string;
@@ -50,8 +50,8 @@ export interface Props
 
 export type PropsRef = {
   table: TableReactTable<any> | undefined;
-  data: Array<unknown>;
-  setData: (data: Array<unknown>) => void
+  data: Array<any>;
+  setData: (data: Array<any>) => void
   refreshTable: () => void;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
