@@ -33,7 +33,7 @@ export interface Props
   TableProps,
   "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
-  data?: Array<any>;
+  data?: Array<unknown>;
   canSelectRow?: boolean;
   enableGlobalFilter?: boolean;
   crudUrl?: string;
@@ -49,8 +49,10 @@ export interface Props
 }
 
 export type PropsRef = {
-  refreshTable: () => void;
   table: TableReactTable<any> | undefined;
+  data: Array<unknown>;
+  setData: (data: Array<unknown>) => void
+  refreshTable: () => void;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
   lazyFilters: newInputFilters;
@@ -98,13 +100,13 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const refreshTable = () => setSendRequest(!sendRequest);
 
   useImperativeHandle(ref, () => ({
+    table: tableRef.current?.table,
+    data: dataTable,
+    setData: setDataTable,
     lazyFilters: externalFilters,
     setLazyilters: setExternalFilters,
     refreshTable,
-    table: tableRef.current?.table,
-    setIsLoading: (isLoading) => {
-      setIsLoading(isLoading);
-    },
+    setIsLoading,
     getSelectedRows: (): Array<any> => {
       if (!tableRef.current) return [];
       return tableRef.current.table
