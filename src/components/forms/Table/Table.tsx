@@ -30,7 +30,6 @@ import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
 import { FieldTypes } from "../../../types";
 import { TableHeader } from "./TableHeader";
 import { TableFooter } from "./TableFooter";
-import style from "./Table.module.scss";
 
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData, TValue> {
@@ -66,6 +65,7 @@ const parseColumns = (
       };
     });
 };
+
 export interface Props {
   columns: Array<ColumnDefinition<any>>;
   data: Array<any>;
@@ -86,6 +86,18 @@ export type PropsRef = {
   globalFilter: string;
   table: TableReactTable<any>;
 };
+
+const tableIsLoading: React.CSSProperties = {
+  width: "100%",
+  height: "100%",
+  paddingTop: "30px",
+  position: "absolute",
+  textAlign: "center",
+  top: 0,
+  color: "rgb(240, 248, 255)",
+  backgroundColor: "rgba(0, 0, 0, 0.575)",
+  zIndex: 4
+}
 
 export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const {
@@ -179,18 +191,14 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         style={{
           position: "relative"
         }}>
-        <div className={isLoading ? style.tableIsLoading : 'd-none'}><LoadingSpinner /></div>
+        <div style={isLoading ? tableIsLoading : { display: "none" }}><LoadingSpinner /></div>
         <TableBootstrap.Table
           striped
           hover
           bordered
           responsive
           className={`${className}`}
-
         >
-          {/* <div className={isLoading ? style.tableIsLoading : 'd-none'}><LoadingSpinner /></div> */}
-
-
           <TableHeader
             table={table}
             enableColumnFilters={enableColumnFilters}
