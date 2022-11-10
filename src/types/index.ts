@@ -1,3 +1,4 @@
+import React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
@@ -57,6 +58,8 @@ export type ColumnDefinition<TData, TValue = unknown> = ColumnDef<
   selectOptionsUrl?: string;
   titleOnCRUD?: string;
   visible?: boolean;
+  getCellStyle?: () => React.CSSProperties;
+  getCellClass?: () => string;
 } & (
     | ExtendStandardFields
     | ExtendMultiSelectField

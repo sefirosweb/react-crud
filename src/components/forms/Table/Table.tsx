@@ -35,6 +35,8 @@ declare module "@tanstack/table-core" {
     multiSelectOptions?: MultiSelectOptionsColumns<unknown, unknown>;
     selectOptionsUrl?: string;
     dropdown?: boolean;
+    getCellStyle?: () => React.CSSProperties;
+    getCellClass?: () => string;
   }
 
   interface TableMeta<TData extends RowData> {
@@ -55,6 +57,8 @@ const parseColumns = (
           multiSelectOptions: c.multiSelectOptions,
           selectOptionsUrl: c.selectOptionsUrl,
           dropdown: c.dropdown,
+          getCellStyle: c.getCellStyle,
+          getCellClass: c.getCellClass,
         },
       };
     });
@@ -207,7 +211,10 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
                 className={table.options.meta?.getRowClass ? table.options.meta.getRowClass(row) : ''}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td
+                    style={cell.column.columnDef.meta?.getCellStyle ? cell.column.columnDef.meta?.getCellStyle() : undefined}
+                    className={cell.column.columnDef.meta?.getCellClass ? cell.column.columnDef.meta?.getCellClass() : undefined}
+                    key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

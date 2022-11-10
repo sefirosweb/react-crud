@@ -13,9 +13,17 @@ const columns: Array<ColumnDefinition<Product>> = [
     accessorKey: "uuid",
     enableColumnFilter: true,
     dropdown: true,
+    getCellStyle: () => {
+      return {
+        backgroundColor: "#e0cffc"
+      }
+    },
   },
   {
     accessorKey: "ean",
+    getCellClass: () => {
+      return 'bg-success'
+    },
   },
   {
     accessorKey: "name",
