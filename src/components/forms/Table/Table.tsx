@@ -8,6 +8,7 @@ import React, {
 import * as TableBootstrap from "react-bootstrap";
 
 import {
+  CellContext,
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -35,8 +36,8 @@ declare module "@tanstack/table-core" {
     multiSelectOptions?: MultiSelectOptionsColumns<unknown, unknown>;
     selectOptionsUrl?: string;
     dropdown?: boolean;
-    getCellStyle?: () => React.CSSProperties;
-    getCellClass?: () => string;
+    getCellStyle?: (cell: CellContext<TData, TValue>) => React.CSSProperties;
+    getCellClass?: (cell: CellContext<TData, TValue>) => string;
   }
 
   interface TableMeta<TData extends RowData> {
@@ -212,8 +213,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               >
                 {row.getVisibleCells().map((cell) => (
                   <td
-                    style={cell.column.columnDef.meta?.getCellStyle ? cell.column.columnDef.meta?.getCellStyle() : undefined}
-                    className={cell.column.columnDef.meta?.getCellClass ? cell.column.columnDef.meta?.getCellClass() : undefined}
+                    style={cell.column.columnDef.meta?.getCellStyle ? cell.column.columnDef.meta?.getCellStyle(cell.getContext()) : undefined}
+                    className={cell.column.columnDef.meta?.getCellClass ? cell.column.columnDef.meta?.getCellClass(cell.getContext()) : undefined}
                     key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
