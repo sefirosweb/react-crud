@@ -166,7 +166,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
     const cancelTokenSource = axios.CancelToken.source();
 
-    setDataTable([]);
     setIsLoading(true);
     axios
       .get(crudUrl, {

@@ -30,6 +30,8 @@ import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
 import { FieldTypes } from "../../../types";
 import { TableHeader } from "./TableHeader";
 import { TableFooter } from "./TableFooter";
+import style from "./Table.module.scss";
+
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData, TValue> {
     fieldType?: FieldTypes;
@@ -173,58 +175,60 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   return (
     <>
-      <TableBootstrap.Table
-        striped
-        hover
-        bordered
-        responsive
-        className={`${className}`}
-      >
-        <TableHeader
-          table={table}
-          enableColumnFilters={enableColumnFilters}
-          columnFiltersFields={columnFiltersFields}
-          setColumnFiltersFields={setColumnFiltersFields}
-        />
+      <div
+        style={{
+          position: "relative"
+        }}>
+        <div className={isLoading ? style.tableIsLoading : 'd-none'}><LoadingSpinner /></div>
+        <TableBootstrap.Table
+          striped
+          hover
+          bordered
+          responsive
+          className={`${className}`}
 
-        {isLoading ? (
-          <tbody>
-            <tr>
-              <td colSpan={100} className="text-center">
-                <LoadingSpinner />
-              </td>
-            </tr>
-          </tbody>
-        ) : table.getPrePaginationRowModel().rows.length === 0 ? (
-          <tbody>
-            <tr>
-              <td colSpan={100} className="text-center">
-                No Data
-              </td>
-            </tr>
-          </tbody>
-        ) : (
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                style={table.options.meta?.getRowStyles ? table.options.meta.getRowStyles(row) : {}}
-                className={table.options.meta?.getRowClass ? table.options.meta.getRowClass(row) : ''}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    style={cell.column.columnDef.meta?.getCellStyle ? cell.column.columnDef.meta?.getCellStyle(cell.getContext()) : undefined}
-                    className={cell.column.columnDef.meta?.getCellClass ? cell.column.columnDef.meta?.getCellClass(cell.getContext()) : undefined}
-                    key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
+        >
+          {/* <div className={isLoading ? style.tableIsLoading : 'd-none'}><LoadingSpinner /></div> */}
+
+
+          <TableHeader
+            table={table}
+            enableColumnFilters={enableColumnFilters}
+            columnFiltersFields={columnFiltersFields}
+            setColumnFiltersFields={setColumnFiltersFields}
+          />
+
+          {table.getPrePaginationRowModel().rows.length === 0 ? (
+            <tbody>
+              <tr>
+                <td colSpan={100} className="text-center">
+                  No Data
+                </td>
               </tr>
-            ))}
-          </tbody>
-        )}
-      </TableBootstrap.Table>
-      <TableFooter table={table} />
+            </tbody>
+          ) : (
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  style={table.options.meta?.getRowStyles ? table.options.meta.getRowStyles(row) : {}}
+                  className={table.options.meta?.getRowClass ? table.options.meta.getRowClass(row) : ''}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      style={cell.column.columnDef.meta?.getCellStyle ? cell.column.columnDef.meta?.getCellStyle(cell.getContext()) : undefined}
+                      className={cell.column.columnDef.meta?.getCellClass ? cell.column.columnDef.meta?.getCellClass(cell.getContext()) : undefined}
+                      key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </TableBootstrap.Table>
+        <TableFooter table={table} />
+      </div>
     </>
   );
 });
