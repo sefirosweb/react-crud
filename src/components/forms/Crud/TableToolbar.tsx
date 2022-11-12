@@ -4,6 +4,7 @@ import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
 
 type Props = {
+  isLoading: boolean;
   enableGlobalFilter?: boolean;
   createButtonTitle?: string;
   canRefresh?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 export const TableToolbar = (props: Props) => {
   const {
+    isLoading,
     createButtonTitle,
     enableGlobalFilter,
     setGlobalFilter,
@@ -33,7 +35,7 @@ export const TableToolbar = (props: Props) => {
     <Row>
       <Col lg={9} md={8} xs={12} className="mb-3">
         {createButtonTitle && (
-          <Button variant="success" onClick={() => handleModalShow()}>
+          <Button variant="success" onClick={() => handleModalShow()} disabled={isLoading}>
             {createButtonTitle}
           </Button>
         )}
@@ -50,11 +52,13 @@ export const TableToolbar = (props: Props) => {
               onChange={(value) => setFilter(String(value))}
               placeholder={`Search...`}
               className="form-control"
+              disabled={isLoading}
             />
           )}
 
           {canRefresh && (
             <RefreshButton
+              disabled={isLoading}
               onClick={() => {
                 if (typeof refreshTable !== "undefined") {
                   refreshTable();

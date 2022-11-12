@@ -12,7 +12,7 @@ import {
   Props as TableProps,
   PropsRef as TablePropsRef,
 } from "../Table";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import {
   ColumnFiltersState,
   Row as RowTanstack,
@@ -52,7 +52,7 @@ export type PropsRef = {
   table: TableReactTable<any> | undefined;
   data: Array<any>;
   setData: (data: Array<any>) => void
-  refreshTable: () => void;
+  refreshTable: () => Promise<AxiosResponse<any, any>> | undefined;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
   lazyFilters: newInputFilters;
@@ -105,7 +105,11 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     setData: setDataTable,
     lazyFilters: externalFilters,
     setLazyilters: setExternalFilters,
-    refreshTable,
+    refreshTable: () => {
+      if (crudUrl) {
+        return getDataTable(crudUrl, inputFilters)
+      }
+    },
     setIsLoading,
     getSelectedRows: (): Array<any> => {
       if (!tableRef.current) return [];
@@ -165,34 +169,39 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     if (!crudUrl) return;
 
     const cancelTokenSource = axios.CancelToken.source();
-
-    setIsLoading(true);
-    axios
-      .get(crudUrl, {
-        cancelToken: cancelTokenSource.token,
-        params: inputFilters,
-      })
-      .then((request) => {
-        if (!mounted.current) return;
-
-        const responseData = request.data.data;
-        const success = request.data.success;
-        if (success) {
-          const result = Object.keys(responseData).map(
-            (key) => responseData[key]
-          );
-          setDataTable(result);
-        }
-      })
-      .finally(() => {
-        if (!mounted.current) return;
-        setIsLoading(false);
-      });
-
+    getDataTable(crudUrl, inputFilters, cancelTokenSource);
     return () => {
       cancelTokenSource.cancel();
     };
   }, [crudUrl, inputFilters, sendRequest]);
+
+  const getDataTable = (url: string, params: {}, cancelTokenSource?: CancelTokenSource): Promise<AxiosResponse<any, any>> => {
+    return new Promise((resolve, reject) => {
+      setIsLoading(true);
+      axios
+        .get(url, {
+          cancelToken: cancelTokenSource?.token,
+          params,
+        })
+        .then((request) => {
+          if (!mounted.current) return;
+          setIsLoading(false);
+
+          const responseData = request.data.data;
+          const success = request.data.success;
+          if (success) {
+            const result = Object.keys(responseData).map((key) => responseData[key]);
+            setDataTable(result);
+          }
+          resolve(request)
+        })
+        .catch((e) => {
+          if (!mounted.current) return;
+          setIsLoading(false);
+          reject(e)
+        })
+    })
+  }
 
   const newColumns = NewColumns({
     columns,
@@ -214,9 +223,9 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           canRefresh={canRefresh}
           refreshTable={refreshTable}
           customButtons={customButtons}
-          handleModalShow={() =>
-            handleModalShowRef.current?.handleModalShow("CREATE")
-          }
+          handleModalShow={() => handleModalShowRef.current?.handleModalShow("CREATE")}
+          isLoading={isLoading}
+
         />
         <Row>
           <Col>
