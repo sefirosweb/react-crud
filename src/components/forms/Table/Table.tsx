@@ -116,10 +116,13 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const visibleColumns = () => {
     const hidenColumns: Record<string, boolean> = {}
     columns
-      .filter((c) => c.visible === false && c.accessorKey)
+      .filter((c) => c.visible === false && (c.accessorKey || c.id))
       .forEach(c => {
         if (c.accessorKey) {
           hidenColumns[c.accessorKey] = false
+        }
+        if (c.id) {
+          hidenColumns[c.id] = false
         }
       })
     return hidenColumns
