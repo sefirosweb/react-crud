@@ -72,7 +72,7 @@ export const TableHeader = (props: Props) => {
           <React.Fragment key={headerGroup.id}>
             <tr>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} colSpan={header.colSpan}>
                   {header.isPlaceholder ? null : (
                     <div
                       {...{
