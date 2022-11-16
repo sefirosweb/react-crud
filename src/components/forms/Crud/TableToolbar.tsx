@@ -43,7 +43,7 @@ export const TableToolbar = (props: Props) => {
         {customButtons}
       </Col>
 
-      <Col lg={3} md={4} xs={12} className="mb-3">
+      <Col lg={3} md={4} xs={12} className="mb-3 align-self-end">
         <InputGroup className="d-flex justify-content-end">
           {enableGlobalFilter && (
             <DebouncedInput
