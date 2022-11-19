@@ -2,15 +2,12 @@ name: Build and Deploy
 on:
   push:
     branches: [master]
-  release:
-    types: [created]
   pull_request:
 
 permissions:
   contents: write
 jobs:
   build-and-deploy:
-    name: "Publish to GitHub pages"
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
@@ -20,23 +17,7 @@ jobs:
         run: |
           npm ci --legacy-peer-deps
           npm run build-storybook
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: storybook-static
-  
-  release:
-    name: "Publish package to NPM"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm run build-module
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
