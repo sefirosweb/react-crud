@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeTextArea,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypeTextArea';
+} from '../../src/module/components/forms/FormTypes/FormTypeTextArea';
 
 const meta: Meta = {
   title: 'Form/FormTypes/TextArea',
@@ -18,5 +18,5 @@ TextArea.args = {
   label: 'Form Type Text Area',
   rows: 5,
   inputFieldName: 'form_text_area',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };

@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeText,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypeText';
+} from '../../src/module/components/forms/FormTypes/FormTypeText';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Text',
@@ -17,5 +17,5 @@ export const Text: Story<Props> = Template.bind({});
 Text.args = {
   label: 'Form Type Text',
   inputFieldName: 'form_text',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };

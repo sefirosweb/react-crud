@@ -5,9 +5,9 @@ import scss from 'rollup-plugin-scss';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
-export default [
+const config = [
     {
-        input: './src/index.tsx',
+        input: './src/storybook/index.tsx',
         output: [
             {
                 file: 'dist/index.js',
@@ -36,3 +36,5 @@ export default [
         ],
     },
 ];
+
+export default config

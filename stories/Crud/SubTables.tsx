@@ -1,8 +1,8 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
-import { Crud, Props } from '../../src/components/forms/Crud';
-import { ColumnDefinition } from '../../src/types';
+import { Crud, Props } from '../../src/module/components/forms/Crud';
+import { ColumnDefinition } from '../../src/module/types';
 import { Product, data } from '../../models/Product';
 
 const columns: Array<ColumnDefinition<Product>> = [

@@ -1,10 +1,10 @@
 import React from "react";
 import { Story } from "@storybook/react";
 
-import { Crud, Props } from "../../src/components/forms/Crud";
-import { ColumnDefinition, MultiSelectOptionsColumns } from "../../src/types";
+import { Crud, Props } from "../../src/module/components/forms/Crud";
+import { ColumnDefinition, MultiSelectOptionsColumns } from "../../src/module/types";
 import { Product } from "../../models/Product";
-import { FieldTypes } from "../../src/types";
+import { FieldTypes } from "../../src/module/types";
 
 const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
   primaryKey: "uuid",

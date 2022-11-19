@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Props } from '../src/components/forms/Modal';
+import { Modal, Props } from '../src/module/components/forms/Modal';
 import { Button } from 'react-bootstrap';
 // import useState from 'storybook-addon-state';
 import { Meta, Story } from '@storybook/react';

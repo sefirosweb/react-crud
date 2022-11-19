@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeDate,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypeDate';
+} from '../../src/module/components/forms/FormTypes/FormTypeDate';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Date',
@@ -17,5 +17,5 @@ export const Date: Story<Props> = Template.bind({});
 Date.args = {
   label: 'Form Type Date',
   inputFieldName: 'form_date',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };

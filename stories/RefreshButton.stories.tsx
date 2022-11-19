@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { RefreshButton, Props } from '../src/components/buttons/RefreshButton';
+import { RefreshButton, Props } from '../src/module/components/buttons/RefreshButton';
 
 const meta: Meta = {
   title: 'Buttons/RefreshButton',

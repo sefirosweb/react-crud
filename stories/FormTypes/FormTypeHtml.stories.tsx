@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeHtml,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypeHtml';
+} from '../../src/module/components/forms/FormTypes/FormTypeHtml';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Html',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { FormTypes, Props } from '../../src/components/forms/FormTypes';
+import { FormTypes, Props } from '../../src/module/components/forms/FormTypes';
 
 const meta: Meta = {
   title: 'Form/FormTypes',
@@ -16,5 +16,5 @@ MultiFormType.args = {
   label: 'This is a multi form type',
   type: 'text',
   inputFieldName: 'form_multi_type',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };

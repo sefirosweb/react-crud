@@ -4,9 +4,9 @@ import { Story } from "@storybook/react";
 import {
   MultiSelectCrudTable,
   Props,
-} from "../../src/components/forms/MultiSelectCrudTable";
+} from "../../src/module/components/forms/MultiSelectCrudTable";
 import { Product } from "../../models/Product";
-import { ColumnDefinition } from "../../src/types";
+import { ColumnDefinition } from "../../src/module/types";
 
 const TestColumnsModel: ColumnDefinition<Product>[] = [
   {

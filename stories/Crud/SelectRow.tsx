@@ -1,8 +1,8 @@
 import React from "react";
 import { Story } from "@storybook/react";
 
-import { Crud, Props, PropsRef } from "../../src/components/forms/Crud";
-import { ColumnDefinition } from "../../src/types";
+import { Crud, Props, PropsRef } from "../../src/module/components/forms/Crud";
+import { ColumnDefinition } from "../../src/module/types";
 import { Product, data } from "../../models/Product";
 import { Button } from "react-bootstrap";
 import { useRef } from "@storybook/addons";

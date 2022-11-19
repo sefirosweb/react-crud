@@ -1,6 +1,6 @@
 import { createData } from "../.storybook/dataMock";
-import { ColumnDefinition } from "../src/types";
-import { FieldTypes } from "../src/types";
+import { ColumnDefinition } from "../src/module/types";
+import { FieldTypes } from "../src/module/types";
 
 export type Product = {
   uuid: string;

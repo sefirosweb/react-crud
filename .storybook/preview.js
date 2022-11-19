@@ -1,5 +1,5 @@
 import "../scss/app.scss"
-import '../src/lib/axiosWithToastr'
+import '../src/module/lib/axiosWithToastr'
 import "./dataMock"
 
 export const parameters = {

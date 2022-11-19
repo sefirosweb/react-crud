@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import { Crud } from '../../src/components/forms/Crud';
+import { Crud } from '../../src/module/components/forms/Crud';
 
 const meta: Meta = {
   title: 'Form/Crud',

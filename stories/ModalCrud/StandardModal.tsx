@@ -4,7 +4,7 @@ import {
   ModalCrud,
   ModalData,
   Props,
-} from "../../src/components/forms/ModalCrud";
+} from "../../src/module/components/forms/ModalCrud";
 import { Button } from "react-bootstrap";
 import { Story } from "@storybook/react";
 import { generateOptionsValue } from "../../.storybook/dataMock";

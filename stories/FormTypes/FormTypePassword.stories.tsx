@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypePassword,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypePassword';
+} from '../../src/module/components/forms/FormTypes/FormTypePassword';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Password',
@@ -17,5 +17,5 @@ export const Password: Story<Props> = Template.bind({});
 Password.args = {
   label: 'Form Type Password',
   inputFieldName: 'form_password',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };

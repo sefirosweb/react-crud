@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeSelect,
   Props,
-} from '../../src/components/forms/FormTypes/FormTypeSelect';
+} from '../../src/module/components/forms/FormTypes/FormTypeSelect';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Select',
@@ -18,5 +18,5 @@ Select.args = {
   label: 'Form Type Select',
   selectOptionsUrl: '/api/get_options',
   inputFieldName: 'form_select',
-  handleChange: (e) => {console.log(e)}
+  handleChange: (e) => { console.log(e) }
 };
