@@ -7,7 +7,7 @@ import { terser } from 'rollup-plugin-terser';
 
 const config = [
     {
-        input: './src/storybook/index.tsx',
+        input: './src/module/index.tsx',
         output: [
             {
                 file: 'dist/index.js',
