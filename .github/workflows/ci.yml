@@ -24,7 +24,6 @@ jobs:
         with:
           folder: storybook-static
 
-name: Publish Package to npmjs
 on:
   release:
     types: [created]
