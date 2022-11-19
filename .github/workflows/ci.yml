@@ -2,6 +2,8 @@ name: Build and Deploy
 on:
   push:
     branches: [master]
+  release:
+    types: [created]
   pull_request:
 
 permissions:
@@ -24,10 +26,6 @@ jobs:
         with:
           folder: storybook-static
 
-on:
-  release:
-    types: [created]
-jobs:
   build:
     runs-on: ubuntu-latest
     steps:
