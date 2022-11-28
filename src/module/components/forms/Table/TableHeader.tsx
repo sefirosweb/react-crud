@@ -89,9 +89,9 @@ export const TableHeader = (props: Props) => {
 
                       {header.column.getCanSort()
                         ? {
-                            asc: " 🔼",
-                            desc: " 🔽",
-                          }[header.column.getIsSorted() as string] ?? " -"
+                          asc: " 🔼",
+                          desc: " 🔽",
+                        }[header.column.getIsSorted() as string] ?? " -"
                         : null}
                     </div>
                   )}
@@ -102,23 +102,23 @@ export const TableHeader = (props: Props) => {
             {headerGroup.headers.find(
               (header) => header.column.columnDef.enableColumnFilter
             ) && (
-              <tr>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {header.column.columnDef.enableColumnFilter && (
-                      <div>
-                        <Filter
-                          column={header.column}
-                          setColumnFilter={(filter) =>
-                            filterField(filter, header)
-                          }
-                        />
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            )}
+                <tr>
+                  {headerGroup.headers.map((header) => (
+                    <th key={header.id}>
+                      {header.column.columnDef.enableColumnFilter && (
+                        <div>
+                          <Filter
+                            column={header.column}
+                            setColumnFilter={(filter) =>
+                              filterField(filter, header)
+                            }
+                          />
+                        </div>
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              )}
           </React.Fragment>
         ))}
       </thead>
