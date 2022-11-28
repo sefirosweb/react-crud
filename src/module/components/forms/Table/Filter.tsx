@@ -13,9 +13,9 @@ type Props = {
 
 export function Filter(props: Props) {
   const { column, setColumnFilter } = props;
-  const firstValue = column.columnDef.meta?.fieldType ?? FieldTypes.TEXT;
+  const filterType = column.columnDef.meta?.fieldType ?? FieldTypes.TEXT;
 
-  const [filter, setFilter] = useState<any>("");
+  const [filter, setFilter] = useState<FilterType>("");
 
   useEffect(() => {
     setColumnFilter(filter);
@@ -23,13 +23,13 @@ export function Filter(props: Props) {
 
   const sortedUniqueValues = useMemo(
     () =>
-      firstValue === FieldTypes.NUMBER
+      filterType === FieldTypes.NUMBER
         ? []
         : Array.from(column.getFacetedUniqueValues().keys()).sort(),
     [column.getFacetedUniqueValues()]
   );
 
-  if (firstValue === FieldTypes.NUMBER)
+  if (filterType === FieldTypes.NUMBER)
     return (
       <div>
         <div className="flex space-x-2">
@@ -39,10 +39,11 @@ export function Filter(props: Props) {
                 type="number"
                 min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
                 max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-                value={(filter as [number, number])?.[0] ?? ""}
-                onChange={(value) =>
-                  setFilter((old: [number, number]) => [value, old?.[1]])
-                }
+                value={(filter as [number, number])?.[0]?.toString() ?? ""}
+                onChange={(value) => {
+                  const newData = [parseInt(value), filter[1]] as [number, number]
+                  setFilter(newData)
+                }}
                 placeholder="Min"
                 className="form-control"
               />
@@ -54,10 +55,11 @@ export function Filter(props: Props) {
                 type="number"
                 min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
                 max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-                value={(filter as [number, number])?.[1] ?? ""}
-                onChange={(value) =>
-                  setFilter((old: [number, number]) => [old?.[0], value])
-                }
+                value={(filter as [number, number])?.[1]?.toString() ?? ""}
+                onChange={(value) => {
+                  const newData = [filter[0], parseInt(value)] as [number, number]
+                  setFilter(newData)
+                }}
                 placeholder="Max"
                 className="form-control"
               />
@@ -68,7 +70,7 @@ export function Filter(props: Props) {
       </div>
     );
 
-  if (firstValue === FieldTypes.SELECT)
+  if (filterType === FieldTypes.SELECT)
     return (
       <>
         <FormTypeSelect
@@ -95,7 +97,6 @@ export function Filter(props: Props) {
         type="text"
         value={(filter ?? "") as string}
         onChange={(value) => setFilter(value)}
-        placeholder={`Search...`}
         className="form-control"
         list={column.id + "_list"}
       />

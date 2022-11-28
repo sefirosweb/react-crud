@@ -2,8 +2,8 @@ import React, { InputHTMLAttributes, useEffect, useState } from 'react';
 
 interface Props
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value: string;
+  onChange: (value: string) => void;
   debounce?: number;
 }
 export function DebouncedInput(props: Props) {

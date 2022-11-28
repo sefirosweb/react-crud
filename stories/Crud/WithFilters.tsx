@@ -30,6 +30,7 @@ const columns: Array<ColumnDefinition<Product>> = [
   {
     accessorKey: "price",
     enableColumnFilter: true,
+    fieldType: FieldTypes.NUMBER
   },
   {
     accessorKey: "category_id",
