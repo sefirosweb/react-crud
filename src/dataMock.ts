@@ -24,13 +24,13 @@ export type GeneratedData = {
     price: number;
     category: any;
     category_id: any;
-    created_at: Date;
+    created_at: string;
 }
 
 let generatedData: Array<GeneratedData> | undefined = undefined
 export const createData = () => {
     if (generatedData) {
-        generatedData.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
+        generatedData.sort((a, b) => (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
         return generatedData
     }
 
@@ -51,7 +51,7 @@ export const createData = () => {
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,
-            created_at: faker.date.recent()
+            created_at: faker.date.recent().toISOString()
         })
     }
 
