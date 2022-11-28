@@ -18,7 +18,7 @@ const mock = new MockAdapter(axios, {
 let generatedData = undefined // cached for same request all times
 export const createData = () => {
     if (generatedData) {
-        generatedData.sort((a, b) => b.created_at - a.created_at)
+        generatedData.sort((a, b) => (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
         return generatedData
     }
 
@@ -39,7 +39,7 @@ export const createData = () => {
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,
-            created_at: faker.date.recent()
+            created_at: faker.date.recent().toISOString()
         })
     }
 

@@ -5,6 +5,7 @@ import {
   Table,
 } from "@tanstack/react-table";
 import React from "react";
+import { FieldTypes } from "../../../types";
 import { Filter } from "./Filter";
 
 type Props = {
@@ -24,45 +25,66 @@ export const TableHeader = (props: Props) => {
     setColumnFiltersFields,
   } = props;
 
-  const filterField = (filter: any, header: Header<any, unknown>) => {
-    if (enableColumnFilters) {
-      header.column.setFilterValue(filter);
-    } else {
-      if (header.column.id && columnFiltersFields && setColumnFiltersFields) {
-        const newColumnFiltersFields = [...columnFiltersFields];
-        const fIndex = newColumnFiltersFields.findIndex(
-          (f) => f.id === header.column.id
-        );
+  const filterField = (filter: FilterType, header: Header<any, unknown>) => {
+    const fieldType = header.column.columnDef.meta?.fieldType ?? FieldTypes.TEXT
 
-        let validValude;
-
-        if (
-          (typeof filter === "string" && filter === "") ||
-          (Array.isArray(filter) && filter[0] === "" && filter[1] === "")
-        ) {
-          validValude = false;
-        } else {
-          validValude = filter;
-        }
-
-        if (fIndex < 0 && validValude) {
-          newColumnFiltersFields.push({
-            id: header.column.id,
-            value: validValude,
-          });
-        }
-
-        if (fIndex >= 0 && validValude) {
-          newColumnFiltersFields[fIndex].value = validValude;
-        }
-
-        if (fIndex >= 0 && !validValude) {
-          newColumnFiltersFields.splice(fIndex, 1);
-        }
-
-        setColumnFiltersFields(newColumnFiltersFields);
-      }
+    if (!fieldType) {
+      return
     }
+
+
+    if (!enableColumnFilters) {
+      return
+    }
+
+    if (fieldType === FieldTypes.TEXT) {
+      header.column.setFilterValue(filter)
+      return
+    }
+
+    if (!header.column.id || !columnFiltersFields || !setColumnFiltersFields) {
+      return
+    }
+
+    const newColumnFiltersFields = [...columnFiltersFields];
+    const fIndex = newColumnFiltersFields.findIndex(
+      (f) => f.id === header.column.id
+    );
+
+    let validValude;
+    console.log({ newColumnFiltersFields })
+    console.log({ fIndex })
+
+    if (
+      (typeof filter === "string" && filter === "") ||
+      (Array.isArray(filter) && filter[0] === "" && filter[1] === "")
+    ) {
+      validValude = false;
+    } else {
+      validValude = filter;
+    }
+    console.log({ validValude })
+
+
+    if (fIndex < 0 && validValude) {
+      newColumnFiltersFields.push({
+        id: header.column.id,
+        value: validValude,
+      });
+    }
+
+    if (fIndex >= 0 && validValude) {
+      newColumnFiltersFields[fIndex].value = validValude;
+    }
+
+    if (fIndex >= 0 && !validValude) {
+      newColumnFiltersFields.splice(fIndex, 1);
+    }
+
+    console.log({ newColumnFiltersFields })
+    setColumnFiltersFields(newColumnFiltersFields);
+
+
   };
 
   return (

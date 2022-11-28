@@ -1,10 +1,9 @@
-import { DebouncedInput } from "./DebouncedInput";
-
-import { Column } from "@tanstack/react-table";
 import React, { useEffect, useMemo, useState } from "react";
+import { Column } from "@tanstack/react-table";
 import { Row, Col } from "react-bootstrap";
 import { FieldTypes } from "../../../types";
 import { FormTypeSelect } from "../FormTypes/FormTypeSelect";
+import { DebouncedInput } from "./DebouncedInput";
 
 type Props = {
   column: Column<any, unknown>;
@@ -18,6 +17,8 @@ export function Filter(props: Props) {
   const [filter, setFilter] = useState<FilterType>("");
 
   useEffect(() => {
+    console.log('detected filter changed')
+    console.log({ filter })
     setColumnFilter(filter);
   }, [filter]);
 
@@ -80,6 +81,39 @@ export function Filter(props: Props) {
           value={(filter as string | number) ?? ""}
         />
         <div className="h-1" />
+      </>
+    );
+
+  if (filterType === FieldTypes.DATE)
+    return (
+      <>
+        <Row>
+          <Col>
+            <DebouncedInput
+              type="date"
+              value={(filter as [string, string])?.[0] ?? ""}
+              onChange={(value) => {
+                const newData = [value, filter[1]] as [string, string]
+                setFilter(newData)
+              }}
+
+              className="form-control"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <DebouncedInput
+              type="date"
+              value={(filter as [string, string])?.[1] ?? ""}
+              onChange={(value) => {
+                const newData = [filter[0], value] as [string, string]
+                setFilter(newData)
+              }}
+              className="form-control"
+            />
+          </Col>
+        </Row>
       </>
     );
 
