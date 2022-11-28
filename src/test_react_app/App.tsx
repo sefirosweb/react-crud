@@ -1,38 +1,35 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
+import { GeneratedData } from '../dataMock';
 import { ColumnDefinition, Crud } from '../module';
+
 function App() {
 
-  const columns: Array<ColumnDefinition<any>> = [
+  const columns: Array<ColumnDefinition<GeneratedData>> = [
     {
-      id: "id",
-      accessorKey: "id"
+      accessorKey: "uuid"
     },
     {
-      id: "asdasdasd",
-      accessorKey: "asdasdasd"
+      accessorKey: "category"
+    },
+    {
+      accessorKey: "created_at",
+      cell: (props) => {
+        console.log(typeof (props.row.original.created_at))
+        return props?.row?.original?.created_at
+      }
     }
   ]
 
-  const data = [
-    {
-      id: "1",
-      asdasdasd: 'a'
-    },
-    {
-      id: "2",
-      asdasdasd: 'b'
-    }
-  ]
   return (
-    <div>
-      Testomg
+    <Container className='mt-5'>
+      <h1>Tests</h1>
       <Crud
         columns={columns}
         primaryKey='id'
-        data={data}
+        crudUrl='/api/crud'
       />
-
-    </div>
+    </Container>
   );
 }
 

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './test_react_app/App';
 import reportWebVitals from './test_react_app/reportWebVitals';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./dataMock"
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
