@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Story } from "@storybook/react";
-
 import { Crud, Props, PropsRef } from "../../src/module/components/forms/Crud";
 import { ColumnDefinition, FieldTypes } from "../../src/module/types";
 import { Product, data } from "../../models/Product";
 import { ColumnFilter, ColumnFiltersState } from "@tanstack/react-table";
 import { FormTypeSelect } from "../../src/module/components/forms/FormTypes/FormTypeSelect";
 import { useEffect } from "@storybook/addons";
+import { DateTime } from 'luxon'
 
 const columns: Array<ColumnDefinition<Product>> = [
   {
@@ -41,6 +41,12 @@ const columns: Array<ColumnDefinition<Product>> = [
     selectOptionsUrl: "/api/get_options",
     visible: false
   },
+  {
+    header: "Date",
+    accessorFn: (props) => (DateTime.fromISO(props.created_at)).toISODate(),
+    enableColumnFilter: true,
+    fieldType: FieldTypes.DATE,
+  }
 ];
 
 const Template = (props: Props) => {
