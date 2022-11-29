@@ -1,4 +1,5 @@
 import { FilterFn } from "@tanstack/react-table";
+import { matchString } from "../../../lib";
 // import { rankItem } from "@tanstack/match-sorter-utils";
 
 export const fuzzyFilter: FilterFn<any> = (
@@ -12,41 +13,6 @@ export const fuzzyFilter: FilterFn<any> = (
   //   itemRank,
   // });
   // return itemRank.passed;
-  const text = row.getValue(columnId);
-
-  if (typeof text === "string") {
-    const result = text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .match(
-        value
-          .toString()
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-      );
-
-    if (result) return true;
-    return false;
-  }
-
-  if (typeof text === "number") {
-    const result = text
-      .toString()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .match(
-        value
-          .toString()
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-      );
-    if (result) return true;
-    return false;
-  }
-
-  return false;
+  const text = row.getValue(columnId) as string | number;
+  return matchString(text, value)
 };

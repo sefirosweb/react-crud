@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { matchString } from './module/lib';
 
 const TIMEOUT = 600
 
@@ -145,21 +146,17 @@ const generateDataSubtable = (): Promise<GenerateDataSubtable> => {
 }
 
 
-const matchGlobalFilter = (row: Record<string, string | number>, valueParam: string) => {
+const matchGlobalFilter = (row: Record<string, string | number>, valueParam: string | number) => {
     if (valueParam === '') return true
     let result = false
+
     Object.entries(row).every((entry) => {
-
-        const value = typeof entry[1] === 'number' ? entry[1].toString() : entry[1]
-        if (typeof value === 'string') {
-            if (value.includes(valueParam)) {
-                result = true
-                return false
-            }
+        console.log({ entry })
+        if (matchString(entry[1], valueParam)) {
+            result = true
+            return false
         }
-
         return true
-
     })
 
     return result
@@ -167,26 +164,35 @@ const matchGlobalFilter = (row: Record<string, string | number>, valueParam: str
 
 const filterData = (row: any, params: Record<string, string>) => {
     let result = true
-    let globalFilter = false
+    let globalFilter = true
     Object.entries(params).every(paramEntry => {
         const keyParam = paramEntry[0]
         const valueParam = paramEntry[1]
 
         if (keyParam === 'globalFilter') {
-            if (valueParam === '') {
+            if (matchGlobalFilter(row, valueParam)) {
                 globalFilter = true
-            } else if (matchGlobalFilter(row, valueParam)) {
-                globalFilter = true
+            } else {
+                globalFilter = false
             }
+
         } else if (
-            typeof row[keyParam] === 'string'
-            && !row[keyParam].includes(valueParam)
+            (typeof row[keyParam] === 'string' || typeof row[keyParam] === "number") &&
+            !matchString(row[keyParam], valueParam)
         ) {
             result = false
+            console.log({ result })
             return false
         }
 
+        console.log({ result })
+
         return true
+    })
+
+    console.log({
+        globalFilter,
+        result
     })
 
     return globalFilter && result
@@ -203,6 +209,9 @@ mock.onGet('/api/crud').reply((request) => {
 
             return filterData(row, request.params)
         })
+
+        console.log({ params: request.params })
+        console.log({ filteredData })
 
         resolve([
             200,

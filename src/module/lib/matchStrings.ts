@@ -1,4 +1,4 @@
-export const matchString = (a: string, b: string): boolean => {
+export const matchString = (a: string | number, b: string | number): boolean => {
   const result = a
     .toString()
     .toLowerCase()
