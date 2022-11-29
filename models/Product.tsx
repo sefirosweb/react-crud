@@ -1,4 +1,4 @@
-import { createData } from "../.storybook/dataMock";
+import { createData } from "../src/dataMock";
 import { ColumnDefinition } from "../src/module/types";
 import { FieldTypes } from "../src/module/types";
 

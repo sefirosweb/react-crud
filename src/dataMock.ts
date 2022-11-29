@@ -1,19 +1,17 @@
-
-
 import { faker } from '@faker-js/faker';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 const TIMEOUT = 600
-export function get_random<T>(list: Array<T>) {
-    return list[Math.floor((Math.random() * list.length))];
-}
 
 const mock = new MockAdapter(axios, {
     onNoMatch: 'passthrough',
     delayResponse: TIMEOUT,
 })
 
+export function get_random<T>(list: Array<T>) {
+    return list[Math.floor((Math.random() * list.length))];
+}
 
 export type GeneratedData = {
     uuid: string;
