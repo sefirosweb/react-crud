@@ -23,7 +23,7 @@ export const createData = () => {
     }
 
     console.log('Generating mok data.. "generateData"')
-    const random = Math.floor(Math.random() * 100) + 1
+    const random = Math.floor(Math.random() * 200) + 20
     const data = []
     for (var i = 0; i < random; i++) {
 
@@ -39,7 +39,7 @@ export const createData = () => {
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,
-            created_at: faker.date.recent().toISOString()
+            created_at: faker.date.recent(10).toISOString()
         })
     }
 

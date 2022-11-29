@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { FieldTypes } from "../../../types";
 import { FormTypeSelect } from "../FormTypes/FormTypeSelect";
 import { DebouncedInput } from "./DebouncedInput";
+import { DateTime } from "luxon";
 
 type Props = {
   column: Column<any, unknown>;
@@ -38,8 +39,6 @@ export function Filter(props: Props) {
             <Col>
               <DebouncedInput
                 type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
                 value={(filter as [number, number])?.[0]?.toString() ?? ""}
                 onChange={(value) => {
                   const newData = [parseInt(value), filter[1]] as [number, number]
@@ -54,8 +53,6 @@ export function Filter(props: Props) {
             <Col>
               <DebouncedInput
                 type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
                 value={(filter as [number, number])?.[1]?.toString() ?? ""}
                 onChange={(value) => {
                   const newData = [filter[0], parseInt(value)] as [number, number]
@@ -91,12 +88,13 @@ export function Filter(props: Props) {
           <Col>
             <DebouncedInput
               type="date"
-              value={(filter as [string, string])?.[0] ?? ""}
+              value={(filter as [number, number])?.[0] && typeof (filter as [number, number])?.[0] === "number" ? DateTime.fromMillis((filter as [number, number])?.[0]).toISODate() : ''}
               onChange={(value) => {
-                const newData = [value, filter[1]] as [string, string]
+                const newValue = DateTime.fromISO(value).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toMillis();
+                const newData = [newValue, filter[1]] as [number, number]
                 setFilter(newData)
               }}
-
+              placeholder="Min"
               className="form-control"
             />
           </Col>
@@ -105,11 +103,13 @@ export function Filter(props: Props) {
           <Col>
             <DebouncedInput
               type="date"
-              value={(filter as [string, string])?.[1] ?? ""}
+              value={(filter as [number, number])?.[1] && typeof (filter as [number, number])?.[1] === "number" ? DateTime.fromMillis((filter as [number, number])?.[1]).plus({ day: -1 }).toISODate() : ''}
               onChange={(value) => {
-                const newData = [filter[0], value] as [string, string]
+                const newValue = DateTime.fromISO(value).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).plus({ day: 1 }).toMillis();
+                const newData = [filter[0], newValue] as [number, number]
                 setFilter(newData)
               }}
+              placeholder="Max"
               className="form-control"
             />
           </Col>

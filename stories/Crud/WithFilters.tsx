@@ -43,9 +43,11 @@ const columns: Array<ColumnDefinition<Product>> = [
   },
   {
     header: "Date",
-    accessorFn: (props) => (DateTime.fromISO(props.created_at)).toISODate(),
+    accessorFn: (props) => DateTime.fromISO(props.created_at).toMillis(),
     enableColumnFilter: true,
+    enableSorting: true,
     fieldType: FieldTypes.DATE,
+    cell: (props) => (DateTime.fromISO(props.row.original.created_at)).toISODate() + ' => ' + (DateTime.fromISO(props.row.original.created_at)).toMillis(),
   }
 ];
 

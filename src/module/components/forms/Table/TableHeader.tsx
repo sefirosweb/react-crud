@@ -25,20 +25,15 @@ export const TableHeader = (props: Props) => {
     setColumnFiltersFields,
   } = props;
 
-  const filterField = (filter: FilterType, header: Header<any, unknown>) => {
+  const filterField = (filter: any, header: Header<any, unknown>) => {
     const fieldType = header.column.columnDef.meta?.fieldType ?? FieldTypes.TEXT
 
     if (!fieldType) {
       return
     }
 
-
-    if (!enableColumnFilters) {
-      return
-    }
-
-    if (fieldType === FieldTypes.TEXT) {
-      header.column.setFilterValue(filter)
+    if (enableColumnFilters) {
+      header.column.setFilterValue(filter);
       return
     }
 
@@ -52,8 +47,6 @@ export const TableHeader = (props: Props) => {
     );
 
     let validValude;
-    console.log({ newColumnFiltersFields })
-    console.log({ fIndex })
 
     if (
       (typeof filter === "string" && filter === "") ||
@@ -63,8 +56,6 @@ export const TableHeader = (props: Props) => {
     } else {
       validValude = filter;
     }
-    console.log({ validValude })
-
 
     if (fIndex < 0 && validValude) {
       newColumnFiltersFields.push({
@@ -81,7 +72,6 @@ export const TableHeader = (props: Props) => {
       newColumnFiltersFields.splice(fIndex, 1);
     }
 
-    console.log({ newColumnFiltersFields })
     setColumnFiltersFields(newColumnFiltersFields);
 
 

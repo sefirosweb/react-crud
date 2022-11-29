@@ -14,7 +14,7 @@ export type Product = {
   category_list: string;
 };
 
-export const data: Product[] = createData().splice(0, 50);
+export const data: Product[] = createData()
 
 export type TestModel = {
   id: string;
