@@ -55,11 +55,11 @@ const Template = (props: Props) => {
     setSelectedValue(e.target.value);
 
     const lazyFilter: Record<string, any> = {
-      custom_lazy_filter: e.target.value,
+      category_id: e.target.value,
     };
 
-    if (lazyFilter.custom_lazy_filter === "") {
-      delete lazyFilter.custom_lazy_filter;
+    if (lazyFilter.category_id === "") {
+      delete lazyFilter.category_id;
     }
 
     if (crudRef.current) {

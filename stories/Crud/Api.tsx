@@ -44,10 +44,10 @@ const Template = (props: Props) => {
     setSelectedValue(e.target.value);
 
     const lazyFilter = {
-      custom_lazy_filter: e.target.value,
+      category_id: e.target.value,
     };
 
-    crudRef.current.setLazyilters(lazyFilter);
+    crudRef.current?.setLazyilters(lazyFilter);
   };
 
   const customButtons = (
