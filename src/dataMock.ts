@@ -151,7 +151,6 @@ const matchGlobalFilter = (row: Record<string, string | number>, valueParam: str
     let result = false
 
     Object.entries(row).every((entry) => {
-        console.log({ entry })
         if (matchString(entry[1], valueParam)) {
             result = true
             return false
@@ -162,14 +161,14 @@ const matchGlobalFilter = (row: Record<string, string | number>, valueParam: str
     return result
 }
 
-const filterData = (row: any, params: Record<string, string>) => {
+const filterData = (row: any, params: Record<string, FilterType>) => {
     let result = true
     let globalFilter = true
     Object.entries(params).every(paramEntry => {
         const keyParam = paramEntry[0]
         const valueParam = paramEntry[1]
 
-        if (keyParam === 'globalFilter') {
+        if (keyParam === 'globalFilter' && typeof valueParam === "string") {
             if (matchGlobalFilter(row, valueParam)) {
                 globalFilter = true
             } else {
@@ -177,22 +176,30 @@ const filterData = (row: any, params: Record<string, string>) => {
             }
 
         } else if (
-            (typeof row[keyParam] === 'string' || typeof row[keyParam] === "number") &&
+            (typeof valueParam === "string") &&
             !matchString(row[keyParam], valueParam)
         ) {
             result = false
-            console.log({ result })
             return false
         }
 
-        console.log({ result })
+        if (
+            (Array.isArray(valueParam) && !isNaN(valueParam[0]))
+            && row[keyParam] < valueParam[0]
+        ) {
+            result = false
+            return false
+        }
+
+        if (
+            (Array.isArray(valueParam) && !isNaN(valueParam[1]))
+            && row[keyParam] > valueParam[1]
+        ) {
+            result = false
+            return false
+        }
 
         return true
-    })
-
-    console.log({
-        globalFilter,
-        result
     })
 
     return globalFilter && result
@@ -210,9 +217,6 @@ mock.onGet('/api/crud').reply((request) => {
             return filterData(row, request.params)
         })
 
-        console.log({ params: request.params })
-        console.log({ filteredData })
-
         resolve([
             200,
             {
@@ -227,7 +231,6 @@ mock.onPost('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' POST`)
 
     const requestData = JSON.parse(request.data)
-    console.log({ requestData })
     const data = createData()
 
     const categories = generateOptionsValue()
@@ -246,7 +249,6 @@ mock.onPut('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' PUT`)
 
     const updateData = JSON.parse(request.data)
-    console.log({ updateData })
     const uuid = JSON.parse(request.data).uuid
     const data = createData()
     const findData = data.findIndex(i => i.uuid === uuid)
