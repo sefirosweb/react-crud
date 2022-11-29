@@ -103,9 +103,9 @@ export function Filter(props: Props) {
           <Col>
             <DebouncedInput
               type="date"
-              value={(filter as [number, number])?.[1] && typeof (filter as [number, number])?.[1] === "number" ? DateTime.fromMillis((filter as [number, number])?.[1]).plus({ day: -1 }).toISODate() : ''}
+              value={(filter as [number, number])?.[1] && typeof (filter as [number, number])?.[1] === "number" ? DateTime.fromMillis((filter as [number, number])?.[1]).toISODate() : ''}
               onChange={(value) => {
-                const newValue = DateTime.fromISO(value).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).plus({ day: 1 }).toMillis();
+                const newValue = DateTime.fromISO(value).set({ hour: 23, minute: 59, second: 59, millisecond: 999 }).toMillis();
                 const newData = [filter[0], newValue] as [number, number]
                 setFilter(newData)
               }}
