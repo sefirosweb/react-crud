@@ -12,6 +12,9 @@ module.exports = {
   "framework": "@storybook/react",
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
-    check: true, // type-check stories during Storybook build
+    check: true // type-check stories during Storybook build
+  },
+  core: {
+    builder: "webpack5"
   }
-}
+};
