@@ -15,4 +15,4 @@ declare module '*.scss' {
     export default content;
 }
 
-type FilterType = string | [number, number] | [string, string]
+type FilterType = string | [number, number]

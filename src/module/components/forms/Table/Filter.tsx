@@ -18,8 +18,6 @@ export function Filter(props: Props) {
   const [filter, setFilter] = useState<FilterType>("");
 
   useEffect(() => {
-    console.log('detected filter changed')
-    console.log({ filter })
     setColumnFilter(filter);
   }, [filter]);
 
