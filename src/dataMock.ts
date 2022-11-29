@@ -76,7 +76,7 @@ export const generateOptionsValue = () => {
         data.push({
             name: cat,
             category: cat,
-            value: faker.datatype.number({ min: 1, max: 10000 }).toString(),
+            value: i.toString(),
             uuid: faker.datatype.uuid(),
             description: faker.commerce.productDescription(),
         })

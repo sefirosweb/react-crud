@@ -50,7 +50,7 @@ const columns: Array<ColumnDefinition<Product>> = [
 ];
 
 const Template = (props: Props) => {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("3");
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
 
