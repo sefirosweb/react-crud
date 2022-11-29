@@ -7,7 +7,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/preset-scss"
+    "@storybook/preset-scss",
+    "storybook-axios/register"
   ],
   "framework": "@storybook/react",
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration

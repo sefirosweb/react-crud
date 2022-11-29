@@ -1,21 +1,30 @@
 
 
 import { faker } from '@faker-js/faker';
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 const TIMEOUT = 600
-export function get_random(list) {
+
+const mock = new MockAdapter(axios, { onNoMatch: 'passthrough', delayResponse: TIMEOUT });
+
+export function get_random<T>(list: Array<T>) {
     return list[Math.floor((Math.random() * list.length))];
 }
 
-const mock = new MockAdapter(axios, {
-    onNoMatch: 'passthrough',
-    delayResponse: TIMEOUT,
-})
+export type GeneratedData = {
+    uuid: string;
+    value: string;
+    ean: number;
+    name: string;
+    description: string;
+    price: number;
+    category: any;
+    category_id: any;
+    created_at: string;
+}
 
-
-let generatedData = undefined // cached for same request all times
+let generatedData: Array<GeneratedData> | undefined = undefined
 export const createData = () => {
     if (generatedData) {
         generatedData.sort((a, b) => (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
@@ -23,8 +32,8 @@ export const createData = () => {
     }
 
     console.log('Generating mok data.. "generateData"')
-    const random = Math.floor(Math.random() * 200) + 20
-    const data = []
+    const random = Math.floor(Math.random() * 200) + 40
+    const data: Array<GeneratedData> = []
     for (var i = 0; i < random; i++) {
 
         const category = get_random(generateOptionsValue())
@@ -48,10 +57,18 @@ export const createData = () => {
     return generatedData
 }
 
-let optionsWithValue = undefined
+type OptionsType = {
+    name: string;
+    category: string;
+    value: string;
+    uuid: string;
+    description: string;
+}
+
+let optionsWithValue: Array<OptionsType> | undefined = undefined
 export const generateOptionsValue = () => {
     if (optionsWithValue) return optionsWithValue
-    const data = []
+    const data: Array<OptionsType> = []
     for (var i = 0; i < 5; i++) {
         const cat = faker.commerce.department()
         data.push({
@@ -68,8 +85,14 @@ export const generateOptionsValue = () => {
     return optionsWithValue
 }
 
-const generateCrudResponse = (request, message) => {
-    return new Promise(function (resolve) {
+type GenerateCrudResponse = [number, {
+    success: boolean
+    message: string
+    data: any
+}]
+
+const generateCrudResponse = (request: AxiosRequestConfig, message: string): Promise<GenerateCrudResponse> => {
+    return new Promise((resolve) => {
         resolve([
             200,
             {
@@ -81,7 +104,12 @@ const generateCrudResponse = (request, message) => {
     })
 }
 
-const generateDataOptions = (request) => {
+
+type GenerateDataOptions = [number, {
+    success: boolean
+    data: any
+}]
+const generateDataOptions = (request?: AxiosResponse): Promise<GenerateDataOptions> => {
     console.log('Request to: generateDataOptions', request)
     return new Promise(function (resolve) {
         const data = generateOptionsValue()
@@ -96,7 +124,13 @@ const generateDataOptions = (request) => {
     })
 }
 
-const generateDataSubtable = () => {
+
+type GenerateDataSubtable = [number, {
+    success: boolean
+    data: Array<GeneratedData>
+}]
+
+const generateDataSubtable = (): Promise<GenerateDataSubtable> => {
     return new Promise(function (resolve) {
         const data = createData()
         resolve([
@@ -110,7 +144,7 @@ const generateDataSubtable = () => {
 }
 
 
-const matchGlobalFilter = (row, valueParam) => {
+const matchGlobalFilter = (row: Record<string, string | number>, valueParam: string) => {
     if (valueParam === '') return true
     let result = false
     Object.entries(row).every((entry) => {
@@ -130,11 +164,10 @@ const matchGlobalFilter = (row, valueParam) => {
     return result
 }
 
-const filterData = (row, params) => {
+const filterData = (row: any, params: Record<string, string>) => {
     let result = true
     let globalFilter = false
     Object.entries(params).every(paramEntry => {
-
         const keyParam = paramEntry[0]
         const valueParam = paramEntry[1]
 
@@ -144,7 +177,10 @@ const filterData = (row, params) => {
             } else if (matchGlobalFilter(row, valueParam)) {
                 globalFilter = true
             }
-        } else if (typeof row[keyParam] === 'string' && !row[keyParam].includes(valueParam)) {
+        } else if (
+            typeof row[keyParam] === 'string'
+            && !row[keyParam].includes(valueParam)
+        ) {
             result = false
             return false
         }

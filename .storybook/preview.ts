@@ -1,6 +1,8 @@
+import axios from "axios";
 import "../scss/app.scss"
 import '../src/module/lib/axiosWithToastr'
-import "./dataMock"
+import withAxiosDecorator from 'storybook-axios';
+import './dataMock';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -11,3 +13,6 @@ export const parameters = {
     },
   },
 }
+
+//@ts-ignore
+export const decorators = [withAxiosDecorator(axios)];
