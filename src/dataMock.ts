@@ -164,6 +164,7 @@ const matchGlobalFilter = (row: Record<string, string | number>, valueParam: str
 const filterData = (row: any, params: Record<string, FilterType>) => {
     let result = true
     let globalFilter = true
+
     Object.entries(params).every(paramEntry => {
         const keyParam = paramEntry[0]
         const valueParam = paramEntry[1]
@@ -174,8 +175,14 @@ const filterData = (row: any, params: Record<string, FilterType>) => {
             } else {
                 globalFilter = false
             }
+            return true
+        }
 
-        } else if (
+        if (typeof row[keyParam] === "undefined") {
+            return true
+        }
+
+        if (
             (typeof valueParam === "string") &&
             !matchString(row[keyParam], valueParam)
         ) {
