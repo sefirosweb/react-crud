@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Story } from "@storybook/react";
 
 import { Crud, Props, PropsRef } from "../../src/module/components/forms/Crud";
@@ -51,6 +51,15 @@ const columns: Array<ColumnDefinition<Product>> = [
 
 const Template = (props: Props) => {
   const [selectedValue, setSelectedValue] = useState("3");
+  const crudRef = useRef<PropsRef>(null);
+
+  useEffect(() => {
+    const lazyFilter: Record<string, any> = {
+      category_id: "3",
+    };
+    crudRef.current?.setLazyilters(lazyFilter);
+  }, [])
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
 
@@ -77,7 +86,7 @@ const Template = (props: Props) => {
       />
     </>
   );
-  const crudRef = useRef<PropsRef>(null);
+
 
   return <Crud {...props} customButtons={customButtons} ref={crudRef} />;
 };

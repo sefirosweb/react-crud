@@ -151,31 +151,33 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilter]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (firstLoad.current) {
-        firstLoad.current = false;
-        return;
-      }
-      const newExternalFilters = {
-        ...externalFilters,
-        ...reactTableFilters,
-      };
-      setInputFilters(newExternalFilters);
-    }, 400);
-    return () => clearTimeout(timer);
+    const newExternalFilters = {
+      ...externalFilters,
+      ...reactTableFilters,
+    };
+    setInputFilters(newExternalFilters);
   }, [externalFilters, reactTableFilters]);
 
   useEffect(() => {
     if (!crudUrl) return;
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
 
     const cancelTokenSource = axios.CancelToken.source();
-    getDataTable(crudUrl, inputFilters, cancelTokenSource);
+    const timer = setTimeout(() => {
+      getDataTable(crudUrl, inputFilters, cancelTokenSource);
+    }, 400);
+
     return () => {
       cancelTokenSource.cancel();
+      clearTimeout(timer)
     };
   }, [crudUrl, inputFilters, sendRequest]);
 
   const getDataTable = (url: string, params: {}, cancelTokenSource?: CancelTokenSource): Promise<AxiosResponse<any, any>> => {
+    console.log({ url })
     return new Promise((resolve, reject) => {
       setIsLoading(true);
       axios
