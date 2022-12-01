@@ -10,6 +10,7 @@ export type Props = {
   className?: string;
   label?: string;
   isLoading?: boolean;
+  readonly?: boolean;
   handleChange: React.ChangeEventHandler<HTMLSelectElement>;
   value?: string | number | SelectOption;
   selectOptionsUrl?: string;
@@ -26,6 +27,7 @@ export const FormTypeSelect = (props: Props) => {
     className,
     selectOptionsUrl,
     options,
+    readonly = false
   } = props;
 
   const [isLoadingInternal, setIsLoadingInternal] = useState(false);
@@ -110,7 +112,7 @@ export const FormTypeSelect = (props: Props) => {
           setSelectedOption(e.target.value);
           handleChange(e);
         }}
-        disabled={isLoadingInternal}
+        disabled={isLoadingInternal || readonly}
       >
         <option value={""}></option>
         {selectOptions.map((option) => {
