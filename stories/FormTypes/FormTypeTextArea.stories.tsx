@@ -17,6 +17,7 @@ export const TextArea: Story<Props> = Template.bind({});
 TextArea.args = {
   label: 'Form Type Text Area',
   rows: 5,
-  inputFieldName: 'form_text_area',
+  name: 'form_text_area',
+  controlId: 'form_text_area',
   handleChange: (e) => { console.log(e) }
 };

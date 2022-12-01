@@ -16,6 +16,7 @@ const Template: Story<Props> = args => <FormTypeText {...args} />;
 export const Text: Story<Props> = Template.bind({});
 Text.args = {
   label: 'Form Type Text',
-  inputFieldName: 'form_text',
+  name: 'form_text',
+  controlId: 'form_text',
   handleChange: (e) => { console.log(e) }
 };

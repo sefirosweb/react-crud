@@ -2,7 +2,8 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 
 export type Props = {
-  inputFieldName: string;
+  name: string;
+  controlId: string;
   className?: string;
   label?: string;
   isLoading?: boolean;
@@ -11,15 +12,15 @@ export type Props = {
 };
 
 export const FormTypeDate = (props: Props) => {
-  const { inputFieldName, isLoading, label, value, handleChange, className } =
+  const { name, controlId, isLoading, label, value, handleChange, className } =
     props;
   return (
-    <Form.Group controlId={inputFieldName} className={className}>
+    <Form.Group controlId={controlId} className={className}>
       {label ? <Form.Label>{label}</Form.Label> : ''}
       <Form.Control
         type="date"
         readOnly={isLoading}
-        name={inputFieldName}
+        name={name}
         onChange={handleChange}
         value={value}
       />

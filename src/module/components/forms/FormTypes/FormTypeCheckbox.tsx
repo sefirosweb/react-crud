@@ -9,7 +9,8 @@ type HandleChange = {
 };
 
 export type Props = {
-  inputFieldName: string;
+  name: string;
+  controlId: string;
   className?: string;
   label?: string;
   isLoading?: boolean;
@@ -34,27 +35,27 @@ const parser = (value: unknown): boolean => {
 };
 
 export const FormTypeCheckbox = (props: Props) => {
-  const { inputFieldName, className, label, isLoading, handleChange, value } =
+  const { name, controlId, className, label, isLoading, handleChange, value } =
     props;
 
   const checked: boolean = parser(value);
 
   return (
-    <Form.Group controlId={inputFieldName} className={className}>
+    <Form.Group controlId={controlId} className={className}>
       <Form.Check
         type="switch"
         disabled={isLoading}
         onChange={() => {
           handleChange({
             target: {
-              name: inputFieldName,
+              name,
               value: checked ? "0" : "1",
             },
           });
         }}
         checked={checked}
         label={label}
-        name={inputFieldName}
+        name={name}
       />
     </Form.Group>
   );

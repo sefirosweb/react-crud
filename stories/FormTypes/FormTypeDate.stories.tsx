@@ -16,6 +16,7 @@ const Template: Story<Props> = args => <FormTypeDate {...args} />;
 export const Date: Story<Props> = Template.bind({});
 Date.args = {
   label: 'Form Type Date',
-  inputFieldName: 'form_date',
+  name: 'form_date',
+  controlId: 'form_date',
   handleChange: (e) => { console.log(e) }
 };

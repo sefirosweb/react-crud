@@ -6,7 +6,8 @@ import { axiosWithCache } from "./../../../lib/axiosWithCache";
 import { SelectOption } from "../../../types";
 
 export type Props = {
-  inputFieldName: string;
+  name: string;
+  controlId: string;
   className?: string;
   label?: string;
   isLoading?: boolean;
@@ -19,7 +20,8 @@ export type Props = {
 
 export const FormTypeSelect = (props: Props) => {
   const {
-    inputFieldName,
+    name,
+    controlId,
     isLoading,
     label,
     value,
@@ -103,11 +105,11 @@ export const FormTypeSelect = (props: Props) => {
   }, [value]);
 
   return (
-    <Form.Group controlId={inputFieldName} className={className}>
+    <Form.Group controlId={controlId} className={className}>
       {label ? <Form.Label>{label}</Form.Label> : ""}
       <Form.Select
         value={selectedOption}
-        name={inputFieldName}
+        name={name}
         onChange={(e) => {
           setSelectedOption(e.target.value);
           handleChange(e);

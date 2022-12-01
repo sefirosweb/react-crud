@@ -53,10 +53,11 @@ type PropsParams = {
   };
 };
 
-type Props<Field extends ValidFieldTypes = ValidFieldTypes> = {
+export type Props<Field extends ValidFieldTypes = ValidFieldTypes> = {
   [field in Field]: {
     type: field;
-    inputFieldName: string;
+    name: string;
+    controlId: string;
     className?: string;
     label?: string;
     isLoading?: boolean;
@@ -75,7 +76,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.SELECT))
     return (
       <FormTypeSelect
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -88,7 +90,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.TEXTAREA))
     return (
       <FormTypeTextArea
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -100,7 +103,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.CHECKBOX))
     return (
       <FormTypeCheckbox
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -112,7 +116,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.NUMBER))
     return (
       <FormTypeNumber
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -124,7 +129,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.DATE))
     return (
       <FormTypeDate
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -136,7 +142,8 @@ export const FormTypes = (props: Props): JSX.Element => {
   if (hasField(props, FieldTypes.PASSWORD))
     return (
       <FormTypePassword
-        inputFieldName={props.inputFieldName}
+        name={props.name}
+        controlId={props.controlId}
         className={props.className}
         label={props.label}
         isLoading={props.isLoading}
@@ -147,7 +154,8 @@ export const FormTypes = (props: Props): JSX.Element => {
 
   return (
     <FormTypeText
-      inputFieldName={props.inputFieldName}
+      name={props.name}
+      controlId={props.controlId}
       className={props.className}
       label={props.label}
       isLoading={props.isLoading}

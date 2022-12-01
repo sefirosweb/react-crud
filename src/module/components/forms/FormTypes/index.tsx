@@ -7,3 +7,4 @@ export { FormTypeSelect } from "./FormTypeSelect";
 export { FormTypeText } from "./FormTypeText";
 export { FormTypeTextArea } from "./FormTypeTextArea";
 export { FormTypes } from "./FormTypes";
+export type { Props } from "./FormTypes";

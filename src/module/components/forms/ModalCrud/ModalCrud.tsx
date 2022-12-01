@@ -187,7 +187,8 @@ export const ModalCrud = (props: Props) => {
                 <FormTypes
                   type={fieldWithData.fieldType}
                   key={fieldWithData.accessorKey}
-                  inputFieldName={fieldWithData.accessorKey}
+                  name={fieldWithData.accessorKey}
+                  controlId={fieldWithData.accessorKey}
                   label={fieldWithData.titleOnCRUD ?? fieldWithData.accessorKey}
                   isLoading={isLoading}
                   handleChange={handleChange}
@@ -202,7 +203,8 @@ export const ModalCrud = (props: Props) => {
               <FormTypes
                 type={fieldWithData.fieldType ?? FieldTypes.TEXT}
                 key={fieldWithData.accessorKey}
-                inputFieldName={fieldWithData.accessorKey}
+                name={fieldWithData.accessorKey}
+                controlId={fieldWithData.accessorKey}
                 label={fieldWithData.titleOnCRUD ?? fieldWithData.accessorKey}
                 isLoading={isLoading}
                 handleChange={handleChange}

@@ -17,6 +17,7 @@ export const Select: Story<Props> = Template.bind({});
 Select.args = {
   label: 'Form Type Select',
   selectOptionsUrl: '/api/get_options',
-  inputFieldName: 'form_select',
+  name: 'form_select',
+  controlId: 'form_select',
   handleChange: (e) => { console.log(e) }
 };

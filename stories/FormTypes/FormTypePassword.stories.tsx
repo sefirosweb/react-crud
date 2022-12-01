@@ -16,6 +16,7 @@ const Template: Story<Props> = args => <FormTypePassword {...args} />;
 export const Password: Story<Props> = Template.bind({});
 Password.args = {
   label: 'Form Type Password',
-  inputFieldName: 'form_password',
+  name: 'form_password',
+  controlId: 'form_password',
   handleChange: (e) => { console.log(e) }
 };

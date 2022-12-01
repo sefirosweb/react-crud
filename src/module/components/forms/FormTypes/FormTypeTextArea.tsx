@@ -2,7 +2,8 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 
 export type Props = {
-  inputFieldName: string;
+  name: string;
+  controlId: string;
   className?: string;
   label?: string;
   isLoading?: boolean;
@@ -13,7 +14,8 @@ export type Props = {
 
 export const FormTypeTextArea = (props: Props) => {
   const {
-    inputFieldName,
+    name,
+    controlId,
     isLoading,
     label,
     value,
@@ -22,14 +24,14 @@ export const FormTypeTextArea = (props: Props) => {
     rows = 4,
   } = props;
   return (
-    <Form.Group controlId={inputFieldName} className={className}>
+    <Form.Group controlId={controlId} className={className}>
       {label ? <Form.Label>{label}</Form.Label> : ''}
       <Form.Control
         as="textarea"
         rows={rows}
         value={value}
         onChange={handleChange}
-        name={inputFieldName}
+        name={name}
         readOnly={isLoading}
       />
     </Form.Group>
