@@ -218,8 +218,8 @@ export const ModalCrud = (props: Props) => {
 
         {fields.map((field) => {
           if (crud === "DELETE") return null;
-          if (!field.multiSelectOptions) return;
-          if (!field.accessorKey) return;
+          if (!field.multiSelectOptions) return null;
+          if (!field.accessorKey) return null;
           const fieldWithData = modalData[field.accessorKey];
           if (!fieldWithData?.accessorKey) return null;
           if (fieldWithData.fieldType !== FieldTypes.MULTISELECT) return null;

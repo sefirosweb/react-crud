@@ -21,7 +21,7 @@ export function DebouncedInput(props: Props) {
     }, debounce);
 
     return () => clearTimeout(timeout);
-  }, [value]);
+  }, [value, debounce, onChange]);
 
   return (
     <input

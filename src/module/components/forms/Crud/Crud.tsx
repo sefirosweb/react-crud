@@ -148,7 +148,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   useEffect(() => {
     if (lazyLoad) return;
     setGlobalFilterText(globalFilter);
-  }, [globalFilter]);
+  }, [globalFilter, setGlobalFilterText, lazyLoad]);
 
   useEffect(() => {
     const newExternalFilters = {

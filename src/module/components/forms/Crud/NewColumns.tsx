@@ -8,8 +8,8 @@ import { FieldTypes } from "../../../types";
 import { PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
 export interface Props
   extends Omit<
-    TableProps,
-    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
+  TableProps,
+  "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   primaryKey: string;
   canEdit?: boolean;
@@ -19,7 +19,7 @@ export interface Props
   refreshTable: () => void;
 }
 
-export default (props: Props) => {
+const NewColumns = (props: Props) => {
   const {
     primaryKey,
     columns,
@@ -144,3 +144,5 @@ export default (props: Props) => {
 
   return newColumns;
 };
+
+export default NewColumns;

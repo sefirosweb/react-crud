@@ -19,6 +19,8 @@ export function Filter(props: Props) {
 
   useEffect(() => {
     setColumnFilter(filter);
+    // cant add setColumnFilter into useEffect array
+    // eslint-disable-next-line
   }, [filter]);
 
   const sortedUniqueValues = useMemo(
@@ -26,7 +28,9 @@ export function Filter(props: Props) {
       filterType === FieldTypes.NUMBER
         ? []
         : Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column.getFacetedUniqueValues()]
+    // unknow to fix
+    // eslint-disable-next-line
+    [column.getFacetedUniqueValues(), filterType]
   );
 
   if (filterType === FieldTypes.NUMBER)
