@@ -52,7 +52,6 @@ export const TableToolbar = (props: Props) => {
               onChange={(value) => setFilter(String(value))}
               placeholder={`Search...`}
               className="form-control"
-              disabled={isLoading}
             />
           )}
 

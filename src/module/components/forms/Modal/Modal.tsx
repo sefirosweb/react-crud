@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal as BootstrapModal } from "react-bootstrap";
+import { Button, Modal as BootstrapModal, ModalProps } from "react-bootstrap";
 import { Variant } from "../../../types";
 import { LoadingButton } from "./../../buttons/LoadingButton";
 
@@ -14,6 +14,7 @@ export type Props = {
   onExited?: () => void;
   onShow?: () => void;
   isLoading?: boolean;
+  size?: ModalProps['size']
 };
 
 export const Modal = (props: Props) => {
@@ -28,6 +29,7 @@ export const Modal = (props: Props) => {
     onExited,
     onShow,
     isLoading,
+    size
   } = props;
 
   const handleClose = () => setShow(false);
@@ -41,6 +43,7 @@ export const Modal = (props: Props) => {
         keyboard={!isLoading}
         onExited={onExited}
         onShow={onShow}
+        size={size}
       >
         <BootstrapModal.Header>
           <BootstrapModal.Title>{title}</BootstrapModal.Title>
