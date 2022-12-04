@@ -21,7 +21,9 @@ export function DebouncedInput(props: Props) {
     }, debounce);
 
     return () => clearTimeout(timeout);
-  }, [value, debounce, onChange]);
+    // cant add onchange on debounce
+    // @ts-ignore
+  }, [value]);
 
   return (
     <input
