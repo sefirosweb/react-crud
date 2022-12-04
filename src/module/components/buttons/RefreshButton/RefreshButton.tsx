@@ -11,7 +11,7 @@ export type Props = {
 export const RefreshButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
-    <Button onClick={onClick} disabled={disabled} variant="secondary">
+    <Button onClick={onClick} disabled={disabled} variant="secondary" className='d-flex justify-content-center align-items-center'>
       {children} <HiOutlineRefresh />
     </Button>
   );

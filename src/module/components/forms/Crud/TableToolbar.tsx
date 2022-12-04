@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, InputGroup, Row } from "react-bootstrap";
 import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
+import { FaFileExport } from 'react-icons/fa';
+
 
 type Props = {
   isLoading: boolean;
@@ -9,9 +11,12 @@ type Props = {
   createButtonTitle?: string;
   canRefresh?: boolean;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-  refreshTable?: () => void;
+  refreshTable: () => void;
+  generateExcel: (fileName: string) => Promise<void>;
   handleModalShow: () => void;
   customButtons?: JSX.Element;
+  canExport: boolean;
+  exportName: string;
 };
 
 export const TableToolbar = (props: Props) => {
@@ -23,7 +28,10 @@ export const TableToolbar = (props: Props) => {
     canRefresh,
     refreshTable,
     handleModalShow,
+    generateExcel,
     customButtons,
+    canExport,
+    exportName
   } = props;
 
   const [filter, setFilter] = useState("");
@@ -44,29 +52,36 @@ export const TableToolbar = (props: Props) => {
       </Col>
 
       <Col lg={3} md={4} xs={12} className="mb-3 align-self-end">
-        <InputGroup className="d-flex justify-content-end">
-          {enableGlobalFilter && (
-            <DebouncedInput
-              type="text"
-              value={filter}
-              onChange={(value) => setFilter(String(value))}
-              placeholder={`Search...`}
-              className="form-control"
-            />
-          )}
+        <div className="d-flex justify-content-end">
+          <InputGroup>
+            {enableGlobalFilter && (
+              <DebouncedInput
+                type="text"
+                value={filter}
+                onChange={(value) => setFilter(String(value))}
+                placeholder={`Search...`}
+                className="form-control"
+              />
+            )}
 
-          {canRefresh && (
-            <RefreshButton
-              disabled={isLoading}
-              onClick={() => {
-                if (typeof refreshTable !== "undefined") {
-                  refreshTable();
-                }
-              }}
-            />
-          )}
-        </InputGroup>
+            {canRefresh && (
+              <RefreshButton
+                disabled={isLoading}
+                onClick={() => refreshTable()}
+              />
+            )}
+
+          </InputGroup>
+
+          {canExport &&
+            <Button className="ms-2 d-flex justify-content-center align-items-center"
+              onClick={() => generateExcel(exportName + Date.now())}
+            >
+              <FaFileExport />
+            </Button>
+          }
+        </div>
       </Col>
-    </Row>
+    </Row >
   );
 };

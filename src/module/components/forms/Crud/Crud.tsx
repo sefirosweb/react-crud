@@ -26,6 +26,7 @@ import {
   PropsRef as HandleModalShowPropsRef,
 } from "./HandleModalShow";
 import NewColumns from "./NewColumns";
+import exportToExcel from "../../../lib/exportToExcel";
 
 type newInputFilters = Record<string, unknown>;
 export interface Props
@@ -42,6 +43,8 @@ export interface Props
   canRefresh?: boolean;
   canDelete?: boolean;
   canEdit?: boolean;
+  canExport?: boolean;
+  exportName?: string;
   handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
   primaryKey: string;
   titleOnDelete?: string;
@@ -60,6 +63,7 @@ export type PropsRef = {
   setIsLoading: (isLoading: boolean) => void;
   getRowStyles?: (row: RowTanstack<any>) => React.CSSProperties;
   getRowClass?: (row: RowTanstack<any>) => string;
+  exportToExcel: (fileName: string) => Promise<void>;
 };
 
 export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
@@ -75,6 +79,8 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     canRefresh,
     canDelete,
     canEdit,
+    canExport,
+    exportName,
     handleSuccess,
     primaryKey,
     titleOnDelete,
@@ -98,6 +104,19 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const handleModalShowRef = useRef<HandleModalShowPropsRef>(null);
 
   const refreshTable = () => setSendRequest(!sendRequest);
+  const generateExcel = (fileName: string) => {
+    const data: Array<Record<string, any>> = []
+
+    tableRef.current?.table.getCoreRowModel().rows.forEach(row => {
+      const tempRowData: Record<string, any> = {}
+      row.getVisibleCells().forEach((cell) => {
+        tempRowData[cell.column.id] = cell.getValue()
+      })
+      data.push(tempRowData)
+    })
+
+    return exportToExcel(data, fileName)
+  }
 
   useImperativeHandle(ref, () => ({
     table: tableRef.current?.table,
@@ -122,6 +141,8 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       if (!tableRef.current) return [];
       return Object.keys(tableRef.current.table.getState().rowSelection);
     },
+
+    exportToExcel: generateExcel
   }));
 
   useEffect(() => {
@@ -177,7 +198,6 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [crudUrl, inputFilters, sendRequest]);
 
   const getDataTable = (url: string, params: {}, cancelTokenSource?: CancelTokenSource): Promise<AxiosResponse<any, any>> => {
-    console.log({ url })
     return new Promise((resolve, reject) => {
       setIsLoading(true);
       axios
@@ -224,10 +244,12 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           createButtonTitle={createButtonTitle}
           canRefresh={canRefresh}
           refreshTable={refreshTable}
+          generateExcel={generateExcel}
           customButtons={customButtons}
           handleModalShow={() => handleModalShowRef.current?.handleModalShow("CREATE")}
           isLoading={isLoading}
-
+          canExport={canExport ?? false}
+          exportName={exportName ?? 'Excel_'}
         />
         <Row>
           <Col>

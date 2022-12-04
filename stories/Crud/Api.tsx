@@ -54,7 +54,8 @@ const Template = (props: Props) => {
     <>
       <FormTypeSelect
         handleChange={handleChange}
-        inputFieldName={'Test change'}
+        name='Test change'
+        controlId='Test change'
         selectOptionsUrl={'/api/get_options'}
         value={selectedValue}
       />
@@ -71,4 +72,6 @@ Api.args = {
   enableGlobalFilter: true,
   crudUrl: `/api/crud`,
   canRefresh: true,
+  canExport: true,
+  exportName: "API Excel "
 };
