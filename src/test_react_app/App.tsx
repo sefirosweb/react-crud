@@ -1,35 +1,58 @@
-import React from 'react';
+import { DateTime } from 'luxon';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
-import { ColumnDefinition, Crud } from '../module';
+import { ColumnDefinition, Crud, FormTypeSelect } from '../module';
 
 function App() {
+  const [select, setSelect] = useState("")
 
   const columns: Array<ColumnDefinition<GeneratedData>> = [
     {
       accessorKey: "uuid"
     },
     {
+      accessorKey: "ean"
+    },
+    {
       accessorKey: "category"
     },
     {
+      accessorKey: "description"
+    },
+    {
       accessorKey: "created_at",
-      cell: (props) => {
-        console.log(typeof (props.row.original.created_at))
-        return props?.row?.original?.created_at
-      }
+      cell: (props) => DateTime.fromISO(props.row.original.created_at).toISODate()
     }
   ]
 
-  return (
-    <Container className='mt-5'>
-      <h1>Tests</h1>
-      <Crud
-        columns={columns}
-        primaryKey='id'
-        crudUrl='/api/crud'
+  const customButtons =
+    <>
+      <FormTypeSelect
+        label='Select category'
+        name='felectCategoryField'
+        controlId='felectCategoryField'
+        value={select}
+        handleChange={(e) => setSelect(e.target.value)}
+        selectOptionsUrl='/api/get_options'
       />
-    </Container>
+    </>
+
+  return (
+    <>
+      <Container className='mt-5'>
+        <h1>Tests</h1>
+        <Crud
+          customButtons={customButtons}
+          columns={columns}
+          canDelete
+          canRefresh
+          enableGlobalFilter
+          primaryKey='uuid'
+          crudUrl='/api/crud'
+        />
+      </Container>
+    </>
   );
 }
 
