@@ -10,6 +10,7 @@ It is made by bootstrap (react-bootstrap) you can modify colors and styles for t
 
 Full writed in typescript
 
+Most of compenents are used [@tanstack/table](https://tanstack.com/table/v8/docs/guide/introduction)
 # Start Production
 
 Install:
@@ -55,8 +56,8 @@ const columns = [
 
 // Import CRUD component
 <Crud
-    canSearch: true,
-    canRefresh: true,
+    canSearch,
+    canRefresh,
 
     primaryKey: 'id',
     titleOnDelete: 'name',
@@ -66,8 +67,7 @@ const columns = [
     canDelete: true,
     crudUrl: `/api/crud`,
 
-    columns
-
+    columns={columns}
 />
 ```
 
@@ -75,18 +75,21 @@ All components in the [Storybook](https://sefirosweb.github.io/react-crud/)
 
 Contribute to this project in [GitHub](https://github.com/sefirosweb/react-crud)
 
-# Start develop
+# Development
 
 ## Start docker
 
-```
-npm run docker
-```
+```Start devcontainer of vscode```
 
-## Start watcher
+## Start storybook for develop
 
 http://localhost:6006/
 
+```
+npm run storybook
+```
+
+## Start react app to tests modules
 ```
 npm start
 ```
@@ -94,6 +97,6 @@ npm start
 ## Build and publish to NPM
 
 ```
-npm run build
+npm run build-module
 npm publish
 ```
