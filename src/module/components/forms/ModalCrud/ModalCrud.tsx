@@ -44,6 +44,15 @@ export const ModalCrud = (props: Props) => {
     return newModalData;
   };
 
+  useEffect(() => {
+    const newModalData: Record<string, ColumnDefinition<any>> = {};
+    fields.forEach((field) => {
+      if (!field.accessorKey) return;
+      newModalData[field.accessorKey] = field;
+    });
+    setModalData(newModalData)
+  }, [fields])
+
   const [isLoading, setIsLoading] = useState(false);
   const [variantButton, setVariantButton] = useState<Variant>("info");
   const [modalData, setModalData] = useState(INITIAL_FIELD_STATE);
