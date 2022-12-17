@@ -1,30 +1,36 @@
 import { DateTime } from 'luxon';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
 import { ColumnDefinition, Crud, FormTypeSelect } from '../module';
 
 function App() {
   const [select, setSelect] = useState("")
+  const [columns, setColumns] = useState<Array<ColumnDefinition<GeneratedData>>>([]);
 
-  const columns: Array<ColumnDefinition<GeneratedData>> = [
-    {
-      accessorKey: "uuid"
-    },
-    {
-      accessorKey: "ean"
-    },
-    {
-      accessorKey: "category"
-    },
-    {
-      accessorKey: "description"
-    },
-    {
-      accessorKey: "created_at",
-      cell: (props) => DateTime.fromISO(props.row.original.created_at).toISODate()
-    }
-  ]
+  useEffect(() => {
+    const newColumns: Array<ColumnDefinition<GeneratedData>> = [
+      {
+        accessorKey: "uuid",
+        visible: false
+      },
+      {
+        accessorKey: "ean"
+      },
+      {
+        accessorKey: "category"
+      },
+      {
+        accessorKey: "description"
+      },
+      {
+        accessorKey: "created_at",
+        cell: (props) => DateTime.fromISO(props.row.original.created_at).toISODate()
+      }
+    ]
+    setColumns(newColumns)
+  }, [])
+
 
   const customButtons =
     <>
