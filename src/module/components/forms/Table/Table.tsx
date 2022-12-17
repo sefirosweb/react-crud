@@ -30,6 +30,7 @@ import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
 import { FieldTypes } from "../../../types";
 import { TableHeader } from "./TableHeader";
 import { TableFooter } from "./TableFooter";
+import getVisibleColumns from "./getVisibleColumns";
 
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData, TValue> {
@@ -113,26 +114,14 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     getRowClass
   } = props;
 
-  const visibleColumns = () => {
-    const hidenColumns: Record<string, boolean> = {}
-    columns
-      .filter((c) => c.visible === false && (c.accessorKey || c.id))
-      .forEach(c => {
-        if (c.accessorKey) {
-          hidenColumns[c.accessorKey] = false
-        }
-        if (c.id) {
-          hidenColumns[c.id] = false
-        }
-      })
-    return hidenColumns
-  }
-
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnVisibility, setColumnVisibility] = useState(visibleColumns());
+  const [columnVisibility, setColumnVisibility] = useState(getVisibleColumns(columns));
 
+  useEffect(() => {
+    setColumnVisibility(getVisibleColumns(columns))
+  }, [columns])
 
   useEffect(() => {
     setGlobalFilter(globalFilterText ?? "");
