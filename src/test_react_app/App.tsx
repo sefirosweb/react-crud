@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
-import { ColumnDefinition, Crud, FormTypeSelect } from '../module';
+import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect } from '../module';
 
 function App() {
   const [select, setSelect] = useState("")
@@ -21,7 +21,9 @@ function App() {
         accessorKey: "category"
       },
       {
-        accessorKey: "description"
+        accessorKey: "description",
+        editable: true,
+        fieldType: FieldTypes.TEXTAREA
       },
       {
         accessorKey: "created_at",
@@ -52,6 +54,7 @@ function App() {
           customButtons={customButtons}
           columns={columns}
           canDelete
+          canEdit
           canRefresh
           enableGlobalFilter
           primaryKey='uuid'

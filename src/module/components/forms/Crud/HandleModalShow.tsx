@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, useImperativeHandle } from "react";
+import React, { forwardRef, Ref, useEffect, useImperativeHandle } from "react";
 import { AxiosResponse } from "axios";
 import { useState } from "react";
 import { ColumnDefinition, CrudType } from "../../../types";
@@ -33,6 +33,10 @@ export const HandleModalShow = forwardRef(
     const [modalTitle, setModalTitle] = useState("");
     const [show, setShow] = useState(false);
     const [modalData, setModalData] = useState(columns);
+
+    useEffect(() => {
+      setModalData(columns)
+    }, [columns])
 
     const handleSuccessModalCrud = (
       request: AxiosResponse<any, any>,
