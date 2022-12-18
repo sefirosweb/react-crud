@@ -168,20 +168,20 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
 const queryClient = new QueryClient()
 
-export const InputDataField = (props: Props & { ref?: Ref<PropsRef> }) => {
+export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   try {
     const client = useQueryClient()
     return (
       <QueryClientProvider client={client}>
-        <InputDataFieldBox {...props} />
+        <InputDataFieldBox {...props} ref={ref} />
       </QueryClientProvider >
     )
   } catch (e) {
     return (
       <QueryClientProvider client={queryClient}>
-        <InputDataFieldBox {...props} />
+        <InputDataFieldBox {...props} ref={ref} />
       </QueryClientProvider >
     )
   }
 
-}
+})
