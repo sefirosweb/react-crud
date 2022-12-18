@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
-import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect } from '../module';
+import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField } from '../module';
 
 const queryClient = new QueryClient()
 
@@ -56,17 +56,33 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Container className='mt-5'>
           <h1>Tests</h1>
-          <Crud
-            customButtons={customButtons}
-            columns={columns}
-            canDelete
-            canEdit
-            canRefresh
-            lazyLoad
-            enableGlobalFilter
-            primaryKey='uuid'
-            crudUrl='/api/crud'
-          />
+          <Row>
+            <Col>
+              <InputDataField
+                label={'Search by text'}
+                url={'/api/get_options'}
+                lazyLoad
+                onAcceptButton={(resultDataField) => {
+                  console.log({ resultDataField })
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Crud
+                customButtons={customButtons}
+                columns={columns}
+                canDelete
+                canEdit
+                canRefresh
+                lazyLoad
+                enableGlobalFilter
+                primaryKey='uuid'
+                crudUrl='/api/crud'
+              />
+            </Col>
+          </Row>
         </Container>
         <ReactQueryDevtools />
       </QueryClientProvider>

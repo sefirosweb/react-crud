@@ -1,16 +1,16 @@
 import React, {
   useEffect,
   useImperativeHandle,
-  useRef,
   useState,
   forwardRef,
   Ref,
 } from "react";
-import axios from "axios";
 import { Col, Form, InputGroup, Button, Row } from "react-bootstrap";
 import toastr from "toastr";
 import { matchString } from "../../../lib/matchStrings";
 import { SelectOption, DataField } from "../../../types";
+import { getInputDataField } from "../../../api/formTypeSelectData";
+import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export type PropsRef = {
   clear: () => void;
@@ -45,7 +45,7 @@ const parse = (dataToParse: SelectOption[] | string[]) => {
   return result;
 };
 
-export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
+const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const {
     data = [],
     limit = 10,
@@ -61,14 +61,21 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [filter, setFilter] = useState("");
   const [tempFilters, setTempFilters] = useState("");
   const [dataField, setDataField] = useState<SelectOption[]>(parse(data));
-  const mounted = useRef(false);
+
+  const { data: dataQuery } = useQuery<any>({
+    queryKey: [url, tempFilters],
+    queryFn: () => getInputDataField(url, tempFilters),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity
+  })
 
   useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
+    if (!dataQuery) return
+    const data = dataQuery.data as SelectOption[];
+    const parsed = parse(data);
+    setDataField(parsed);
+  }, [dataQuery, setDataField])
 
   useImperativeHandle(ref, () => ({
     clear() {
@@ -112,28 +119,6 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     }, 400);
     return () => clearTimeout(timer);
   }, [filter, lazyLoad]);
-
-  useEffect(() => {
-    const cancelTokenSource = axios.CancelToken.source();
-    if (!url) return;
-
-    axios
-      .get(url, {
-        cancelToken: cancelTokenSource.token,
-        params: { filter: tempFilters },
-      })
-      .then((response) => {
-        if (mounted.current) {
-          const data = response.data.data as SelectOption[];
-          const parsed = parse(data);
-          setDataField(parsed);
-        }
-      });
-
-    return () => {
-      cancelTokenSource.cancel();
-    };
-  }, [url, setDataField, tempFilters]);
 
   const options = () => {
     const items = dataField.filter((i) => {
@@ -179,3 +164,24 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     </>
   );
 });
+
+
+const queryClient = new QueryClient()
+
+export const InputDataField = (props: Props & { ref?: Ref<PropsRef> }) => {
+  try {
+    const client = useQueryClient()
+    return (
+      <QueryClientProvider client={client}>
+        <InputDataFieldBox {...props} />
+      </QueryClientProvider >
+    )
+  } catch (e) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <InputDataFieldBox {...props} />
+      </QueryClientProvider >
+    )
+  }
+
+}

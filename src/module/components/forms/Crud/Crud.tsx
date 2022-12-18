@@ -274,7 +274,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
 const queryClient = new QueryClient()
 
-export const Crud = (props: Props) => {
+export const Crud = (props: Props & { ref?: Ref<PropsRef> }) => {
   try {
     const client = useQueryClient()
     return (
