@@ -2,7 +2,6 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { axiosWithCache } from "./../../../lib/axiosWithCache";
 import { SelectOption } from "../../../types";
 
 export type Props = {
@@ -74,7 +73,7 @@ export const FormTypeSelect = (props: Props) => {
     setIsLoadingInternal(true);
 
     const cancelTokenSource = axios.CancelToken.source();
-    axiosWithCache
+    axios
       .get(selectOptionsUrl, {
         cancelToken: cancelTokenSource.token,
       })

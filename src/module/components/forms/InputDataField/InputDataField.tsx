@@ -9,7 +9,6 @@ import React, {
 import axios from "axios";
 import { Col, Form, InputGroup, Button, Row } from "react-bootstrap";
 import toastr from "toastr";
-import { axiosWithCache } from "../../../lib/axiosWithCache";
 import { matchString } from "../../../lib/matchStrings";
 import { SelectOption, DataField } from "../../../types";
 
@@ -118,7 +117,7 @@ export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     const cancelTokenSource = axios.CancelToken.source();
     if (!url) return;
 
-    axiosWithCache
+    axios
       .get(url, {
         cancelToken: cancelTokenSource.token,
         params: { filter: tempFilters },
