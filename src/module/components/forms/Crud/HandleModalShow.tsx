@@ -1,5 +1,4 @@
 import React, { forwardRef, Ref, useEffect, useImperativeHandle } from "react";
-import { AxiosResponse } from "axios";
 import { useState } from "react";
 import { ColumnDefinition, CrudType } from "../../../types";
 import { ModalCrud } from "../ModalCrud";
@@ -14,7 +13,7 @@ export type Props = {
   url: string;
   primaryKey: string;
   titleOnDelete?: string;
-  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
+  handleSuccess?: (response: any, crud: CrudType) => void;
   dataTable: any[];
 };
 
@@ -39,7 +38,7 @@ export const HandleModalShow = forwardRef(
     }, [columns])
 
     const handleSuccessModalCrud = (
-      request: AxiosResponse<any, any>,
+      response: any,
       crud: CrudType
     ) => {
       refreshTable();
@@ -48,7 +47,7 @@ export const HandleModalShow = forwardRef(
         handleSuccess &&
         {}.toString.call(handleSuccess) === "[object Function]"
       ) {
-        handleSuccess(request, crud);
+        handleSuccess(response, crud);
       }
     };
 

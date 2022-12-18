@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
-import toastr from "toastr";
 import { Form } from "react-bootstrap";
 import { Modal } from "./../Modal";
 import { FormTypes } from "./../FormTypes";
-import { ColumnDefinition, Variant } from "../../../types";
+import { ColumnDefinition, ModalDataToSend, Variant } from "../../../types";
 import { FieldTypes, CrudType, DataField } from "../../../types";
 import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
+import { useMutation } from "@tanstack/react-query";
+import { mutateData } from "../../../api/crudDataTable";
 
 export type Props = {
   accept?: string;
@@ -14,11 +14,20 @@ export type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
   url: string;
-  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
+  handleSuccess?: (response: any, crud: CrudType) => void;
   crud: CrudType;
   titleOnDelete?: string; // TODO: This must be relationshop pf "<Array<Fields"
   primaryKey: string; // TODO: This must be relationshop pf "<Array<Fields"
   fields: Array<ColumnDefinition<any>>;
+};
+
+const FilterModalData = (fields: Array<ColumnDefinition<any, unknown>>) => {
+  const newModalData: Record<string, ColumnDefinition<any>> = {};
+  fields.forEach((field) => {
+    if (!field.accessorKey) return;
+    newModalData[field.accessorKey] = field;
+  });
+  return newModalData;
 };
 
 export const ModalCrud = (props: Props) => {
@@ -35,28 +44,18 @@ export const ModalCrud = (props: Props) => {
     titleOnDelete,
   } = props;
 
-  const INITIAL_FIELD_STATE = () => {
-    const newModalData: Record<string, ColumnDefinition<any>> = {};
-    fields.forEach((field) => {
-      if (!field.accessorKey) return;
-      newModalData[field.accessorKey] = field;
-    });
-    return newModalData;
-  };
-
-  useEffect(() => {
-    const newModalData: Record<string, ColumnDefinition<any>> = {};
-    fields.forEach((field) => {
-      if (!field.accessorKey) return;
-      newModalData[field.accessorKey] = field;
-    });
-    setModalData(newModalData)
-  }, [fields])
-
   const [isLoading, setIsLoading] = useState(false);
   const [variantButton, setVariantButton] = useState<Variant>("info");
-  const [modalData, setModalData] = useState(INITIAL_FIELD_STATE);
-  // const onExited = () => setModalData({});
+  const [modalData, setModalData] = useState(FilterModalData(fields));
+
+  const { mutate } = useMutation({
+    mutationFn: mutateData
+  })
+
+  useEffect(() => {
+    const newModalData = FilterModalData(fields)
+    setModalData(newModalData)
+  }, [fields])
 
   useEffect(() => {
     switch (crud) {
@@ -107,25 +106,7 @@ export const ModalCrud = (props: Props) => {
 
   const sendRequest = () => {
     setIsLoading(true);
-    const response = (request: AxiosResponse<any, any>) => {
-      setShow(false);
-
-      if (
-        handleSuccess &&
-        {}.toString.call(handleSuccess) === "[object Function]"
-      ) {
-        handleSuccess(request, crud);
-      }
-    };
-
-    const completed = () => {
-      setIsLoading(false);
-    };
-
-    const modalDataToSend: Record<
-      string,
-      string | number | Array<string> | Array<number>
-    > = {};
+    const modalDataToSend: ModalDataToSend = {};
 
     fields
       .filter((f) => f.editable || f.accessorKey === primaryKey)
@@ -135,23 +116,28 @@ export const ModalCrud = (props: Props) => {
         }
       });
 
-    switch (crud) {
-      case "CREATE":
-        axios.post(url, modalDataToSend).then(response).finally(completed);
-        break;
-      case "DELETE":
-        axios
-          .delete(url, { data: modalDataToSend })
-          .then(response)
-          .finally(completed);
-        break;
-      case "UPDATE":
-        axios.put(url, modalDataToSend).then(response).finally(completed);
-        break;
-      default:
-        toastr.warning("Error on crud", "No selected correct CRUD petitin");
-        setIsLoading(false);
-    }
+    mutate({
+      crud,
+      modalDataToSend,
+      url
+    },
+      {
+        onSuccess: (response) => {
+          setShow(false);
+          setIsLoading(false)
+
+          if (
+            handleSuccess &&
+            {}.toString.call(handleSuccess) === "[object Function]"
+          ) {
+            handleSuccess(response, crud);
+          }
+        },
+        onError: () => {
+          setIsLoading(false)
+        }
+      }
+    )
   };
 
   const titleOnCRUD = () => {

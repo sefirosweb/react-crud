@@ -12,14 +12,15 @@ import {
   Props as TableProps,
   PropsRef as TablePropsRef,
 } from "../Table";
-import axios, { AxiosResponse, CancelTokenSource } from "axios";
 import {
   ColumnFiltersState,
   Row as RowTanstack,
   Table as TableReactTable,
 } from "@tanstack/react-table";
+import { QueryClient, QueryClientProvider, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery, useQueryClient } from '@tanstack/react-query'
+
 import { TableToolbar } from "./TableToolbar";
-import { CrudType } from "../../../types";
+import { CrudType, InputFilter } from "../../../types";
 
 import {
   HandleModalShow,
@@ -27,12 +28,12 @@ import {
 } from "./HandleModalShow";
 import NewColumns from "./NewColumns";
 import exportToExcel from "../../../lib/exportToExcel";
+import { getRequestData } from "../../../api/crudDataTable";
 
-type newInputFilters = Record<string, unknown>;
 export interface Props
   extends Omit<
-  TableProps,
-  "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
+    TableProps,
+    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   data?: Array<any>;
   canSelectRow?: boolean;
@@ -45,7 +46,7 @@ export interface Props
   canEdit?: boolean;
   canExport?: boolean;
   exportName?: string;
-  handleSuccess?: (request: AxiosResponse<any, any>, crud: CrudType) => void;
+  handleSuccess?: (response: any, crud: CrudType) => void;
   primaryKey: string;
   titleOnDelete?: string;
   customButtons?: JSX.Element;
@@ -55,18 +56,18 @@ export type PropsRef = {
   table: TableReactTable<any> | undefined;
   data: Array<any>;
   setData: (data: Array<any>) => void
-  refreshTable: () => Promise<AxiosResponse<any, any>> | undefined;
+  refreshTable: <TPageData>(options?: RefetchOptions & RefetchQueryFilters<TPageData>) => Promise<QueryObserverResult<any, any>> | undefined;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
-  lazyFilters: newInputFilters;
-  setLazyilters: React.Dispatch<React.SetStateAction<newInputFilters>>;
+  lazyFilters: InputFilter;
+  setLazyilters: React.Dispatch<React.SetStateAction<InputFilter>>;
   setIsLoading: (isLoading: boolean) => void;
   getRowStyles?: (row: RowTanstack<any>) => React.CSSProperties;
   getRowClass?: (row: RowTanstack<any>) => string;
   exportToExcel: (fileName: string) => Promise<void>;
 };
 
-export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
+const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const {
     enableGlobalFilter,
     canSelectRow,
@@ -91,19 +92,37 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [dataTable, setDataTable] = useState(data);
-  const [reactTableFilters, setReactTableFilters] = useState({});
+  const [reactTableFilters, setReactTableFilters] = useState<InputFilter>({});
   const [inputFilters, setInputFilters] = useState({});
   const [globalFilterText, setGlobalFilterText] = useState("");
   const [globalFilter, setGlobalFilter] = useState("");
-  const [sendRequest, setSendRequest] = useState(false);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [externalFilters, setExternalFilters] = useState<newInputFilters>({});
+  const [externalFilters, setExternalFilters] = useState<InputFilter>({});
   const mounted = useRef(false);
   const firstLoad = useRef(true);
   const tableRef = useRef<TablePropsRef>(null);
   const handleModalShowRef = useRef<HandleModalShowPropsRef>(null);
 
-  const refreshTable = () => setSendRequest(!sendRequest);
+  const { data: dataQuery, isFetching: isFetchingQuery, refetch } = useQuery<any>({
+    queryKey: [crudUrl],
+    queryFn: () => getRequestData(crudUrl, inputFilters),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    enabled: false
+  })
+
+  useEffect(() => {
+    setIsLoading(isFetchingQuery)
+  }, [isFetchingQuery])
+
+  useEffect(() => {
+    if (!dataQuery) return
+    if (!dataQuery.success) return
+    const result = Object.keys(dataQuery.data).map((key) => dataQuery.data[key]);
+    setDataTable(result);
+  }, [dataQuery])
+
+  const refreshTable = () => refetch()
   const generateExcel = (fileName: string) => {
     const data: Array<Record<string, any>> = []
 
@@ -126,7 +145,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     setLazyilters: setExternalFilters,
     refreshTable: () => {
       if (crudUrl) {
-        return getDataTable(crudUrl, inputFilters)
+        return refetch()
       }
     },
     setIsLoading,
@@ -154,7 +173,7 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   useEffect(() => {
     if (!lazyLoad) return;
-    const reactTableFilters: newInputFilters = {};
+    const reactTableFilters: InputFilter = {};
     if (globalFilter !== "") {
       reactTableFilters["globalFilter"] = globalFilter;
     }
@@ -186,44 +205,14 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       return;
     }
 
-    const cancelTokenSource = axios.CancelToken.source();
     const timer = setTimeout(() => {
-      getDataTable(crudUrl, inputFilters, cancelTokenSource);
+      refetch();
     }, 400);
 
     return () => {
-      cancelTokenSource.cancel();
       clearTimeout(timer)
     };
-  }, [crudUrl, inputFilters, sendRequest]);
-
-  const getDataTable = (url: string, params: {}, cancelTokenSource?: CancelTokenSource): Promise<AxiosResponse<any, any>> => {
-    return new Promise((resolve, reject) => {
-      setIsLoading(true);
-      axios
-        .get(url, {
-          cancelToken: cancelTokenSource?.token,
-          params,
-        })
-        .then((request) => {
-          if (!mounted.current) return;
-          setIsLoading(false);
-
-          const responseData = request.data.data;
-          const success = request.data.success;
-          if (success) {
-            const result = Object.keys(responseData).map((key) => responseData[key]);
-            setDataTable(result);
-          }
-          resolve(request)
-        })
-        .catch((e) => {
-          if (!mounted.current) return;
-          setIsLoading(false);
-          reject(e)
-        })
-    })
-  }
+  }, [crudUrl, inputFilters, refetch]);
 
   const newColumns = NewColumns({
     columns,
@@ -282,3 +271,23 @@ export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     </>
   );
 });
+
+const queryClient = new QueryClient()
+
+export const Crud = (props: Props) => {
+  try {
+    const client = useQueryClient()
+    return (
+      <QueryClientProvider client={client}>
+        <CrudTable {...props} />
+      </QueryClientProvider >
+    )
+  } catch (e) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <CrudTable {...props} />
+      </QueryClientProvider >
+    )
+  }
+
+}

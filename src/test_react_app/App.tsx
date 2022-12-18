@@ -1,8 +1,12 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
 import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect } from '../module';
+
+const queryClient = new QueryClient()
 
 function App() {
   const [select, setSelect] = useState("")
@@ -22,6 +26,7 @@ function App() {
       },
       {
         accessorKey: "description",
+        enableColumnFilter: true,
         editable: true,
         fieldType: FieldTypes.TEXTAREA
       },
@@ -48,19 +53,23 @@ function App() {
 
   return (
     <>
-      <Container className='mt-5'>
-        <h1>Tests</h1>
-        <Crud
-          customButtons={customButtons}
-          columns={columns}
-          canDelete
-          canEdit
-          canRefresh
-          enableGlobalFilter
-          primaryKey='uuid'
-          crudUrl='/api/crud'
-        />
-      </Container>
+      <QueryClientProvider client={queryClient}>
+        <Container className='mt-5'>
+          <h1>Tests</h1>
+          <Crud
+            customButtons={customButtons}
+            columns={columns}
+            canDelete
+            canEdit
+            canRefresh
+            lazyLoad
+            enableGlobalFilter
+            primaryKey='uuid'
+            crudUrl='/api/crud'
+          />
+        </Container>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </>
   );
 }

@@ -97,3 +97,10 @@ export type DataField = {
   value: string;
   name: string;
 } & Record<string, any>;
+
+export type InputFilter = Record<string, unknown>
+
+export type ModalDataToSend = Record<
+  string,
+  string | number | Array<string> | Array<number>
+>
