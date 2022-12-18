@@ -6,7 +6,6 @@ import {
 import { Button } from "react-bootstrap";
 import { Story } from "@storybook/react";
 import { TestColumnsModel } from "../../models/Product";
-import { AxiosResponse } from "axios";
 import { CrudType } from "../../src/module/types";
 
 const Template = (props: Props) => {
@@ -15,8 +14,8 @@ const Template = (props: Props) => {
 
   const [crud, setCrud] = useState<CrudType>("CREATE");
 
-  const handleSuccess = (request: AxiosResponse<any, any>, crud: string) => {
-    console.log(request);
+  const handleSuccess = (response: any, crud: CrudType) => {
+    console.log(response);
     console.log(crud);
   };
 
