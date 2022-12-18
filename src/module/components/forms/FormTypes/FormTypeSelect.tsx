@@ -1,8 +1,9 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { SelectOption } from "../../../types";
+import { useQuery } from "@tanstack/react-query";
+import { getFormTypeData } from "../../../api/formTypeSelectData";
 
 export type Props = {
   name: string;
@@ -34,7 +35,23 @@ export const FormTypeSelect = (props: Props) => {
   const [isLoadingInternal, setIsLoadingInternal] = useState(false);
   const [selectOptions, setSelectOptions] = useState<SelectOption[]>([]);
   const [selectedOption, setSelectedOption] = useState("");
-  const mounted = useRef(false);
+
+  const { data: dataQuery, isLoading: isLoadingQuery } = useQuery<any>({
+    queryKey: [selectOptionsUrl],
+    queryFn: () => getFormTypeData(selectOptionsUrl),
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false
+  })
+
+  useEffect(() => {
+    setIsLoadingInternal(isLoadingQuery)
+  }, [isLoadingQuery])
+
+  useEffect(() => {
+    if (!dataQuery) return
+    console.log(dataQuery.data)
+    setSelectOptions(parseOptions(dataQuery.data));
+  }, [dataQuery])
 
   const parseOptions = (options: SelectOption[] | string[]): SelectOption[] => {
     return options.map((o) => {
@@ -50,13 +67,6 @@ export const FormTypeSelect = (props: Props) => {
   };
 
   useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     if (typeof isLoading !== "undefined") {
       setIsLoadingInternal(isLoading);
     }
@@ -67,29 +77,6 @@ export const FormTypeSelect = (props: Props) => {
       setSelectOptions(parseOptions(options));
     }
   }, [options]);
-
-  useEffect(() => {
-    if (!selectOptionsUrl) return;
-    setIsLoadingInternal(true);
-
-    const cancelTokenSource = axios.CancelToken.source();
-    axios
-      .get(selectOptionsUrl, {
-        cancelToken: cancelTokenSource.token,
-      })
-      .then((response) => {
-        if (!mounted.current) return;
-        const data = response.data.data as SelectOption[] | string[];
-        setSelectOptions(parseOptions(data));
-      })
-      .finally(() => {
-        setIsLoadingInternal(false);
-      });
-
-    return () => {
-      cancelTokenSource.cancel();
-    };
-  }, [selectOptionsUrl]);
 
   useEffect(() => {
     if (value === undefined) {
