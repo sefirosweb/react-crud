@@ -134,7 +134,7 @@ type GenerateDataSubtable = [number, {
 
 const generateDataSubtable = (request?: AxiosRequestConfig): Promise<GenerateDataSubtable> => {
     return new Promise(function (resolve) {
-        const data = createData()
+        const data = createData().splice(0, 5)
         resolve([
             200,
             {
