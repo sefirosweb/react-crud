@@ -231,6 +231,7 @@ export const ModalCrud = (props: Props) => {
               columns={field.multiSelectOptions.columns}
               crudUrl={crudUrl}
               getDataUrl={fieldWithData.multiSelectOptions.getDataUrl}
+              sentKeyAs={fieldWithData.multiSelectOptions.sentKeyAs}
               primaryKey={fieldWithData.multiSelectOptions.primaryKey as string}
               primaryKeyId=""
               lazyLoad={fieldWithData.multiSelectOptions.lazyLoad}

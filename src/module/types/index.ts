@@ -8,6 +8,7 @@ export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
   getDataUrl: string;
   lazyLoad?: boolean;
   primaryKey: keyof TData;
+  sentKeyAs?: string,
   onExitModalRefresh?: boolean;
   onExitModal?: () => void;
 };

@@ -1,14 +1,15 @@
 import React, { forwardRef, useEffect, useRef, useState, Ref, useImperativeHandle } from "react";
-import axios, { AxiosResponse } from "axios";
 import { Table } from "./../Table";
 import { InputDataField, PropsRef as InputDataFieldPropsRef } from "./../InputDataField";
 import { DeleteButton } from "./../../buttons/DeleteButton";
 import { ColumnDefinition, DataField } from "../../../types";
 import { getInputDataField } from "../../../api/formTypeSelectData";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { mutateData } from "../../../api/crudMultiSelectTable";
 
 export type Props = {
   label?: string;
+  sentKeyAs?: string;
   primaryKey: string;
   primaryKeyId: string;
   crudUrl?: string;
@@ -30,6 +31,7 @@ export const MultiSelectCrudTable = forwardRef(
     const {
       autoSave = true,
       label,
+      sentKeyAs,
       primaryKey,
       primaryKeyId,
       crudUrl,
@@ -49,12 +51,31 @@ export const MultiSelectCrudTable = forwardRef(
 
     const queryClient = useQueryClient()
 
-    const { data: dataQuery, isRefetching: isRefetchingQuery } = useQuery<any>({
+    const { data: dataQuery, isRefetching: isRefetchingQuery, isLoading: isLoadingQuery } = useQuery<any>({
       queryKey: [crudUrl, primaryKeyId],
       queryFn: () => getInputDataField(crudUrl, primaryKeyId),
       refetchOnReconnect: false,
       refetchOnWindowFocus: false
     })
+
+    const { mutate, isLoading: isLoadingMutation } = useMutation({
+      mutationFn: mutateData,
+      onSettled: (response: any) => {
+        if (response.success) {
+          queryClient.invalidateQueries({ queryKey: [crudUrl, primaryKeyId] })
+          InputDataFieldRef.current?.clear();
+        }
+      }
+    })
+
+    useEffect(() => {
+      setIsLoading(isRefetchingQuery || isLoadingMutation || isLoadingQuery)
+
+      if (handleIsLoading) {
+        handleIsLoading(isRefetchingQuery || isLoadingMutation || isLoadingQuery);
+      }
+
+    }, [isRefetchingQuery, isLoadingMutation, isLoadingQuery, handleIsLoading])
 
     useEffect(() => {
       if (!dataQuery) return
@@ -64,10 +85,6 @@ export const MultiSelectCrudTable = forwardRef(
         setDataModal(responseData);
       }
     }, [dataQuery, setDataModal])
-
-    useEffect(() => {
-      setIsLoading(isRefetchingQuery)
-    }, [isRefetchingQuery])
 
     useImperativeHandle(ref, () => ({
       getIds() {
@@ -84,22 +101,6 @@ export const MultiSelectCrudTable = forwardRef(
       }
     }, [dataModal, handleChange]);
 
-    useEffect(() => {
-      if (handleIsLoading) {
-        handleIsLoading(isLoading);
-      }
-    }, [isLoading, handleIsLoading]);
-
-    const refreshModalTable = (request: AxiosResponse) => {
-      const { success } = request.data;
-      if (success) {
-        InputDataFieldRef.current?.clear();
-        loadTableModal();
-      } else {
-        setIsLoading(false);
-      }
-    };
-
     newColumns.push({
       header: "Borrar",
       id: "delete_crud",
@@ -107,27 +108,30 @@ export const MultiSelectCrudTable = forwardRef(
         return (
           <DeleteButton
             disabled={isLoading}
-            onClick={() => handleDelete(props.row.original[primaryKey])}
+            onClick={() => handleDelete(props.row.original)}
           />
         );
       },
     });
 
-    const loadTableModal = () => {
-      queryClient.invalidateQueries({ queryKey: [crudUrl, primaryKeyId] })
-    };
-
-    const handleDelete = (idDataField: string) => {
+    const handleDelete = (dataField: DataField) => {
       if (autoSave) {
         if (!crudUrl) return;
-        setIsLoading(true);
-        axios
-          .delete(`${crudUrl}`, { data: { primaryKeyId, idDataField } })
-          .then(refreshModalTable)
-          .catch(() => setIsLoading(false));
+
+        const dataToSend = {
+          ...dataField,
+          [sentKeyAs ?? 'primaryKeyId']: primaryKeyId,
+        }
+
+        mutate({
+          crud: "DELETE",
+          url: crudUrl,
+          dataToSend
+        })
+
       } else {
         const newDataModal = dataModal.filter((d) => {
-          return d[primaryKey] !== idDataField;
+          return d[primaryKey] !== dataField[primaryKey];
         });
         setDataModal(newDataModal);
       }
@@ -136,14 +140,18 @@ export const MultiSelectCrudTable = forwardRef(
     const onAcceptButton = (dataField: DataField) => {
       if (autoSave) {
         if (!crudUrl) return;
-        setIsLoading(true);
-        axios
-          .post(`${crudUrl}`, {
-            name: dataField,
-            primaryKeyId,
-          })
-          .then(refreshModalTable)
-          .catch(() => setIsLoading(false));
+
+        const dataToSend: any = {
+          ...dataField,
+          [sentKeyAs ?? 'primaryKeyId']: primaryKeyId
+        }
+
+        mutate({
+          crud: "CREATE",
+          url: crudUrl,
+          dataToSend
+        })
+
       } else {
         const newDataModal = [...dataModal];
 

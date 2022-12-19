@@ -5,6 +5,7 @@ import { ColumnDefinition } from "../../../types";
 import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
 
 export type Props = {
+  sentKeyAs?: string;
   primaryKey: string;
   primaryKeyId: string;
   crudUrl: string;
@@ -19,6 +20,7 @@ export type Props = {
 
 export const MultiSelectCrud = (props: Props) => {
   const {
+    sentKeyAs,
     primaryKey,
     primaryKeyId,
     crudUrl,
@@ -39,6 +41,7 @@ export const MultiSelectCrud = (props: Props) => {
         columns={columns}
         crudUrl={crudUrl}
         getDataUrl={getDataUrl}
+        sentKeyAs={sentKeyAs}
         primaryKey={primaryKey}
         primaryKeyId={primaryKeyId}
         lazyLoad={lazyLoad}

@@ -8,8 +8,8 @@ import { FieldTypes } from "../../../types";
 import { PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
 export interface Props
   extends Omit<
-  TableProps,
-  "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
+    TableProps,
+    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   primaryKey: string;
   canEdit?: boolean;
@@ -115,26 +115,15 @@ const NewColumns = (props: Props) => {
 
           return (
             <ShowMultiSelectCrud
-              crudUrl={
-                props.column.columnDef.meta?.multiSelectOptions?.url ?? ""
-              }
-              getDataUrl={
-                props.column.columnDef.meta?.multiSelectOptions?.getDataUrl ??
-                ""
-              }
-              primaryKey={
-                props.column.columnDef.meta?.multiSelectOptions?.primaryKey ??
-                ""
-              }
+              crudUrl={props.column.columnDef.meta?.multiSelectOptions?.url ?? ""}
+              getDataUrl={props.column.columnDef.meta?.multiSelectOptions?.getDataUrl ?? ""}
+              sentKeyAs={props.column.columnDef.meta?.multiSelectOptions?.sentKeyAs}
+              primaryKey={props.column.columnDef.meta?.multiSelectOptions?.primaryKey ?? ""}
               primaryKeyId={props.cell.row.original[primaryKey]}
-              columns={
-                props.column.columnDef.meta?.multiSelectOptions?.columns ?? []
-              }
+              columns={props.column.columnDef.meta?.multiSelectOptions?.columns ?? []}
               title={props.column.columnDef.meta?.multiSelectOptions?.title}
+              lazyLoad={props.column.columnDef.meta?.multiSelectOptions?.lazyLoad}
               onExitModal={onExitModal}
-              lazyLoad={
-                props.column.columnDef.meta?.multiSelectOptions?.lazyLoad
-              }
             />
           );
         };

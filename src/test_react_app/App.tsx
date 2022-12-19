@@ -26,6 +26,7 @@ function App() {
 
   useEffect(() => {
     const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
+      sentKeyAs: 'id_item',
       primaryKey: "uuid",
       url: "/api/sub_table",
       getDataUrl: "/api/get_options",
