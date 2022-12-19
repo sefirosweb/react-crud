@@ -303,10 +303,12 @@ mock.onGet('/api/sub_table').reply(() => {
 
 mock.onPost('/api/sub_table').reply((request) => {
     console.log(`Axios request: '/api/sub_table' POST`)
+    console.log(JSON.parse(request.data))
     return generateCrudResponse(request, 'Added to table')
 })
 mock.onDelete('/api/sub_table').reply((request) => {
     console.log(`Axios request: '/api/sub_table' DELETE`)
+    console.log(JSON.parse(request.data))
     return generateCrudResponse(request, 'Deleted from table')
 })
 
