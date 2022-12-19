@@ -34,6 +34,6 @@ MultiSelectTable.args = {
   primaryKeyId: "1",
   crudUrl: "",
   autoSave: true,
-  getDataUrl: "/api/sub_table/get_array",
+  getDataUrl: "/api/get_options",
   columns: TestColumnsModel,
 };

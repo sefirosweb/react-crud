@@ -63,7 +63,7 @@ MultiSelect.args = {
   primaryKey: 'uuid',
   primaryKeyId: '1',
   crudUrl: '/api/sub_table',
-  getDataUrl: '/api/sub_table/get_array',
+  getDataUrl: '/api/get_options',
   title: 'Title for CRUD',
   columns: TestColumnsModel,
 };

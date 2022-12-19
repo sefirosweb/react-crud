@@ -111,7 +111,7 @@ type GenerateDataOptions = [number, {
     success: boolean
     data: any
 }]
-const generateDataOptions = (request?: AxiosResponse): Promise<GenerateDataOptions> => {
+const generateDataOptions = (request?: AxiosRequestConfig): Promise<GenerateDataOptions> => {
     console.log('Request to: generateDataOptions', request)
     return new Promise(function (resolve) {
         const data = generateOptionsValue()
@@ -132,7 +132,7 @@ type GenerateDataSubtable = [number, {
     data: Array<GeneratedData>
 }]
 
-const generateDataSubtable = (): Promise<GenerateDataSubtable> => {
+const generateDataSubtable = (request?: AxiosRequestConfig): Promise<GenerateDataSubtable> => {
     return new Promise(function (resolve) {
         const data = createData()
         resolve([
@@ -214,6 +214,7 @@ const filterData = (row: any, params: Record<string, FilterType>) => {
 
 mock.onGet('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' GET`)
+    console.log(request)
     return new Promise(function (resolve) {
         const data = createData()
 
@@ -290,15 +291,15 @@ mock.onDelete('/api/crud').reply((request) => {
 })
 // End Simple Crud
 
-mock.onGet('/api/get_options').reply(() => {
+mock.onGet('/api/get_options').reply((request) => {
     console.log(`Axios request: '/api/get_options' GET`)
-    return generateDataOptions()
+    return generateDataOptions(request)
 })
 
 // Crud for list table
-mock.onGet('/api/sub_table').reply(() => {
+mock.onGet('/api/sub_table').reply((request) => {
     console.log(`Axios request: '/api/sub_table' GET`)
-    return generateDataSubtable()
+    return generateDataSubtable(request)
 })
 
 mock.onPost('/api/sub_table').reply((request) => {
@@ -312,10 +313,6 @@ mock.onDelete('/api/sub_table').reply((request) => {
     return generateCrudResponse(request, 'Deleted from table')
 })
 
-mock.onGet('/api/sub_table/get_array').reply(() => {
-    console.log(`Axios request: '/api/sub_table/get_array' GET`)
-    return generateDataOptions()
-})
 // END Crud for list table
 
 
