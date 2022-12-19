@@ -1,6 +1,6 @@
 {
   "name": "@sefirosweb/react-crud",
-  "version": "2.8.7",
+  "version": "2.9.0",
   "description": "Basic components for CRUD with react",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
