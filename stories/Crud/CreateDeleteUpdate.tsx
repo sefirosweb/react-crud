@@ -60,7 +60,7 @@ const columns: Array<ColumnDefinition<Product>> = [
     fieldType: FieldTypes.NUMBER,
   },
   {
-    accessorKey: "category_list",
+    id: "category_list",
     header: "Multi Select",
     editable: true,
     fieldType: FieldTypes.MULTISELECT,
