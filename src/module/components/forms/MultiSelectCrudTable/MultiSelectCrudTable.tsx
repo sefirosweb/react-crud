@@ -86,20 +86,11 @@ export const MultiSelectCrudTable = forwardRef(
       }
     }, [dataQuery, setDataModal])
 
-    useImperativeHandle(ref, () => ({
-      getIds() {
-        return dataModal.map((d) => d[primaryKey]);
-      },
-      getTableData() {
-        return dataModal;
-      },
-    }));
-
     useEffect(() => {
       if (handleChange) {
         handleChange(dataModal);
       }
-    }, [dataModal, handleChange]);
+    }, [dataModal]);
 
     newColumns.push({
       header: "Borrar",
@@ -166,6 +157,15 @@ export const MultiSelectCrudTable = forwardRef(
         setDataModal(newDataModal);
       }
     };
+
+    useImperativeHandle(ref, () => ({
+      getIds() {
+        return dataModal.map((d) => d[primaryKey]);
+      },
+      getTableData() {
+        return dataModal;
+      },
+    }));
 
     return (
       <>

@@ -63,7 +63,7 @@ function App() {
         fieldType: FieldTypes.TEXTAREA
       },
       {
-        id: "category_id",
+        accessorKey: "category_id",
         header: "Multi Select",
         editable: true,
         fieldType: FieldTypes.MULTISELECT,

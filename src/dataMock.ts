@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { matchString } from './module/lib';
 
@@ -257,6 +257,7 @@ mock.onPut('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' PUT`)
 
     const updateData = JSON.parse(request.data)
+    console.log(updateData)
     const uuid = JSON.parse(request.data).uuid
     const data = createData()
     const findData = data.findIndex(i => i.uuid === uuid)
