@@ -2,7 +2,6 @@ import axios from 'axios'
 import { CrudType, InputFilter, ModalDataToSend } from '../types'
 
 export const getRequestData = (url?: string, params?: InputFilter) => {
-    console.log(params)
     if (!url) return
     return new Promise((resolve, reject) => {
         axios

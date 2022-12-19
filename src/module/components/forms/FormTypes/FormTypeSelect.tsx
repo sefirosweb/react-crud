@@ -49,7 +49,6 @@ export const FormTypeSelect = (props: Props) => {
 
   useEffect(() => {
     if (!dataQuery) return
-    console.log(dataQuery.data)
     setSelectOptions(parseOptions(dataQuery.data));
   }, [dataQuery])
 
