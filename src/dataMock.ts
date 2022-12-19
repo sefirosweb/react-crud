@@ -23,6 +23,7 @@ export type GeneratedData = {
     price: number;
     category: any;
     category_id: any;
+    categories: Array<any>;
     created_at: string;
 }
 
@@ -50,7 +51,11 @@ export const createData = () => {
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,
-            created_at: faker.date.recent(10).toISOString()
+            created_at: faker.date.recent(10).toISOString(),
+            categories: [
+                get_random(generateOptionsValue()),
+                get_random(generateOptionsValue())
+            ]
         })
     }
 

@@ -63,7 +63,16 @@ function App() {
         fieldType: FieldTypes.TEXTAREA
       },
       {
+        visible: false,
         accessorKey: "category_id",
+        titleOnCRUD: "Select the category",
+        header: "Multi Select",
+        editable: true,
+        fieldType: FieldTypes.SELECT,
+        selectOptionsUrl: '/api/get_options'
+      },
+      {
+        accessorKey: "categories",
         header: "Multi Select",
         editable: true,
         fieldType: FieldTypes.MULTISELECT,
