@@ -17,7 +17,7 @@ import {
   Row as RowTanstack,
   Table as TableReactTable,
 } from "@tanstack/react-table";
-import { QueryClient, QueryClientProvider, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery, useQueryClient } from '@tanstack/react-query'
+import { QueryClientProvider, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery } from '@tanstack/react-query'
 
 import { TableToolbar } from "./TableToolbar";
 import { CrudType, InputFilter } from "../../../types";
@@ -29,6 +29,7 @@ import {
 import NewColumns from "./NewColumns";
 import exportToExcel from "../../../lib/exportToExcel";
 import { getRequestData } from "../../../api/crudDataTable";
+import useGetQueryClient from "../../../api/GetQueryClient";
 
 export interface Props
   extends Omit<
@@ -272,22 +273,12 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   );
 });
 
-const queryClient = new QueryClient()
 
 export const Crud = forwardRef((props: Props, ref: Ref<PropsRef>) => {
-  try {
-    const client = useQueryClient()
-    return (
-      <QueryClientProvider client={client}>
-        <CrudTable {...props} ref={ref} />
-      </QueryClientProvider >
-    )
-  } catch (e) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <CrudTable {...props} ref={ref} />
-      </QueryClientProvider >
-    )
-  }
-
+  const client = useGetQueryClient()
+  return (
+    <QueryClientProvider client={client}>
+      <CrudTable {...props} ref={ref} />
+    </QueryClientProvider >
+  )
 })

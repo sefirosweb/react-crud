@@ -10,7 +10,8 @@ import toastr from "toastr";
 import { matchString } from "../../../lib/matchStrings";
 import { SelectOption, DataField } from "../../../types";
 import { getInputDataField } from "../../../api/formTypeSelectData";
-import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, useQuery } from "@tanstack/react-query";
+import useGetQueryClient from "../../../api/GetQueryClient";
 
 export type PropsRef = {
   clear: () => void;
@@ -165,23 +166,11 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   );
 });
 
-
-const queryClient = new QueryClient()
-
 export const InputDataField = forwardRef((props: Props, ref: Ref<PropsRef>) => {
-  try {
-    const client = useQueryClient()
-    return (
-      <QueryClientProvider client={client}>
-        <InputDataFieldBox {...props} ref={ref} />
-      </QueryClientProvider >
-    )
-  } catch (e) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <InputDataFieldBox {...props} ref={ref} />
-      </QueryClientProvider >
-    )
-  }
-
+  const client = useGetQueryClient()
+  return (
+    <QueryClientProvider client={client}>
+      <InputDataFieldBox {...props} ref={ref} />
+    </QueryClientProvider >
+  )
 })
