@@ -3,7 +3,7 @@ import { Table } from "./../Table";
 import { InputDataField, PropsRef as InputDataFieldPropsRef } from "./../InputDataField";
 import { DeleteButton } from "./../../buttons/DeleteButton";
 import { ColumnDefinition, DataField } from "../../../types";
-import { getInputDataField } from "../../../api/formTypeSelectData";
+import { getInputDataField } from "../../../api/crudMultiSelectTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { mutateData } from "../../../api/crudMultiSelectTable";
 
@@ -31,10 +31,10 @@ export const MultiSelectCrudTable = forwardRef(
     const {
       autoSave = true,
       label,
-      sentKeyAs,
+      sentKeyAs = 'primaryKeyId',
       primaryKey,
       primaryKeyId,
-      crudUrl,
+      crudUrl = '',
       columns,
       getDataUrl,
       lazyLoad,
@@ -53,7 +53,9 @@ export const MultiSelectCrudTable = forwardRef(
 
     const { data: dataQuery, isRefetching: isRefetchingQuery, isLoading: isLoadingQuery } = useQuery<any>({
       queryKey: [crudUrl, primaryKeyId],
-      queryFn: () => getInputDataField(crudUrl, primaryKeyId),
+      queryFn: () => getInputDataField(crudUrl, {
+        [sentKeyAs]: primaryKeyId
+      }),
       refetchOnReconnect: false,
       refetchOnWindowFocus: false
     })
@@ -111,7 +113,7 @@ export const MultiSelectCrudTable = forwardRef(
 
         const dataToSend = {
           ...dataField,
-          [sentKeyAs ?? 'primaryKeyId']: primaryKeyId,
+          [sentKeyAs]: primaryKeyId,
         }
 
         mutate({
@@ -134,7 +136,7 @@ export const MultiSelectCrudTable = forwardRef(
 
         const dataToSend: any = {
           ...dataField,
-          [sentKeyAs ?? 'primaryKeyId']: primaryKeyId
+          [sentKeyAs]: primaryKeyId
         }
 
         mutate({
