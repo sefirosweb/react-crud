@@ -105,7 +105,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const handleModalShowRef = useRef<HandleModalShowPropsRef>(null);
 
   const { data: dataQuery, isFetching: isFetchingQuery, refetch } = useQuery<any>({
-    queryKey: [crudUrl],
+    queryKey: [crudUrl, inputFilters],
     queryFn: () => getRequestData(crudUrl, inputFilters),
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
