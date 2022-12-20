@@ -11,7 +11,7 @@ import { matchString } from "../../../lib/matchStrings";
 import { SelectOption, DataField } from "../../../types";
 import { getInputDataField } from "../../../api/formTypeSelectData";
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
-import useGetQueryClient from "../../../api/GetQueryClient";
+import { useGetQueryClient } from "../../../api/useGetQueryClient";
 
 export type PropsRef = {
   clear: () => void;

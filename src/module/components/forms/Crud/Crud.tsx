@@ -29,7 +29,7 @@ import {
 import NewColumns from "./NewColumns";
 import exportToExcel from "../../../lib/exportToExcel";
 import { getRequestData } from "../../../api/crudDataTable";
-import useGetQueryClient from "../../../api/GetQueryClient";
+import { useGetQueryClient } from "../../../api/useGetQueryClient";
 
 export interface Props
   extends Omit<

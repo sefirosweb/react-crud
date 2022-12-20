@@ -1,10 +1,11 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
 import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns } from '../module';
+import { useGetQueryClient } from '../module/api/useGetQueryClient';
 
 type Product = {
   uuid: string;
@@ -17,8 +18,6 @@ type Product = {
   created_at: string;
   category_list: string;
 };
-
-const queryClient = new QueryClient()
 
 function App() {
   const [select, setSelect] = useState("")
@@ -99,6 +98,7 @@ function App() {
       />
     </>
 
+  const queryClient = useGetQueryClient();
   return (
     <>
       <QueryClientProvider client={queryClient}>
