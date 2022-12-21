@@ -5,8 +5,9 @@ import { FormTypes } from "./../FormTypes";
 import { ColumnDefinition, ModalDataToSend, Variant } from "../../../types";
 import { FieldTypes, CrudType, DataField } from "../../../types";
 import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClientProvider, useMutation } from "@tanstack/react-query";
 import { mutateData } from "../../../api/crudDataTable";
+import { useGetQueryClient } from "../../../api/useGetQueryClient";
 
 export type Props = {
   accept?: string;
@@ -30,7 +31,7 @@ const FilterModalData = (fields: Array<ColumnDefinition<any, unknown>>) => {
   return newModalData;
 };
 
-export const ModalCrud = (props: Props) => {
+const ModalCrudAction = (props: Props) => {
   const {
     show,
     setShow,
@@ -264,3 +265,13 @@ export const ModalCrud = (props: Props) => {
     </>
   );
 };
+
+
+export const ModalCrud = (props: Props) => {
+  const client = useGetQueryClient()
+  return (
+    <QueryClientProvider client={client}>
+      <ModalCrudAction {...props} />
+    </QueryClientProvider >
+  )
+}

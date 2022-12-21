@@ -2,8 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { SelectOption } from "../../../types";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { getFormTypeData } from "../../../api/formTypeSelectData";
+import { useGetQueryClient } from "../../../api/useGetQueryClient";
 
 export type Props = {
   name: string;
@@ -18,7 +19,7 @@ export type Props = {
   options?: SelectOption[] | string[];
 };
 
-export const FormTypeSelect = (props: Props) => {
+const FormTypeSelection = (props: Props) => {
   const {
     name,
     controlId,
@@ -113,3 +114,15 @@ export const FormTypeSelect = (props: Props) => {
     </Form.Group>
   );
 };
+
+
+export const FormTypeSelect = (props: Props) => {
+  const client = useGetQueryClient()
+  return (
+    <>
+      <QueryClientProvider client={client}>
+        <FormTypeSelection {...props} />
+      </QueryClientProvider>
+    </>
+  )
+}

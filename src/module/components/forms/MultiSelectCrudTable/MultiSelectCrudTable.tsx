@@ -4,8 +4,9 @@ import { InputDataField, PropsRef as InputDataFieldPropsRef } from "./../InputDa
 import { DeleteButton } from "./../../buttons/DeleteButton";
 import { ColumnDefinition, DataField } from "../../../types";
 import { getInputDataField } from "../../../api/crudMultiSelectTable";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { mutateData } from "../../../api/crudMultiSelectTable";
+import { useGetQueryClient } from "../../../api/useGetQueryClient";
 
 export type Props = {
   label?: string;
@@ -26,7 +27,7 @@ export type PropsRef = {
   getTableData: () => Array<DataField>;
 };
 
-export const MultiSelectCrudTable = forwardRef(
+const MultiSelectCrudTableAction = forwardRef(
   (props: Props, ref: Ref<PropsRef>) => {
     const {
       autoSave = true,
@@ -189,3 +190,14 @@ export const MultiSelectCrudTable = forwardRef(
     );
   }
 );
+
+export const MultiSelectCrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
+  const client = useGetQueryClient()
+  return (
+    <>
+      <QueryClientProvider client={client}>
+        <MultiSelectCrudTableAction  {...props} ref={ref} />
+      </QueryClientProvider>
+    </>
+  )
+})
