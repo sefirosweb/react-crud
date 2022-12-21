@@ -27,8 +27,12 @@ export const mutateData = (options: MutateData): Promise<any> => {
 }
 
 export const getInputDataField = (url: string, filter: Record<string, string>) => {
-    if (!url) return
     return new Promise((resolve, reject) => {
+        if (!url) {
+            resolve(null)
+            return
+        }
+
         axios
             .get(url, {
                 params: filter,

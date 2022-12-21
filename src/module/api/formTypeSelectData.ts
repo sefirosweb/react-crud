@@ -3,7 +3,11 @@ import { SelectOption } from '../types'
 
 export const getFormTypeData = (url?: string) => {
     return new Promise((resolve, reject) => {
-        if (!url) return
+        if (!url) {
+            resolve(null)
+            return
+        }
+
         axios
             .get(url)
             .then((request) => resolve(request.data))
