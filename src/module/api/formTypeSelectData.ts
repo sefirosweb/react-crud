@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { SelectOption } from '../types'
 
 export const getFormTypeData = (url?: string) => {
-    if (!url) return
     return new Promise((resolve, reject) => {
+        if (!url) return
         axios
             .get(url)
             .then((request) => resolve(request.data))
@@ -10,14 +11,18 @@ export const getFormTypeData = (url?: string) => {
     })
 }
 
-export const getInputDataField = (url?: string, filter?: string) => {
-    if (!url) return
+export const getInputDataField = (url?: string, filter?: string): Promise<Array<SelectOption>> => {
     return new Promise((resolve, reject) => {
+        if (!url) {
+            resolve([])
+            return
+        }
+
         axios
-            .get(url, {
+            .get<{ data: Array<SelectOption> }>(url, {
                 params: { filter },
             })
-            .then((request) => resolve(request.data))
+            .then((request) => resolve(request.data.data))
             .catch(reject)
     })
 }

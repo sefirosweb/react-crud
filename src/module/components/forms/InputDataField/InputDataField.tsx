@@ -29,7 +29,7 @@ export type Props = {
   isLoading?: boolean;
 };
 
-const parse = (dataToParse: SelectOption[] | string[]) => {
+const parse = (dataToParse: Array<SelectOption> | Array<string>) => {
   const result: SelectOption[] = [];
 
   dataToParse.forEach((i: SelectOption | string) => {
@@ -63,7 +63,7 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [tempFilters, setTempFilters] = useState("");
   const [dataField, setDataField] = useState<SelectOption[]>(parse(data));
 
-  const { data: dataQuery } = useQuery<any>({
+  const { data: dataQuery } = useQuery({
     queryKey: [url, tempFilters],
     queryFn: () => getInputDataField(url, tempFilters),
     refetchOnReconnect: false,
@@ -73,8 +73,7 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   useEffect(() => {
     if (!dataQuery) return
-    const data = dataQuery.data as SelectOption[];
-    const parsed = parse(data);
+    const parsed = parse(dataQuery);
     setDataField(parsed);
   }, [dataQuery, setDataField])
 
