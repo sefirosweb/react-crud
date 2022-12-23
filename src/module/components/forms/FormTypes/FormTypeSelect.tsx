@@ -12,6 +12,7 @@ export type Props = {
   className?: string;
   label?: string;
   isLoading?: boolean;
+  isInvalid?: boolean;
   readonly?: boolean;
   handleChange: React.ChangeEventHandler<HTMLSelectElement>;
   value?: string | number | SelectOption;
@@ -30,7 +31,8 @@ const FormTypeSelection = (props: Props) => {
     className,
     selectOptionsUrl,
     options,
-    readonly = false
+    readonly = false,
+    isInvalid
   } = props;
 
   const [isLoadingInternal, setIsLoadingInternal] = useState(false);
@@ -94,6 +96,7 @@ const FormTypeSelection = (props: Props) => {
     <Form.Group controlId={controlId} className={className}>
       {label ? <Form.Label>{label}</Form.Label> : ""}
       <Form.Select
+        isInvalid={isInvalid}
         value={selectedOption}
         name={name}
         onChange={(e) => {
