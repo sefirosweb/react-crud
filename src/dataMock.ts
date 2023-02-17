@@ -19,7 +19,7 @@ export type GeneratedData = {
     value: string;
     ean: number;
     name: string;
-    description: string;
+    description: string | null;
     price: number;
     category: any;
     category_id: any;
@@ -47,7 +47,7 @@ export const createData = () => {
             value: uuid,
             ean: faker.datatype.number({ min: 8000000, max: 9000000 }),
             name: faker.commerce.product(),
-            description: faker.commerce.productDescription(),
+            description: Math.random() < 0.8 ? faker.commerce.productDescription() : null,
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,

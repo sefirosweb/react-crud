@@ -13,6 +13,6 @@ export const fuzzyFilter: FilterFn<any> = (
   //   itemRank,
   // });
   // return itemRank.passed;
-  const text = row.getValue(columnId) as string | number;
+  const text = row.getValue(columnId) as string | number | null;
   return matchString(text, value)
 };

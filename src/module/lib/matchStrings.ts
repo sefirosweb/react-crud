@@ -1,4 +1,5 @@
-export const matchString = (a: string | number, b: string | number): boolean => {
+export const matchString = (a: string | number | null, b: string | number | null): boolean => {
+  if (a === null || b === null) return false
   const result = a
     .toString()
     .toLowerCase()
