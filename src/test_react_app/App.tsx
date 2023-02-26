@@ -129,6 +129,9 @@ function App() {
                 enableGlobalFilter
                 primaryKey='uuid'
                 crudUrl='/api/crud'
+                handleFetch={(response: Array<GeneratedData>) => {
+                  console.log('fetch', response)
+                }}
               />
             </Col>
           </Row>

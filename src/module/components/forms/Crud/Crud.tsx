@@ -48,6 +48,7 @@ export interface Props
   canExport?: boolean;
   exportName?: string;
   handleSuccess?: (response: any, crud: CrudType) => void;
+  handleFetch?: (data: Array<any>) => void;
   primaryKey: string;
   titleOnDelete?: string;
   customButtons?: JSX.Element;
@@ -84,6 +85,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     canExport,
     exportName,
     handleSuccess,
+    handleFetch,
     primaryKey,
     titleOnDelete,
     customButtons,
@@ -121,7 +123,15 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     if (!dataQuery.success) return
     const result = Object.keys(dataQuery.data).map((key) => dataQuery.data[key]);
     setDataTable(result);
-  }, [dataQuery])
+
+    if (
+      handleFetch &&
+      {}.toString.call(handleFetch) === "[object Function]"
+    ) {
+      handleFetch(result);
+    }
+
+  }, [dataQuery, handleFetch])
 
   const refreshTable = () => refetch()
   const generateExcel = (fileName: string) => {
