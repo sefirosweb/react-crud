@@ -1,7 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { GeneratedData } from '../dataMock';
 import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns } from '../module';
@@ -22,6 +22,7 @@ type Product = {
 function App() {
   const [select, setSelect] = useState("")
   const [columns, setColumns] = useState<Array<ColumnDefinition<GeneratedData>>>([]);
+  const [data, setData] = useState<Array<any>>([])
 
   useEffect(() => {
     const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
@@ -98,6 +99,10 @@ function App() {
       />
     </>
 
+  const handleFetch = useCallback((res: Array<any>) => {
+    setData(res)
+  }, []);
+
   const queryClient = useGetQueryClient();
   return (
     <>
@@ -129,9 +134,7 @@ function App() {
                 enableGlobalFilter
                 primaryKey='uuid'
                 crudUrl='/api/crud'
-                handleFetch={(response: Array<GeneratedData>) => {
-                  console.log('fetch', response)
-                }}
+                handleFetch={handleFetch}
               />
             </Col>
           </Row>
