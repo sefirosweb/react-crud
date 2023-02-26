@@ -53,13 +53,13 @@ export const HandleModalShow = forwardRef(
 
     const handleModalShow = (type: CrudType, key?: number) => {
       const fieldsCanBeEdit = columns
-        .filter((column) => (column.editable && column.accessorKey) || column.accessorKey === primaryKey)
+        .filter((column) => ((column.editable || type === "DELETE") && column.accessorKey) || column.accessorKey === primaryKey)
         .map((column) => {
           if (!column.accessorKey) return column;
           if (type === "CREATE" || key === undefined) {
             column.data = "";
           } else {
-            column.data = dataTable[key][column.accessorKey];
+            column.data = dataTable[key][column.accessorKey] ?? "";
           }
           return column;
         });

@@ -146,7 +146,7 @@ const ModalCrudAction = (props: Props) => {
       return (
         <span>
           <p>Seguro que quieres el registro: {modalData[primaryKey].data}</p>
-          {titleOnDelete && <p>{modalData[titleOnDelete].data}</p>}
+          {titleOnDelete && modalData[titleOnDelete]?.data && <p>{modalData[titleOnDelete].data}</p>}
         </span>
       );
     }

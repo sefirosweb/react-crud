@@ -125,6 +125,7 @@ function App() {
                 canEdit
                 canRefresh
                 lazyLoad
+                titleOnDelete='ean'
                 enableGlobalFilter
                 primaryKey='uuid'
                 crudUrl='/api/crud'
