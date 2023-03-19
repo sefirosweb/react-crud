@@ -260,7 +260,6 @@ mock.onPost('/api/crud').reply((request) => {
 
 mock.onPut('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' PUT`)
-
     const updateData = JSON.parse(request.data)
     console.log(updateData)
     const uuid = JSON.parse(request.data).uuid
@@ -284,6 +283,7 @@ mock.onPut('/api/crud').reply((request) => {
 
 mock.onDelete('/api/crud').reply((request) => {
     console.log(`Axios request: '/api/crud' DELETE`)
+    console.log({ request })
 
     const uuid = JSON.parse(request.data).uuid
     const data = createData()

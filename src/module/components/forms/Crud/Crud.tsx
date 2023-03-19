@@ -50,6 +50,7 @@ export interface Props
   handleSuccess?: (response: any, crud: CrudType) => void;
   handleFetch?: (data: Array<any>) => void;
   primaryKey: string;
+  sentKeyAs?: string;
   titleOnDelete?: string;
   customButtons?: JSX.Element;
 }
@@ -87,6 +88,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     handleSuccess,
     handleFetch,
     primaryKey,
+    sentKeyAs = '',
     titleOnDelete,
     customButtons,
     getRowStyles,
@@ -274,6 +276,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         url={crudUrl ?? ""}
         dataTable={dataTable}
         primaryKey={primaryKey}
+        sentKeyAs={sentKeyAs}
         titleOnDelete={titleOnDelete}
         refreshTable={refreshTable}
         handleSuccess={handleSuccess}

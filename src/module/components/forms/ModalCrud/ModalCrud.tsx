@@ -17,8 +17,9 @@ export type Props = {
   url: string;
   handleSuccess?: (response: any, crud: CrudType) => void;
   crud: CrudType;
-  titleOnDelete?: string; // TODO: This must be relationshop pf "<Array<Fields"
-  primaryKey: string; // TODO: This must be relationshop pf "<Array<Fields"
+  titleOnDelete?: string;
+  primaryKey: string;
+  sentKeyAs?: string;
   fields: Array<ColumnDefinition<any>>;
 };
 
@@ -42,6 +43,7 @@ const ModalCrudAction = (props: Props) => {
     handleSuccess,
     crud,
     primaryKey,
+    sentKeyAs = '',
     titleOnDelete,
   } = props;
 
@@ -115,7 +117,11 @@ const ModalCrudAction = (props: Props) => {
         if (f.accessorKey) {
           modalDataToSend[f.accessorKey] = modalData[f.accessorKey].data ?? "";
         }
-      });
+      })
+
+    if (sentKeyAs) {
+      modalDataToSend[sentKeyAs] = modalDataToSend[primaryKey]
+    }
 
     mutate({
       crud,

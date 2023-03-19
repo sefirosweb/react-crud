@@ -133,6 +133,7 @@ function App() {
                 titleOnDelete='ean'
                 enableGlobalFilter
                 primaryKey='uuid'
+                sentKeyAs='newPrimaryKeyName'
                 crudUrl='/api/crud'
                 handleFetch={handleFetch}
               />

@@ -12,6 +12,7 @@ export type Props = {
   refreshTable: () => void;
   url: string;
   primaryKey: string;
+  sentKeyAs?: string;
   titleOnDelete?: string;
   handleSuccess?: (response: any, crud: CrudType) => void;
   dataTable: any[];
@@ -24,6 +25,7 @@ export const HandleModalShow = forwardRef(
       url,
       refreshTable,
       primaryKey,
+      sentKeyAs = '',
       titleOnDelete,
       dataTable,
       handleSuccess,
@@ -85,6 +87,7 @@ export const HandleModalShow = forwardRef(
         url={url}
         handleSuccess={handleSuccessModalCrud}
         primaryKey={primaryKey}
+        sentKeyAs={sentKeyAs}
         titleOnDelete={titleOnDelete}
       />
     );
