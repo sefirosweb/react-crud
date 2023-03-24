@@ -1,0 +1,51 @@
+{
+  "name": "@sefirosweb/react-crud",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "files": [
+    "/dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "prepare": "npm run build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.28.0",
+    "@tanstack/react-table": "^8.8.0",
+    "@types/luxon": "^3.2.0",
+    "axios": "^1.3.4",
+    "luxon": "^3.3.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.2",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "toastr": "^2.1.4"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@types/node": "^18.15.7",
+    "@types/react": "^18.0.29",
+    "@types/react-dom": "^18.0.11",
+    "@types/toastr": "^2.1.40",
+    "@vitejs/plugin-react-swc": "^3.2.0",
+    "axios-mock-adapter": "^1.21.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1",
+    "vite-plugin-dts": "^2.1.0"
+  }
+}

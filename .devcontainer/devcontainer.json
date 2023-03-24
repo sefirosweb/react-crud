@@ -19,7 +19,8 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"eamodio.gitlens",
-				"pflannery.vscode-versionlens"
+				"pflannery.vscode-versionlens",
+				"esbenp.prettier-vscode"
 			]
 		}
 	},

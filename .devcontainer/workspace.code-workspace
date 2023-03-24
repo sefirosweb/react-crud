@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..",
+			"name": "root"
+		},
+		{
+			"path": "../react_components",
+			"name": "components"
+		},
+		{
+			"path": "../test/react_app",
+			"name": "test"
+		},
+	],
+	"settings": {}
+}
