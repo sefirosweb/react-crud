@@ -15,7 +15,6 @@ export default defineConfig({
       external: [
         'react',
         'react-dom',
-        'react-bootstrap',
         'react-icons',
         '@tanstack/react-query'
       ],
@@ -23,7 +22,6 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          "react-bootstrap": "ReactBootstrap",
           "@tanstack/react-query": "ReactQuery"
         },
       },

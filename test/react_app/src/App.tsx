@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, mock, MoackGeneratedData, useGetQueryClient } from '@sefirosweb/react-crud';
+import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, mock, MoackGeneratedData, useGetQueryClient, FormTypes } from '@sefirosweb/react-crud';
 
 mock.startMock()
 
@@ -108,6 +108,12 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <Container className='mt-5'>
+
+          <FormTypes
+            controlId='asd'
+            name='asd'
+            type={FieldTypes.NUMBER}
+          />
           <h1>Tests</h1>
           <Row>
             <Col>

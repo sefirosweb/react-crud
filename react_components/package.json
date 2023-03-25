@@ -18,12 +18,18 @@
   "files": [
     "/dist"
   ],
+  "keywords": [
+    "react",
+    "crud",
+    "table",
+    "modal"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && cp ../README.md ./dist",
     "preview": "vite preview"
   },
   "repository": {
