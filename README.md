@@ -2,6 +2,8 @@
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/sefirosweb)
 
+[!["Storybook"](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://sefirosweb.github.io/react-crud) [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+
 It´s a React compononet to be used at multiple projets
 
 Normally you are interested to have a CRUD system for a lot of things, usually you want to make a fast and simple CRUD system,
@@ -11,6 +13,13 @@ It is made by bootstrap (react-bootstrap) you can modify colors and styles for t
 Full writed in typescript
 
 Most of compenents are used [@tanstack/table](https://tanstack.com/table/v8/docs/guide/introduction)
+
+# Try it!
+
+How to use all components are in the [GitHub Pages](https://sefirosweb.github.io/react-crud/)
+
+![image](https://raw.githubusercontent.com/sefirosweb/react-crud/master/docs/preview.gif)
+
 # Start Production
 
 Install:
@@ -71,15 +80,13 @@ const columns = [
 />
 ```
 
-All components in the [Storybook](https://sefirosweb.github.io/react-crud/)
-
 Contribute to this project in [GitHub](https://github.com/sefirosweb/react-crud)
 
 # Development
 
 ## Start docker
 
-```Start devcontainer of vscode```
+`Start devcontainer of vscode`
 
 ## Start storybook for develop
 
@@ -90,6 +97,7 @@ npm run storybook
 ```
 
 ## Start react app to tests modules
+
 ```
 npm start
 ```
