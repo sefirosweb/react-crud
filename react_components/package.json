@@ -1,7 +1,9 @@
 {
   "name": "@sefirosweb/react-crud",
-  "private": false,
   "version": "2.9.10",
+  "author": "@Sefirosweb",
+  "license": "MIT",
+  "description": "Basic components for CRUD with react",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -22,6 +24,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sefirosweb/react-crud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sefirosweb/react-crud/issues"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.28.0",
