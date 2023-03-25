@@ -1,7 +1,7 @@
 {
   "name": "@sefirosweb/react-crud",
   "private": false,
-  "version": "0.0.1",
+  "version": "2.9.10",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
