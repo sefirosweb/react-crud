@@ -9,25 +9,25 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: '@sefirosweb/react-crud',
-      fileName: (format) => `index.${format}.js`,
+      fileName: 'react-crud'
     },
     rollupOptions: {
       external: [
         'react',
         'react-dom',
-        'react-icons',
         '@tanstack/react-query'
       ],
       output: {
         globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          "@tanstack/react-query": "ReactQuery"
+          'react': 'React',
+          'react-dom': 'ReactDom',
+          '@tanstack/react-query': 'TtanstackReactQuery',
         },
       },
     },
     sourcemap: true,
     emptyOutDir: true,
   },
-  plugins: [react(), dts()],
+  plugins: [react(), dts(),
+  ],
 })
