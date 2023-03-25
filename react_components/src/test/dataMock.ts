@@ -155,6 +155,8 @@ export const startMock = (options?: Options) => {
         console.log(JSON.parse(request.data))
         return generateCrudResponse(request, 'Deleted from table')
     })
+
+    return mock
 }
 
 export function get_random<T>(list: Array<T>) {
