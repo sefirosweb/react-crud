@@ -1,6 +1,6 @@
 {
   "name": "@sefirosweb/react-crud",
-  "version": "2.9.11",
+  "version": "2.9.12",
   "author": "@Sefirosweb",
   "license": "MIT",
   "description": "Basic components for CRUD with react",
