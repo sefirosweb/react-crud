@@ -1,7 +1,7 @@
 {
   "name": "@sefirosweb/react-crud-storybook",
-  "version": "2.9.9",
-  "description": "Basic components for CRUD with react",
+  "version": "1.0.0",
+  "description": "Storybook of @sefirosweb/react-crud",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "scripts": {
@@ -66,24 +66,7 @@
     "web-vitals": "^3.1.0",
     "webpack": "^5.75.0"
   },
-  "peerDependencies": {
-    "@tanstack/match-sorter-utils": "8.1.1",
-    "@tanstack/react-query": "^4.20.4",
-    "@tanstack/react-table": "8.5.13",
-    "axios": "0.27.2",
-    "bootstrap": "5.2.1",
-    "file-saver": "^2.0.5",
-    "luxon": "3.1.0",
-    "react": "18.2.0",
-    "react-bootstrap": "2.5.0",
-    "react-dom": "18.2.0",
-    "react-draft-wysiwyg": "1.15.0",
-    "react-icons": "^4.4.0",
-    "sheetjs-style": "^0.15.8",
-    "toastr": "2.1.4"
-  },
   "dependencies": {
-    "@sefirosweb/react-crud": "file:react_components",
     "@tanstack/match-sorter-utils": "8.1.1",
     "@tanstack/react-query": "^4.20.4",
     "@tanstack/react-table": "8.5.13",
