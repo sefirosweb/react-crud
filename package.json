@@ -1,6 +1,6 @@
 {
   "name": "@sefirosweb/react-crud-storybook",
-  "version": "2.9.16",
+  "version": "2.9.17",
   "description": "Storybook of @sefirosweb/react-crud",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
