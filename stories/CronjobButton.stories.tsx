@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { CronjobButton, Props } from '../src/module/components/buttons/CronjobButton';
+import { CronjobButton, Props } from '../react_components/src/components/buttons/CronjobButton';
 
 const meta: Meta = {
   title: 'Buttons/CronjobButton',

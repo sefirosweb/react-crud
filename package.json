@@ -1,17 +1,12 @@
 {
-  "name": "@sefirosweb/react-crud",
+  "name": "@sefirosweb/react-crud-storybook",
   "version": "2.9.9",
   "description": "Basic components for CRUD with react",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build-module": "rm dist/ -rf && rollup -c",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "start-storybook -p 6006"
   },
   "repository": {
     "type": "git",
@@ -41,6 +36,9 @@
     "@storybook/preset-scss": "1.0.3",
     "@storybook/react": "6.5.16",
     "@storybook/testing-library": "0.0.13",
+    "@tanstack/match-sorter-utils": "8.1.1",
+    "@tanstack/react-query-devtools": "^4.24.6",
+    "@tanstack/react-table": "8.7.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -62,7 +60,6 @@
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "1.15.0",
     "react-icons": "4.4.0",
-    "react-scripts": "^5.0.1",
     "rollup": "2.79.0",
     "rollup-plugin-peer-deps-external": "2.2.4",
     "rollup-plugin-scss": "3.0.0",
@@ -93,9 +90,10 @@
     "toastr": "2.1.4"
   },
   "dependencies": {
+    "@sefirosweb/react-crud": "file:react_components",
     "@tanstack/match-sorter-utils": "8.1.1",
-    "@tanstack/react-query": "^4.24.6",
-    "@tanstack/react-table": "8.7.9",
+    "@tanstack/react-query": "^4.20.4",
+    "@tanstack/react-table": "8.5.13",
     "axios": "0.27.2",
     "bootstrap": "5.2.1",
     "file-saver": "^2.0.5",

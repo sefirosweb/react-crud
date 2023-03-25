@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Story } from "@storybook/react";
-import { Crud, Props, PropsRef } from "../../src/module/components/forms/Crud";
-import { ColumnDefinition, FieldTypes } from "../../src/module/types";
+import { Crud, Props, PropsRef } from "../../react_components/src/components/forms/Crud";
+import { ColumnDefinition, FieldTypes } from "../../react_components/src/types";
 import { Product, data } from "../../models/Product";
 import { ColumnFilter, ColumnFiltersState } from "@tanstack/react-table";
-import { FormTypeSelect } from "../../src/module/components/forms/FormTypes/FormTypeSelect";
+import { FormTypeSelect } from "../../react_components/src/components/forms/FormTypes/FormTypeSelect";
 import { useEffect } from "@storybook/addons";
 import { DateTime } from 'luxon'
 
@@ -79,7 +79,8 @@ const Template = (props: Props) => {
     <>
       <FormTypeSelect
         handleChange={handleChange}
-        inputFieldName={"Test change"}
+        controlId="Test change"
+        name="Test change"
         selectOptionsUrl={"/api/get_options"}
         value={selectedValue}
         label={"This is a external filter"}

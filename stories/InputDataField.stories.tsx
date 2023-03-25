@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { InputDataField, Props } from '../src/module/components/forms/InputDataField';
+import { InputDataField, Props } from '../react_components/src/components/forms/InputDataField';
 
 const meta: Meta = {
   title: 'Form/InputDataField',

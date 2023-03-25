@@ -5,9 +5,9 @@ import { Story } from '@storybook/react';
 import {
   MultiSelectCrud,
   Props,
-} from '../../src/module/components/forms/MultiSelectCrud';
+} from '../../react_components/src/components/forms/MultiSelectCrud';
 import { Product } from '../../models/Product';
-import { ColumnDefinition } from '../../src/module/types';
+import { ColumnDefinition } from '../../react_components/src/types';
 
 const TestColumnsModel: ColumnDefinition<Product>[] = [
   {

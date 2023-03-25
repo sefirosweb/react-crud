@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import {
   FormTypeSelect,
   Props,
-} from '../../src/module/components/forms/FormTypes/FormTypeSelect';
+} from '../../react_components/src/components/forms/FormTypes/FormTypeSelect';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Select',

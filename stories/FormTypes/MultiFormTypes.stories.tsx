@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { FormTypes, Props } from '../../src/module/components/forms/FormTypes';
-import { FieldTypes } from '../../src/module/types';
+import { FormTypes, Props } from '../../react_components/src/components/forms/FormTypes';
+import { FieldTypes } from '../../react_components/src/types';
 
 const meta: Meta = {
   title: 'Form/FormTypes',

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { Table, Props } from '../src/module/components/forms/Table';
+import { Table, Props } from '../react_components/src/components/forms/Table';
 import { Product, data } from '../models/Product';
-import { ColumnDefinition } from '../src/module/types';
+import { ColumnDefinition } from '../react_components/src/types';
 
 const meta: Meta = {
   title: 'Tables/Table',
@@ -42,7 +42,7 @@ export const Default: Story<Props> = Template.bind({});
 Default.args = {
   columns: columns,
   data: data,
-  getRowStyles(row) {
+  getRowStyles() {
     return {
       backgroundColor: (Math.floor(Math.random() * 2) + 1) > 1 ? '#f7cbcb' : '#e8e8ff'
     }

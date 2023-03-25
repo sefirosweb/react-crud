@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { CancelButton, Props } from '../src/module/components/buttons/CancelButton';
+import { CancelButton, Props } from '../react_components/src/components/buttons/CancelButton';
 
 const meta: Meta = {
   title: 'Buttons/CancelButton',

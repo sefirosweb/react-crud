@@ -1,8 +1,11 @@
 import axios from "axios";
 import "../scss/app.scss"
-import '../src/module/lib/axiosWithToastr'
+import '../react_components/src/lib/axiosWithToastr'
 import withAxiosDecorator from 'storybook-axios';
-import '../src/dataMock';
+
+import mock from '../react_components/src/test/dataMock'
+
+mock.startMock()
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Props } from '../src/module/components/forms/Modal';
+import { Modal, Props } from '../react_components/src/components/forms/Modal';
 import { Button } from 'react-bootstrap';
-// import useState from 'storybook-addon-state';
 import { Meta, Story } from '@storybook/react';
 
 const meta: Meta = {

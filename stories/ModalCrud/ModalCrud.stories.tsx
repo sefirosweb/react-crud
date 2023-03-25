@@ -1,4 +1,4 @@
-import { ModalCrud } from '../../src/module/components/forms/ModalCrud';
+import { ModalCrud } from '../../react_components/src/components/forms/ModalCrud';
 import { Meta } from '@storybook/react';
 
 const meta: Meta = {

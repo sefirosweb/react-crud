@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Story } from '@storybook/react';
 
-import { Crud, Props, PropsRef } from '../../src/module/components/forms/Crud';
-import { ColumnDefinition } from '../../src/module/types';
+import { Crud, Props, PropsRef } from '../../react_components/src/components/forms/Crud';
+import { ColumnDefinition } from '../../react_components/src/types';
 import { Product } from '../../models/Product';
-import { FieldTypes } from '../../src/module/types';
-import { FormTypeSelect } from '../../src/module/components/forms/FormTypes/FormTypeSelect';
+import { FieldTypes } from '../../react_components/src/types';
+import { FormTypeSelect } from '../../react_components/src/components/forms/FormTypes/FormTypeSelect';
 
 const columns: Array<ColumnDefinition<Product>> = [
   {

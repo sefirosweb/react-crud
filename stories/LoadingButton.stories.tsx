@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { LoadingButton, Props } from '../src/module/components/buttons/LoadingButton';
+import { LoadingButton, Props } from '../react_components/src/components/buttons/LoadingButton';
 
 const meta: Meta = {
   title: 'Buttons/LoadingButton',

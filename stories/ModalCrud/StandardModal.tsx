@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import {
   ModalCrud,
   Props,
-} from "../../src/module/components/forms/ModalCrud";
+} from "../../react_components/src/components/forms/ModalCrud";
 import { Button } from "react-bootstrap";
 import { Story } from "@storybook/react";
 import { TestColumnsModel } from "../../models/Product";
-import { CrudType } from "../../src/module/types";
+import { CrudType } from "../../react_components/src/types";
 
 const Template = (props: Props) => {
   const { accept, fields } = props;

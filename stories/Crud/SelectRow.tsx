@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Story } from "@storybook/react";
-
-import { Crud, Props, PropsRef } from "../../src/module/components/forms/Crud";
-import { ColumnDefinition } from "../../src/module/types";
+import { Crud, Props, PropsRef } from "../../react_components/src/components/forms/Crud";
+import { ColumnDefinition } from "../../react_components/src/types";
 import { Product, data } from "../../models/Product";
 import { Button } from "react-bootstrap";
-import { useRef } from "@storybook/addons";
 
 const columns: ColumnDefinition<Product>[] = [
   {
@@ -33,8 +31,10 @@ const columns: ColumnDefinition<Product>[] = [
 ];
 
 const Template = (props: Props) => {
+  const crudRef = useRef<PropsRef>(null);
   const handleClick = () => {
-    const eans = crudRef.current.getSelectedRows<Product>().map((o) => o.ean);
+    const eans = crudRef.current?.getSelectedRows<Product>().map((o) => o.ean);
+    console.log({ eans })
   };
 
   const customButtons = (
@@ -42,7 +42,7 @@ const Template = (props: Props) => {
       <Button onClick={handleClick}>Show selected row data</Button>
     </>
   );
-  const crudRef = useRef<PropsRef>(null);
+
 
   return <Crud {...props} customButtons={customButtons} ref={crudRef} />;
 };

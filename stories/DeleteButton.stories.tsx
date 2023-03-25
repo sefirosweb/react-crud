@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { DeleteButton, Props } from '../src/module/components/buttons/DeleteButton';
+import { DeleteButton, Props } from '../react_components/src/components/buttons/DeleteButton';
 
 const meta: Meta = {
   title: 'Buttons/DeleteButton',

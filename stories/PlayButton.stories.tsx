@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-
-import { PlayButton, Props } from '../src/module/components/buttons/PlayButton';
+import { PlayButton, Props } from '../react_components/src/components/buttons/PlayButton';
 
 const meta: Meta = {
   title: 'Buttons/PlayButton',

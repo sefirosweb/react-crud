@@ -1,9 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import {
-  FormTypeNumber,
-  Props,
-} from '../../src/module/components/forms/FormTypes/FormTypeNumber';
+
+import { FormTypeNumber, Props } from '../../react_components/src/components/forms/FormTypes/FormTypeNumber';
 
 const meta: Meta = {
   title: 'Form/FormTypes/Number',
