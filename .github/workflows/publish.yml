@@ -16,9 +16,11 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
-      - run: cd ./react_components/
       - run: npm install
+        working-directory: ./react_components
       - run: npm run build
+        working-directory: ./react_components
       - run: npm publish
+        working-directory: ./react_components
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
