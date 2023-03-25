@@ -1,13 +1,13 @@
 {
   "name": "@sefirosweb/react-crud",
-  "version": "2.9.14",
+  "version": "2.9.15",
   "author": "@Sefirosweb",
   "license": "MIT",
   "description": "Basic components for CRUD with react",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/index.d.ts",
   "private": false,
   "exports": {
     ".": {
