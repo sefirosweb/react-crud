@@ -1,16 +1,11 @@
-// import XLSX from 'sheetjs-style'
-// import { saveAs } from 'file-saver'
-
+import { utils, writeFileXLSX } from 'xlsx';
 
 const exportToExcel = async (excelData: Array<Record<string, unknown>>, fileName: string) => {
-    console.log('Pending to add  it')
-    // const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF=8'
-    // const fileExtension = ".xlsx"
-    // const ws = XLSX.utils.json_to_sheet(excelData)
-    // const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] }
-    // const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    // const data = new Blob([excelBuffer], { type: fileType })
-    // saveAs(data, fileName + fileExtension)
+    const fileExtension = ".xlsx"
+    const ws = utils.json_to_sheet(excelData);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, "Data");
+    writeFileXLSX(wb, fileName + fileExtension);
 }
 
 export default exportToExcel

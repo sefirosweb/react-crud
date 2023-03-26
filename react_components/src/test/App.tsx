@@ -19,6 +19,7 @@ export default function App() {
         <div>
             Hello world
             <Crud
+                canExport
                 columns={columns}
                 primaryKey="id"
                 data={data}
