@@ -74,7 +74,7 @@ export const HandleModalShow = forwardRef(
 
       setCrud(type);
       setModalData(fieldsCanBeEdit);
-      setModalTitle(t(type));
+      setModalTitle(t(type) as string);
 
       setShow(true);
     };
