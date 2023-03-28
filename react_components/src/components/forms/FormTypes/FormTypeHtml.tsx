@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Quill, { QuillOptionsStatic } from 'quill';
-import 'quill/dist/quill.snow.css';
 import { isEqual } from '../../../lib/compareObjects';
 
 export type Props = {
