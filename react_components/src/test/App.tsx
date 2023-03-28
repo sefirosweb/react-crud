@@ -52,8 +52,11 @@ export default function App() {
             <div className="mt-5">{t('header')}</div>
             <div className="mt-5">{t('header.title')}</div>
             <Crud
+                createButtonTitle="Create Field"
                 canExport
                 canEdit
+                canDelete
+                titleOnDelete="name"
                 columns={columns}
                 primaryKey="id"
                 data={data}

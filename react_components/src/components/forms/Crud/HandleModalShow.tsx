@@ -1,5 +1,6 @@
 import { forwardRef, Ref, useEffect, useImperativeHandle } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ColumnDefinition, CrudType } from "../../../types";
 import { ModalCrud } from "../ModalCrud";
 
@@ -37,6 +38,8 @@ export const HandleModalShow = forwardRef(
     const [modalTitle, setModalTitle] = useState("");
     const [show, setShow] = useState(false);
     const [modalData, setModalData] = useState(columns);
+    const { t } = useTranslation()
+
 
     useEffect(() => {
       setModalData(columns)
@@ -71,7 +74,7 @@ export const HandleModalShow = forwardRef(
 
       setCrud(type);
       setModalData(fieldsCanBeEdit);
-      setModalTitle(type); // TODO change title
+      setModalTitle(t(type));
 
       setShow(true);
     };

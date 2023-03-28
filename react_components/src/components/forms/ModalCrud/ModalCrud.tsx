@@ -157,7 +157,7 @@ const ModalCrudAction = (props: Props) => {
     if (crud === "DELETE") {
       return (
         <span>
-          <p>Seguro que quieres el registro: {modalData[primaryKey].data}</p>
+          <p>{t('messages.confirm_delete')}: {modalData[primaryKey].data}</p>
           {titleOnDelete && modalData[titleOnDelete]?.data && <p>{modalData[titleOnDelete].data}</p>}
         </span>
       );
