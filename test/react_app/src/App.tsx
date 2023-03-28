@@ -63,7 +63,7 @@ function App() {
         accessorKey: "description",
         enableColumnFilter: true,
         editable: true,
-        fieldType: FieldTypes.TEXTAREA
+        fieldType: FieldTypes.HTML
       },
       {
         visible: false,

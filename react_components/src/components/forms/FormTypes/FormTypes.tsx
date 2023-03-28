@@ -7,11 +7,17 @@ import { FormTypeNumber } from "./FormTypeNumber";
 import { FormTypeDate } from "./FormTypeDate";
 import { FormTypePassword } from "./FormTypePassword";
 import { FieldTypes, SelectOption } from "../../../types";
+import { FormTypeHtml } from "./FormTypeHtml";
 
 type ValidFieldTypes = Exclude<FieldTypes, FieldTypes.MULTISELECT>;
 
 type PropsParams = {
   text: {
+    value?: string;
+    options?: never;
+    selectOptionsUrl?: never;
+  };
+  html: {
     value?: string;
     options?: never;
     selectOptionsUrl?: never;
@@ -96,6 +102,25 @@ export const FormTypes = (props: Props): JSX.Element => {
         label={props.label}
         isLoading={props.isLoading}
         handleChange={props.handleChange}
+        value={props.value}
+      />
+    );
+  if (hasField(props, FieldTypes.HTML))
+    return (
+      <FormTypeHtml
+        className={props.className}
+        label={props.label}
+        setValue={(value) => {
+          props.handleChange({
+            target: {
+              name: props.name,
+              value
+            }
+          })
+        }}
+        options={{
+          readOnly: props.isLoading
+        }}
         value={props.value}
       />
     );

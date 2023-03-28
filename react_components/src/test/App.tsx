@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Crud } from "../components/forms/Crud";
 import { FormTypeHtml } from "../components/forms/FormTypes";
-import { ColumnDefinition } from "../types";
+import { ColumnDefinition, FieldTypes } from "../types";
 
 
 export default function App() {
@@ -16,13 +16,23 @@ export default function App() {
 
     const columns: Array<ColumnDefinition<any>> = [
         {
-            accessorKey: "id"
-        }
+            accessorKey: "id",
+        },
+        {
+            accessorKey: "name",
+            fieldType: FieldTypes.HTML,
+            editable: true
+        },
     ]
 
     const data = [
         {
-            id: 5
+            id: 5,
+            name: "hi"
+        },
+        {
+            id: 5,
+            name: "bye",
         }
     ]
 
@@ -43,6 +53,7 @@ export default function App() {
             <div className="mt-5">{t('header.title')}</div>
             <Crud
                 canExport
+                canEdit
                 columns={columns}
                 primaryKey="id"
                 data={data}

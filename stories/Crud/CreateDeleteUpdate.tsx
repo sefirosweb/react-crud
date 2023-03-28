@@ -51,6 +51,7 @@ const columns: Array<ColumnDefinition<Product>> = [
     header: "Desc",
     titleOnCRUD: "Description",
     accessorKey: "description",
+    fieldType: FieldTypes.HTML,
     editable: true,
   },
   {

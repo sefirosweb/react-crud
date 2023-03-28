@@ -19,7 +19,8 @@ type ExtendStandardFields = {
   | FieldTypes.DATE
   | FieldTypes.NUMBER
   | FieldTypes.PASSWORD
-  | FieldTypes.TEXTAREA;
+  | FieldTypes.TEXTAREA
+  | FieldTypes.HTML;
   dropdown?: never;
   multiSelectOptions?: never;
   selectOptionsUrl?: never;
@@ -86,6 +87,7 @@ export enum FieldTypes {
   NUMBER = 'number',
   DATE = 'date',
   TEXTAREA = 'textarea',
+  HTML = 'html',
   PASSWORD = 'password',
   CHECKBOX = 'checkbox',
   SELECT = 'select',
