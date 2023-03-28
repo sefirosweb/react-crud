@@ -25,11 +25,14 @@ export const HandleModalShow = forwardRef(
       url,
       refreshTable,
       primaryKey,
-      sentKeyAs = '',
+      sentKeyAs,
       titleOnDelete,
       dataTable,
       handleSuccess,
     } = props;
+
+    const sentKeyAsValue = sentKeyAs ?? primaryKey
+
     const [crud, setCrud] = useState<CrudType>("CREATE");
     const [modalTitle, setModalTitle] = useState("");
     const [show, setShow] = useState(false);
@@ -87,7 +90,7 @@ export const HandleModalShow = forwardRef(
         url={url}
         handleSuccess={handleSuccessModalCrud}
         primaryKey={primaryKey}
-        sentKeyAs={sentKeyAs}
+        sentKeyAs={sentKeyAsValue}
         titleOnDelete={titleOnDelete}
       />
     );

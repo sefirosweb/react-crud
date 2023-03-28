@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {
-      sentKeyAs: 'id_item',
+      sentKeyAs: 'bbbbb',
       primaryKey: "uuid",
       url: "/api/sub_table",
       getDataUrl: "/api/get_options",
@@ -48,7 +48,6 @@ function App() {
     const newColumns: Array<ColumnDefinition<MoackGeneratedData>> = [
       {
         accessorKey: "uuid",
-        visible: false
       },
       {
         accessorKey: "ean"
@@ -132,6 +131,7 @@ function App() {
               <Crud
                 customButtons={customButtons}
                 columns={columns}
+                createButtonTitle='Crear'
                 canDelete
                 canEdit
                 canRefresh

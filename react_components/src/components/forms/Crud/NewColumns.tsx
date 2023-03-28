@@ -12,6 +12,7 @@ export interface Props
     "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
   > {
   primaryKey: string;
+  sentKeyAs?: string;
   canEdit?: boolean;
   canDelete?: boolean;
   canSelectRow?: boolean;
@@ -22,6 +23,7 @@ export interface Props
 const NewColumns = (props: Props) => {
   const {
     primaryKey,
+    sentKeyAs,
     columns,
     canEdit,
     canDelete,
@@ -29,6 +31,8 @@ const NewColumns = (props: Props) => {
     handleModalShowRef,
     refreshTable,
   } = props;
+
+  const sentKeyAsValue = sentKeyAs ?? primaryKey
 
   const newColumns = [...columns];
   if (canSelectRow === true) {
@@ -117,9 +121,13 @@ const NewColumns = (props: Props) => {
             <ShowMultiSelectCrud
               crudUrl={props.column.columnDef.meta?.multiSelectOptions?.url ?? ""}
               getDataUrl={props.column.columnDef.meta?.multiSelectOptions?.getDataUrl ?? ""}
-              sentKeyAs={props.column.columnDef.meta?.multiSelectOptions?.sentKeyAs}
+
               primaryKey={props.column.columnDef.meta?.multiSelectOptions?.primaryKey ?? ""}
+              sentKeyAs={props.column.columnDef.meta?.multiSelectOptions?.sentKeyAs ?? ""}
+
               primaryKeyId={props.cell.row.original[primaryKey]}
+              sentPrimaryKeyIdAs={sentKeyAsValue}
+
               columns={props.column.columnDef.meta?.multiSelectOptions?.columns ?? []}
               title={props.column.columnDef.meta?.multiSelectOptions?.title}
               lazyLoad={props.column.columnDef.meta?.multiSelectOptions?.lazyLoad}

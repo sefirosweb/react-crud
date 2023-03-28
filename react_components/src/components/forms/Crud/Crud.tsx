@@ -88,12 +88,14 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     handleSuccess,
     handleFetch,
     primaryKey,
-    sentKeyAs = '',
+    sentKeyAs,
     titleOnDelete,
     customButtons,
     getRowStyles,
     getRowClass
   } = props;
+
+  const sentKeyAsValue = sentKeyAs ?? primaryKey
 
   const [isLoading, setIsLoading] = useState(false);
   const [dataTable, setDataTable] = useState(data);
@@ -234,6 +236,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     canSelectRow,
     handleModalShowRef: handleModalShowRef,
     primaryKey,
+    sentKeyAs: sentKeyAsValue,
     refreshTable,
   });
 
@@ -276,7 +279,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
         url={crudUrl ?? ""}
         dataTable={dataTable}
         primaryKey={primaryKey}
-        sentKeyAs={sentKeyAs}
+        sentKeyAs={sentKeyAsValue}
         titleOnDelete={titleOnDelete}
         refreshTable={refreshTable}
         handleSuccess={handleSuccess}

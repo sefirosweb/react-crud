@@ -120,7 +120,7 @@ export const startMock = (options?: Options) => {
 
     mock.onDelete('/api/crud').reply((request) => {
         console.log(`Axios request: '/api/crud' DELETE`)
-        console.log({ request })
+        console.log(JSON.parse(request.data))
 
         const uuid = JSON.parse(request.data).uuid
         const data = createData()

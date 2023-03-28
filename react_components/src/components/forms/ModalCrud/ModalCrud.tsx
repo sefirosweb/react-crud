@@ -47,6 +47,9 @@ const ModalCrudAction = (props: Props) => {
     titleOnDelete,
   } = props;
 
+  const sentKeyAsValue = sentKeyAs ?? primaryKey
+
+
   const [isLoading, setIsLoading] = useState(false);
   const [variantButton, setVariantButton] = useState<Variant>("info");
   const [modalData, setModalData] = useState(FilterModalData(fields));
@@ -119,8 +122,8 @@ const ModalCrudAction = (props: Props) => {
         }
       })
 
-    if (sentKeyAs) {
-      modalDataToSend[sentKeyAs] = modalDataToSend[primaryKey]
+    if (sentKeyAsValue) {
+      modalDataToSend[sentKeyAsValue] = modalDataToSend[primaryKey]
     }
 
     mutate({

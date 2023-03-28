@@ -8,6 +8,7 @@ export type Props = {
   sentKeyAs?: string;
   primaryKey: string;
   primaryKeyId: string;
+  sentPrimaryKeyIdAs?: string;
   crudUrl: string;
   getDataUrl: string;
   lazyLoad?: boolean;
@@ -23,6 +24,7 @@ export const MultiSelectCrud = (props: Props) => {
     sentKeyAs,
     primaryKey,
     primaryKeyId,
+    sentPrimaryKeyIdAs,
     crudUrl,
     columns,
     onExitModal,
@@ -41,9 +43,10 @@ export const MultiSelectCrud = (props: Props) => {
         columns={columns}
         crudUrl={crudUrl}
         getDataUrl={getDataUrl}
-        sentKeyAs={sentKeyAs}
         primaryKey={primaryKey}
+        sentKeyAs={sentKeyAs}
         primaryKeyId={primaryKeyId}
+        sentPrimaryKeyIdAs={sentPrimaryKeyIdAs}
         lazyLoad={lazyLoad}
         handleIsLoading={setIsLoading}
       />

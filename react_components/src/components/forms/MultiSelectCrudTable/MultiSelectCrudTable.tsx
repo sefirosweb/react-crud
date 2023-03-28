@@ -13,6 +13,7 @@ export type Props = {
   sentKeyAs?: string;
   primaryKey: string;
   primaryKeyId: string;
+  sentPrimaryKeyIdAs?: string;
   crudUrl?: string;
   getDataUrl: string;
   lazyLoad?: boolean;
@@ -32,9 +33,10 @@ const MultiSelectCrudTableAction = forwardRef(
     const {
       autoSave = true,
       label,
-      sentKeyAs = 'primaryKeyId',
+      sentKeyAs,
       primaryKey,
       primaryKeyId,
+      sentPrimaryKeyIdAs = 'primaryKeyId',
       crudUrl = '',
       columns,
       getDataUrl,
@@ -42,6 +44,8 @@ const MultiSelectCrudTableAction = forwardRef(
       handleIsLoading,
       handleChange,
     } = props;
+
+    const sentKeyAsValue = sentKeyAs ?? primaryKey
 
     const newLazyLoad = autoSave ? lazyLoad : false;
 
@@ -55,7 +59,7 @@ const MultiSelectCrudTableAction = forwardRef(
     const { data: dataQuery, isRefetching: isRefetchingQuery, isLoading: isLoadingQuery } = useQuery<any>({
       queryKey: [crudUrl, primaryKeyId],
       queryFn: () => getInputDataField(crudUrl, {
-        [sentKeyAs]: primaryKeyId
+        [sentKeyAsValue]: primaryKeyId
       }),
       refetchOnReconnect: false,
       refetchOnWindowFocus: false
@@ -114,7 +118,8 @@ const MultiSelectCrudTableAction = forwardRef(
 
         const dataToSend = {
           ...dataField,
-          [sentKeyAs]: primaryKeyId,
+          [sentKeyAsValue]: dataField[primaryKey],
+          [sentPrimaryKeyIdAs]: primaryKeyId,
         }
 
         mutate({
@@ -137,7 +142,8 @@ const MultiSelectCrudTableAction = forwardRef(
 
         const dataToSend: any = {
           ...dataField,
-          [sentKeyAs]: primaryKeyId
+          [sentKeyAsValue]: dataField[primaryKey],
+          [sentPrimaryKeyIdAs]: primaryKeyId,
         }
 
         mutate({
