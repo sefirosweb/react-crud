@@ -52,6 +52,7 @@
     "babel-loader": "8.2.5",
     "bootstrap": "5.2.1",
     "css-loader": "5.2.7",
+    "quilljs": "^0.18.1",
     "react": "18.2.0",
     "react-bootstrap": "2.5.0",
     "react-dom": "18.2.0",
