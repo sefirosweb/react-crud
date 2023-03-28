@@ -9,7 +9,7 @@ export type Props = {
   setValue?: React.Dispatch<React.SetStateAction<string>>
   value?: string;
   className?: string;
-  options?: QuillOptionsStatic,
+  options?: QuillOptionsStatic;
 };
 
 const modules = {
@@ -87,7 +87,7 @@ export const FormTypeHtml = (props: Props) => {
       editor.current.clipboard.dangerouslyPasteHTML(value, 'api')
     }
 
-  }, [value, editor.current])
+  }, [optionsState, value, editor.current])
 
 
   return (
