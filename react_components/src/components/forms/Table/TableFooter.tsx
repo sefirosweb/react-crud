@@ -1,6 +1,7 @@
 import { Table } from '@tanstack/react-table';
 import React from 'react';
 import { Col, Form, Pagination, Row } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   table: Table<any>;
@@ -9,6 +10,7 @@ type Props = {
 export const TableFooter = (props: Props) => {
   const storage = window.location.href + '_getSizeTable';
   const pageSize = parseInt(localStorage.getItem(storage) ?? '15');
+  const { t } = useTranslation()
 
   const { table } = props;
   return (
@@ -48,7 +50,7 @@ export const TableFooter = (props: Props) => {
           >
             {[15, 50, 200, 99999].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Show {pageSize}
+                {t('Show')} {pageSize}
               </option>
             ))}
           </Form.Select>

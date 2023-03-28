@@ -3,6 +3,7 @@ import { Button, Col, InputGroup, Row } from "react-bootstrap";
 import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
 import { FaFileExport } from 'react-icons/fa';
+import { useTranslation } from "react-i18next";
 
 
 type Props = {
@@ -39,6 +40,8 @@ export const TableToolbar = (props: Props) => {
     setGlobalFilter(filter);
   }, [filter]);
 
+  const { t } = useTranslation()
+
   return (
     <Row>
       <Col lg={9} md={8} xs={12} className="mb-3">
@@ -59,7 +62,7 @@ export const TableToolbar = (props: Props) => {
                 type="text"
                 value={filter}
                 onChange={(value) => setFilter(String(value))}
-                placeholder={`Search...`}
+                placeholder={t('Search') as string}
                 className="form-control"
               />
             )}

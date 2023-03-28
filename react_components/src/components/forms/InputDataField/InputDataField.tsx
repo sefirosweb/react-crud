@@ -12,6 +12,7 @@ import { SelectOption, DataField } from "../../../types";
 import { getInputDataField } from "../../../api/formTypeSelectData";
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { useGetQueryClient } from "../../../api/useGetQueryClient";
+import { useTranslation } from "react-i18next";
 
 export type PropsRef = {
   clear: () => void;
@@ -63,6 +64,8 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [tempFilters, setTempFilters] = useState("");
   const [dataField, setDataField] = useState<SelectOption[]>(parse(data));
 
+  const { t } = useTranslation()
+
   const { data: dataQuery } = useQuery({
     queryKey: [url, tempFilters],
     queryFn: () => getInputDataField(url, tempFilters),
@@ -100,7 +103,7 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     });
 
     if (!dataFound) {
-      toastr.warning("The selected is not correct");
+      toastr.warning(t('error.wrong_selected') as string);
       return;
     }
 
@@ -154,7 +157,7 @@ const InputDataFieldBox = forwardRef((props: Props, ref: Ref<PropsRef>) => {
                 />
                 <datalist id="data">{options()}</datalist>
                 <Button onClick={handleOnAcceptButton} disabled={isLoading}>
-                  Añadir
+                  {t('Add')}
                 </Button>
               </InputGroup>
             </Form.Group>

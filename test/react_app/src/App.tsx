@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, mock, MoackGeneratedData, useGetQueryClient, FormTypes } from '@sefirosweb/react-crud';
+import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, mock, MoackGeneratedData, useGetQueryClient, FormTypes, i18nInstance } from '@sefirosweb/react-crud';
 
 mock.startMock()
 
@@ -23,6 +23,10 @@ function App() {
   const [select, setSelect] = useState("")
   const [columns, setColumns] = useState<Array<ColumnDefinition<MoackGeneratedData>>>([]);
   const [data, setData] = useState<Array<any>>([])
+
+  useEffect(() => {
+    i18nInstance.changeLanguage('en')
+  }, [])
 
   useEffect(() => {
     const multiSelectOptionsColumnsValues: MultiSelectOptionsColumns<Product> = {

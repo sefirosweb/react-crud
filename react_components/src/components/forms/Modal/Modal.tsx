@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal as BootstrapModal, ModalProps } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { Variant } from "../../../types";
 import { LoadingButton } from "./../../buttons/LoadingButton";
 
@@ -33,6 +34,7 @@ export const Modal = (props: Props) => {
   } = props;
 
   const handleClose = () => setShow(false);
+  const { t } = useTranslation()
 
   return (
     <>
@@ -55,7 +57,7 @@ export const Modal = (props: Props) => {
             onClick={handleClose}
             disabled={isLoading}
           >
-            Cerrar
+            {t('Close')}
           </Button>
 
           {accept &&

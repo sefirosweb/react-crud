@@ -8,6 +8,7 @@ import { MultiSelectCrudTable } from "../MultiSelectCrudTable";
 import { QueryClientProvider, useMutation } from "@tanstack/react-query";
 import { mutateData } from "../../../api/crudDataTable";
 import { useGetQueryClient } from "../../../api/useGetQueryClient";
+import { useTranslation } from "react-i18next";
 
 export type Props = {
   accept?: string;
@@ -37,7 +38,7 @@ const ModalCrudAction = (props: Props) => {
     show,
     setShow,
     title,
-    accept = "Accept",
+    accept,
     fields,
     url,
     handleSuccess,
@@ -53,6 +54,8 @@ const ModalCrudAction = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [variantButton, setVariantButton] = useState<Variant>("info");
   const [modalData, setModalData] = useState(FilterModalData(fields));
+
+  const { t } = useTranslation()
 
   const { mutate } = useMutation({
     mutationFn: mutateData
@@ -268,7 +271,7 @@ const ModalCrudAction = (props: Props) => {
         title={title}
         // onExited={onExited}
         isLoading={isLoading}
-        accept={accept ? accept : "Accept"}
+        accept={accept ?? t('Accept') as string}
         acceptVariant={variantButton}
       />
     </>
