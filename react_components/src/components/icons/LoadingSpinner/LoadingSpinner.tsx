@@ -1,7 +1,9 @@
-import React from 'react';
 import { Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export const LoadingSpinner = () => {
+  const { t } = useTranslation()
+
   return (
     <>
       <Spinner
@@ -12,7 +14,7 @@ export const LoadingSpinner = () => {
         aria-hidden="true"
         className="mr-2"
       />
-      <span className="mx-2">Loading...</span>
+      <span className="mx-2">{t('Loading')}...</span>
     </>
   );
 };

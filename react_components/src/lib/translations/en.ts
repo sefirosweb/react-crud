@@ -4,6 +4,7 @@ export default {
     Close: 'Close',
     Add: 'Add',
     Accept: 'Accept',
+    Loading: 'Loading',
     CREATE: 'Creation form',
     UPDATE: 'Update form',
     DELETE: 'Delete form',
