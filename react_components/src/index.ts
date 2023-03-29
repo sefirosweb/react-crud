@@ -29,7 +29,7 @@ export * from "./types";
 
 export { useGetQueryClient } from "./api/useGetQueryClient";
 
-export { mock } from "./test"
-export type { MoackGeneratedData } from './test'
+// export { mock } from "./test"
+// export type { MoackGeneratedData } from './test'
 
 export { i18nInstance, axiosInstance } from './lib'
