@@ -1,5 +1,6 @@
-import axios from 'axios';
+import { axiosInstance } from './axios'
 import toastr from 'toastr';
+import axios from 'axios';
 
 toastr.options.preventDuplicates = true;
 toastr.options.timeOut = 10000;
@@ -7,7 +8,7 @@ toastr.options.extendedTimeOut = 6000;
 toastr.options.progressBar = true;
 
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     const message = response.data?.message;
     if (message) {

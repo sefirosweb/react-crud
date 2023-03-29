@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
-import axios, { AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig } from 'axios'
+import { axiosInstance as axios } from '../lib/axios'
 import MockAdapter from 'axios-mock-adapter'
 import { matchString } from '../lib';
 

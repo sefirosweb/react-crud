@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axiosInstance as axios } from '../lib/axios'
 import { CrudType, InputFilter, ModalDataToSend } from '../types'
 
 export const getRequestData = (url?: string, params?: InputFilter) => {
