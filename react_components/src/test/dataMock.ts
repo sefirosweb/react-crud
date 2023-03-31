@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { AxiosRequestConfig } from 'axios'
-import { axiosInstance as axios } from '../lib/axios'
+import { AxiosInstance, AxiosRequestConfig } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { matchString } from '../lib';
 
@@ -48,7 +47,7 @@ type GenerateDataSubtable = [number, {
     data: Array<GeneratedData>
 }]
 
-export const startMock = (options?: Options) => {
+export const startMock = (axios: AxiosInstance, options?: Options,) => {
     const mock = new MockAdapter(axios, {
         onNoMatch: 'passthrough',
         delayResponse: options?.timetou ?? 600,
@@ -183,7 +182,7 @@ export const createData = () => {
             value: uuid,
             ean: faker.datatype.number({ min: 8000000, max: 9000000 }),
             name: faker.commerce.product(),
-            description: Math.random() < 0.8 ? faker.commerce.productDescription() : null,
+            description: Math.random() < 0.4 ? faker.commerce.productDescription() : null,
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,

@@ -3,9 +3,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, mock, MoackGeneratedData, useGetQueryClient, FormTypes, i18nInstance } from '@sefirosweb/react-crud';
+import { ColumnDefinition, Crud, FieldTypes, FormTypeSelect, InputDataField, MultiSelectOptionsColumns, useGetQueryClient, FormTypes, i18nInstance, axiosInstance } from '@sefirosweb/react-crud';
 
-mock.startMock()
+import { startMock, GeneratedData as MoackGeneratedData } from '../../../react_components/src/test/dataMock'
+
+startMock(axiosInstance)
 
 type Product = {
   uuid: string;

@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@sefirosweb/react-crud": "file:../../react_components",
+    "@sefirosweb/react-crud": "file:../../react_components/sefirosweb-react-crud-20230331-174715.tgz",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
     "bootstrap": "^5.2.3",
@@ -21,10 +21,10 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.2.0",
-    "@types/react": "^18.0.29",
+    "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.2.0",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "vite": "^4.2.1"
   }
 }
