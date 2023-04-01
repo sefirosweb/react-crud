@@ -13,6 +13,7 @@ export type GeneratedData = {
     ean: number;
     name: string;
     description: string | null;
+    random: string | null;
     price: number;
     category: any;
     category_id: any;
@@ -46,6 +47,18 @@ type GenerateDataSubtable = [number, {
     success: boolean
     data: Array<GeneratedData>
 }]
+
+export const generateRandomString = (length: number) => {
+    let result = '';
+    const characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜáéíóúàèìòùäëïöü';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+};
+
 
 export const startMock = (axios: AxiosInstance, options?: Options,) => {
     const mock = new MockAdapter(axios, {
@@ -183,6 +196,7 @@ export const createData = () => {
             ean: faker.datatype.number({ min: 8000000, max: 9000000 }),
             name: faker.commerce.product(),
             description: Math.random() < 0.4 ? faker.commerce.productDescription() : null,
+            random: Math.random() < 0.4 ? generateRandomString(10) : null,
             price: parseFloat(faker.commerce.price()) + 0.99,
             category: category.name,
             category_id: category.value,

@@ -48,13 +48,22 @@ declare module "@tanstack/table-core" {
   }
 }
 
+const filterFnType = (fieldType?: FieldTypes): string => {
+  if (fieldType === FieldTypes.NUMBER) return "inNumberRange";
+  if (fieldType === FieldTypes.DATE) return "inNumberRange";
+
+  return "textFilter";
+}
+
 const parseColumns = (
   columns: Array<ColumnDefinition<any>>
 ): Array<ColumnDef<any>> => {
+  // @ts-ignore
   return columns
     .map((c) => {
       return {
         ...c,
+        filterFn: filterFnType(c.fieldType),
         meta: {
           fieldType: c.fieldType,
           multiSelectOptions: c.multiSelectOptions,
@@ -159,6 +168,11 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       getRowClass
     },
 
+    filterFns: {
+      textFilter: fuzzyFilter
+    },
+
+    getColumnCanGlobalFilter: () => true,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
