@@ -12,14 +12,24 @@ export const mutateData = (options: MutateData): Promise<any> => {
         switch (crud) {
             case "CREATE":
                 axios
-                    .post(url, dataToSend)
-                    .then((response) => resolve(response.data))
+                    .post<{ success?: boolean }>(url, dataToSend)
+                    .then((response) => {
+                        if (response.data.success !== true) {
+                            return reject(`The response dosen't response success`)
+                        }
+                        resolve(response.data)
+                    })
                     .catch(reject)
                 break;
             case "DELETE":
                 axios
-                    .delete(url, { data: dataToSend })
-                    .then((response) => resolve(response.data))
+                    .delete<{ success?: boolean }>(url, { data: dataToSend })
+                    .then((response) => {
+                        if (response.data.success !== true) {
+                            return reject(`The response dosen't response success`)
+                        }
+                        resolve(response.data)
+                    })
                     .catch(reject)
                 break;
         }

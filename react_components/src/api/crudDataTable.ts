@@ -29,20 +29,35 @@ export const mutateData = (options: MutateData): Promise<any> => {
         switch (crud) {
             case "CREATE":
                 axios
-                    .post(url, modalDataToSend)
-                    .then((response) => resolve(response.data))
+                    .post<{ success?: boolean }>(url, modalDataToSend)
+                    .then((response) => {
+                        if (response.data.success !== true) {
+                            return reject(`The response dosen't response success`)
+                        }
+                        resolve(response.data)
+                    })
                     .catch(reject)
                 break;
             case "DELETE":
                 axios
-                    .delete(url, { data: modalDataToSend })
-                    .then((response) => resolve(response.data))
+                    .delete<{ success?: boolean }>(url, { data: modalDataToSend })
+                    .then((response) => {
+                        if (response.data.success !== true) {
+                            return reject(`The response dosen't response success`)
+                        }
+                        resolve(response.data)
+                    })
                     .catch(reject)
                 break;
             case "UPDATE":
                 axios
-                    .put(url, modalDataToSend)
-                    .then((response) => resolve(response.data))
+                    .put<{ success?: boolean }>(url, modalDataToSend)
+                    .then((response) => {
+                        if (response.data.success !== true) {
+                            return reject(`The response dosen't response success`)
+                        }
+                        resolve(response.data)
+                    })
                     .catch(reject)
                 break;
         }
