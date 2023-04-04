@@ -8,6 +8,8 @@ export default {
     CREATE: 'Formulario de creación',
     UPDATE: 'Formulario de actualización',
     DELETE: 'Formulario de borrado',
+    Delete: 'Borrar',
+    Edit: 'Editar',
     error: {
         wrong_selected: 'El valor seleccionado no es correcto'
     },

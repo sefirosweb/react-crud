@@ -8,6 +8,8 @@ export default {
     CREATE: 'Creation form',
     UPDATE: 'Update form',
     DELETE: 'Delete form',
+    Delete: 'Delete',
+    Edit: 'Edit',
     error: {
         wrong_selected: 'The value selected is not correct'
     },

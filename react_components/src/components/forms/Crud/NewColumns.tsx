@@ -6,6 +6,7 @@ import { DeleteButton } from "../../buttons/DeleteButton";
 import { ShowMultiSelectCrud } from "./ShowMultiSelectCrud";
 import { FieldTypes } from "../../../types";
 import { PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
+import { useTranslation } from "react-i18next";
 export interface Props
   extends Omit<
     TableProps,
@@ -32,6 +33,7 @@ const NewColumns = (props: Props) => {
     refreshTable,
   } = props;
 
+  const { t } = useTranslation()
   const sentKeyAsValue = sentKeyAs ?? primaryKey
 
   const newColumns = [...columns];
@@ -63,7 +65,7 @@ const NewColumns = (props: Props) => {
 
   if (canEdit) {
     newColumns.push({
-      header: "Edit",
+      header: t('Edit') as string,
       id: "edit_crud",
       cell: (row) => {
         return (
@@ -82,7 +84,7 @@ const NewColumns = (props: Props) => {
 
   if (canDelete) {
     newColumns.push({
-      header: "Delete",
+      header: t('Delete') as string,
       id: "edit_crid",
       editable: false,
       cell: (row) => {
