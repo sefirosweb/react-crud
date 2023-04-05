@@ -7,22 +7,9 @@ export const matchString = (a: string | number | null, b: string | number | null
     b === undefined
   ) return false
 
-  const result = a
-    .toString()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .match(
-      b
-        .toString()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-    );
+  const cmpA = a.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const cmpB = b.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const result = cmpA.includes(cmpB);
 
-  if (result === null) {
-    return false;
-  }
-
-  return true;
+  return result;
 };

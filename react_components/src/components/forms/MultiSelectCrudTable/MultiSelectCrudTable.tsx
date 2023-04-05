@@ -7,6 +7,7 @@ import { getInputDataField } from "../../../api/crudMultiSelectTable";
 import { QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { mutateData } from "../../../api/crudMultiSelectTable";
 import { useGetQueryClient } from "../../../api/useGetQueryClient";
+import { useTranslation } from "react-i18next";
 
 export type Props = {
   label?: string;
@@ -56,6 +57,8 @@ const MultiSelectCrudTableAction = forwardRef(
 
     const queryClient = useQueryClient()
 
+    const { t } = useTranslation()
+
     const { data: dataQuery, isRefetching: isRefetchingQuery, isLoading: isLoadingQuery } = useQuery<any>({
       queryKey: [crudUrl, primaryKeyId],
       queryFn: () => getInputDataField(crudUrl, {
@@ -100,7 +103,7 @@ const MultiSelectCrudTableAction = forwardRef(
     }, [dataModal]);
 
     newColumns.push({
-      header: "Borrar",
+      header: t('Delete') as string,
       id: "delete_crud",
       cell: (props) => {
         return (
