@@ -62,7 +62,7 @@ const MultiSelectCrudTableAction = forwardRef(
     const { data: dataQuery, isRefetching: isRefetchingQuery, isLoading: isLoadingQuery } = useQuery<any>({
       queryKey: [crudUrl, primaryKeyId],
       queryFn: () => getInputDataField(crudUrl, {
-        [sentKeyAsValue]: primaryKeyId
+        [sentPrimaryKeyIdAs]: primaryKeyId
       }),
       refetchOnReconnect: false,
       refetchOnWindowFocus: false

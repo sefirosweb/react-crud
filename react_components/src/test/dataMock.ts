@@ -111,7 +111,7 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
     mock.onPut('/api/crud').reply((request) => {
         console.log(`Axios request: '/api/crud' PUT`)
         const updateData = JSON.parse(request.data)
-        console.log(updateData)
+        console.log({ updateData })
         const uuid = JSON.parse(request.data).uuid
         const data = createData()
         const findData = data.findIndex(i => i.uuid === uuid)
@@ -155,6 +155,7 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
     // Crud for list table
     mock.onGet('/api/sub_table').reply((request) => {
         console.log(`Axios request: '/api/sub_table' GET`)
+        console.log({ params: request.params })
         return generateDataSubtable(request)
     })
 
