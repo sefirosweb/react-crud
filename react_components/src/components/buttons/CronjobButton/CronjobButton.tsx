@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiFillClockCircle } from 'react-icons/ai';
+import { FaRegClock } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
 export type Props = {
@@ -12,7 +12,7 @@ export const CronjobButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
     <Button onClick={onClick} disabled={disabled} variant="secondary">
-      {children} <AiFillClockCircle size={18} />
+      {children} <FaRegClock size={18} />
     </Button>
   );
 };

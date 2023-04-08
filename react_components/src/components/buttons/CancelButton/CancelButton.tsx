@@ -1,5 +1,5 @@
 import React from 'react';
-import { GiCancel } from 'react-icons/gi';
+import { FaTimesCircle } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
 export type Props = {
@@ -12,7 +12,7 @@ export const CancelButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
     <Button onClick={onClick} disabled={disabled} variant="secondary">
-      {children} <GiCancel size={22} />
+      {children} <FaTimesCircle size={18} />
     </Button>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiFillDelete } from 'react-icons/ai';
+import { FaTrash } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
 export type Props = {
@@ -12,7 +12,7 @@ export const DeleteButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
     <Button onClick={onClick} disabled={disabled} variant="danger">
-      {children} <AiFillDelete />
+      {children} <FaTrash size={18} />
     </Button>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HiOutlineRefresh } from 'react-icons/hi';
+import { FaSyncAlt } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
 export type Props = {
@@ -11,8 +11,8 @@ export type Props = {
 export const RefreshButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
-    <Button onClick={onClick} disabled={disabled} variant="secondary" className='d-flex justify-content-center align-items-center'>
-      {children} <HiOutlineRefresh />
+    <Button onClick={onClick} disabled={disabled} variant="secondary">
+      {children} <FaSyncAlt size={18} />
     </Button>
   );
 };

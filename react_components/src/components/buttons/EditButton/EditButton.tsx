@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiFillEdit } from 'react-icons/ai';
+import { FaPen } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
 export type Props = {
@@ -12,7 +12,7 @@ export const EditButton = (props: Props) => {
   const { disabled, children, onClick } = props;
   return (
     <Button onClick={onClick} disabled={disabled} variant="secondary">
-      {children} <AiFillEdit />
+      {children} <FaPen size={18} />
     </Button>
   );
 };
