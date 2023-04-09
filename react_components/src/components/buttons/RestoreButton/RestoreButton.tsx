@@ -1,17 +1,15 @@
 import React from 'react';
 import { FaTrashRestore } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
+interface CustomProps {
+}
 
-export type Props = {
-  disabled?: boolean;
-  children?: JSX.Element;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-};
+export type Props = CustomProps & React.ComponentProps<typeof Button>;
 
-export const RestoreButton = (props: Props) => {
-  const { disabled, children, onClick } = props;
+export const RestoreButton: React.FC<Props> = (props) => {
+  const { children, variant = "secondary" } = props;
   return (
-    <Button onClick={onClick} disabled={disabled} variant="secondary">
+    <Button {...props} variant={variant}>
       {children} <FaTrashRestore size={18} />
     </Button>
   );

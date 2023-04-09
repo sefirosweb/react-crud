@@ -2,16 +2,15 @@ import React from 'react';
 import { FaTimesCircle } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
 
-export type Props = {
-  disabled?: boolean;
-  children?: JSX.Element;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-};
+interface CustomProps {
+}
+
+export type Props = CustomProps & React.ComponentProps<typeof Button>;
 
 export const CancelButton = (props: Props) => {
-  const { disabled, children, onClick } = props;
+  const { children, variant = "secondary" } = props;
   return (
-    <Button onClick={onClick} disabled={disabled} variant="secondary">
+    <Button {...props} variant={variant}>
       {children} <FaTimesCircle size={18} />
     </Button>
   );

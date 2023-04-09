@@ -4,6 +4,7 @@ export { DeleteButton } from "./components/buttons/DeleteButton";
 export { LoadingButton } from "./components/buttons/LoadingButton";
 export { PlayButton } from "./components/buttons/PlayButton";
 export { RefreshButton } from "./components/buttons/RefreshButton";
+export { RestoreButton } from "./components/buttons/RestoreButton";
 export { EditButton } from "./components/buttons/EditButton";
 
 export * from "./components/forms/FormTypes";
