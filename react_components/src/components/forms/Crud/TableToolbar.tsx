@@ -56,7 +56,7 @@ export const TableToolbar = (props: Props) => {
 
       <Col lg={3} md={4} xs={12} className="mb-3 align-self-end">
         <div className="d-flex justify-content-end">
-          <InputGroup>
+          <InputGroup className="d-flex justify-content-end w-100">
             {enableGlobalFilter && (
               <DebouncedInput
                 type="text"
