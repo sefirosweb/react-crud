@@ -16,6 +16,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm ci --legacy-peer-deps
+          npm install --prefix ./react_components/
           npm run build-storybook
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
