@@ -74,7 +74,7 @@ export function Filter(props: Props) {
     return (
       <>
         <FormTypeSelect
-          handleChange={(e) => setFilter(e.target.value)}
+          handleChange={(v) => setFilter(v?.value ?? '')}
           name={column.id + "_select"}
           controlId={column.id + "_select"}
           selectOptionsUrl={column.columnDef.meta?.selectOptionsUrl}

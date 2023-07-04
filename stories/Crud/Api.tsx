@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Story } from '@storybook/react';
 
 import { Crud, Props, PropsRef } from '../../react_components/src/components/forms/Crud';
-import { ColumnDefinition } from '../../react_components/src/types';
+import { ColumnDefinition, SelectOption } from '../../react_components/src/types';
 import { Product } from '../../models/Product';
 import { FieldTypes } from '../../react_components/src/types';
 import { FormTypeSelect } from '../../react_components/src/components/forms/FormTypes/FormTypeSelect';
@@ -40,11 +40,11 @@ const columns: Array<ColumnDefinition<Product>> = [
 
 const Template = (props: Props) => {
   const [selectedValue, setSelectedValue] = useState('');
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(e.target.value);
+  const handleChange = (option: SelectOption | null) => {
+    setSelectedValue(option?.value ?? '');
 
     const lazyFilter = {
-      category_id: e.target.value,
+      category_id: option?.value ?? '',
     };
 
     crudRef.current?.setLazyilters(lazyFilter);
