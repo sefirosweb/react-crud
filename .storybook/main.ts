@@ -11,7 +11,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/preset-scss",
-    "storybook-axios/register"
+    // "storybook-axios/register"
   ],
 
   framework: {

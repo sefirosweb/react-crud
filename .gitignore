@@ -24,3 +24,5 @@ yarn-error.log*
 
 dist/
 storybook-static/
+
+sefirosweb-react-*

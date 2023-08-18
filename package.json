@@ -1,20 +1,45 @@
 {
-  "name": "@sefirosweb/react-crud-storybook",
+  "name": "@sefirosweb/react-crud",
   "version": "2.12.0",
-  "description": "Storybook of @sefirosweb/react-crud",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
+  "author": "@Sefirosweb",
+  "description": "Basic components for CRUD with react",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/react-crud.umd.cjs",
+  "module": "./dist/react-crud.js",
+  "types": "./dist/index.d.ts",
+  "private": false,
+  "exports": {
+    ".": {
+      "import": "./dist/react-crud.js",
+      "require": "./dist/react-crud.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "crud",
+    "table",
+    "modal"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build-storybook": "storybook build",
+    "start": "npm run storybook",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
-    "start": "npm run storybook"
+    "build-storybook": "storybook build",
+    "build": "vite build",
+    "pack": "npm run build && rm -f sefirosweb-react-crud-* && npm pack && mv sefirosweb-react-crud-* sefirosweb-react-crud-$(date +%Y%m%d-%H%M%S).tgz"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sefirosweb/react-crud.git"
   },
-  "author": "@Sefirosweb",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sefirosweb/react-crud/issues"
   },
@@ -84,5 +109,9 @@
     "react-icons": "^4.4.0",
     "sheetjs-style": "^0.15.8",
     "toastr": "2.1.4"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
