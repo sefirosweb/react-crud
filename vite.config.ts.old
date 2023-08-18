@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import dts from 'vite-plugin-dts'
 
-import { peerDependencies } from './package.json';
+import { peerDependencies } from './react_components/package.json';
 
 function externalPackages(deps: Record<string, string>) {
   return Object.keys(deps)
