@@ -1,24 +1,20 @@
 import React from "react";
-import { Button, Modal as BootstrapModal, ModalProps } from "react-bootstrap";
+import { Button, Modal as BModal, ButtonProps } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { Variant } from "../../../types";
 import { LoadingButton } from "./../../buttons/LoadingButton";
 
-export type Props = {
-  show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+type CustomProps = {
+  body: JSX.Element | string;
+  title?: JSX.Element | string;
+  accept?: JSX.Element | string;
   handleAccept?: React.MouseEventHandler<HTMLButtonElement>;
-  body?: JSX.Element;
-  title?: string;
-  accept?: string;
-  acceptVariant?: Variant;
-  onExited?: () => void;
-  onShow?: () => void;
+  acceptVariant?: ButtonProps['variant'];
   isLoading?: boolean;
-  size?: ModalProps['size']
 };
 
-export const Modal = (props: Props) => {
+export type Props = CustomProps & React.ComponentProps<typeof BModal>;
+
+export const Modal: React.FC<Props> = (props) => {
   const {
     show,
     setShow,
@@ -30,7 +26,7 @@ export const Modal = (props: Props) => {
     onExited,
     onShow,
     isLoading,
-    size
+    size,
   } = props;
 
   const handleClose = () => setShow(false);
@@ -38,7 +34,7 @@ export const Modal = (props: Props) => {
 
   return (
     <>
-      <BootstrapModal
+      <BModal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -47,11 +43,14 @@ export const Modal = (props: Props) => {
         onShow={onShow}
         size={size}
       >
-        <BootstrapModal.Header>
-          <BootstrapModal.Title>{title}</BootstrapModal.Title>
-        </BootstrapModal.Header>
-        <BootstrapModal.Body>{body}</BootstrapModal.Body>
-        <BootstrapModal.Footer>
+
+        {title &&
+          <BModal.Header>
+            <BModal.Title>{title}</BModal.Title>
+          </BModal.Header>}
+
+        <BModal.Body>{body}</BModal.Body>
+        <BModal.Footer>
           <Button
             variant="secondary"
             onClick={handleClose}
@@ -68,8 +67,8 @@ export const Modal = (props: Props) => {
                 {accept}
               </Button>
             ))}
-        </BootstrapModal.Footer>
-      </BootstrapModal>
+        </BModal.Footer>
+      </BModal>
     </>
   );
 };

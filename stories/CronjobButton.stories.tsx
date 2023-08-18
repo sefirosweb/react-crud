@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { DeleteButton } from '../src/components/buttons/DeleteButton';
+import { CronjobButton, Props } from '../src/components/buttons/CronjobButton';
 
 const meta: Meta = {
-  title: 'Buttons/DeleteButton',
-  component: DeleteButton,
+  title: 'Buttons/CronjobButton',
+  component: CronjobButton,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof DeleteButton>;
+type Story = StoryObj<typeof CronjobButton>;
 
 export const Active: Story = {
   args: {

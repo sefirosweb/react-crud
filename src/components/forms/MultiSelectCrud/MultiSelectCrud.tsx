@@ -19,7 +19,7 @@ export type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const MultiSelectCrud = (props: Props) => {
+export const MultiSelectCrud: React.FC<Props> = (props) => {
   const {
     sentKeyAs,
     primaryKey,

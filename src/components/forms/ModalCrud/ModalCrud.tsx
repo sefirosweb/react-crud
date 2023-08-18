@@ -33,7 +33,7 @@ const FilterModalData = (fields: Array<ColumnDefinition<any, unknown>>) => {
   return newModalData;
 };
 
-const ModalCrudAction = (props: Props) => {
+const ModalCrudAction: React.FC<Props> = (props) => {
   const {
     show,
     setShow,
@@ -279,7 +279,7 @@ const ModalCrudAction = (props: Props) => {
 };
 
 
-export const ModalCrud = (props: Props) => {
+export const ModalCrud: React.FC<Props> = (props) => {
   const client = useGetQueryClient()
   return (
     <QueryClientProvider client={client}>

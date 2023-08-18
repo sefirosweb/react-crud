@@ -1,7 +1,21 @@
 import { faker } from '@faker-js/faker';
-import { GeneratedData, generateOptionsValue } from "../dataMock"
 import { generateRandomString } from "./generateRandomString"
 import { getRandom } from "./getRandom"
+import { generateOptionsValue } from './generateOptionsValue';
+
+type GeneratedData = {
+    uuid: string;
+    value: string;
+    ean: number;
+    name: string;
+    description: string | null;
+    random: string | null;
+    price: number;
+    category: any;
+    category_id: any;
+    categories: Array<any>;
+    created_at: string;
+}
 
 const generatedData: Array<GeneratedData> = []
 
@@ -22,7 +36,7 @@ export const getData = () => {
         data.push({
             uuid: uuid,
             value: uuid,
-            ean: faker.number.int(8000000, 9000000).toString(),
+            ean: faker.number.int({ min: 8000000, max: 9000000 }),
             name: faker.commerce.product(),
             description: Math.random() < 0.4 ? faker.commerce.productDescription() : null,
             random: Math.random() < 0.4 ? generateRandomString(10) : null,

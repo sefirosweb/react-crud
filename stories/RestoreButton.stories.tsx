@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { DeleteButton } from '../src/components/buttons/DeleteButton';
+import { RestoreButton, } from '../src/components/buttons/RestoreButton';
 
 const meta: Meta = {
-  title: 'Buttons/DeleteButton',
-  component: DeleteButton,
+  title: 'Buttons/RestoreButton',
+  component: RestoreButton,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof DeleteButton>;
+type Story = StoryObj<typeof RestoreButton>;
 
 export const Active: Story = {
   args: {
