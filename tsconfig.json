@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -15,10 +19,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "declaration": true,
-    "typeRoots": ["./dist/index.d.ts"],
+    "typeRoots": [
+      "./dist/index.d.ts"
+    ],
     "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "src/InputSearch/style.tsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src",
+    "test"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/InputSearch/style.tsx"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

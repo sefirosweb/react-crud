@@ -1,5 +1,5 @@
-import { createData } from "../react_components/src/test/dataMock";
-import { ColumnDefinition, FieldTypes } from "../react_components/src/types";
+import { ColumnDefinition, FieldTypes } from "../../src/types";
+import { getData } from ".";
 
 export type Product = {
   uuid: string;
@@ -13,7 +13,7 @@ export type Product = {
   category_list: string;
 };
 
-export const data = createData()
+export const data = getData()
 
 export type TestModel = {
   id: string;

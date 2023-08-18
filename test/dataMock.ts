@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { AxiosInstance, AxiosRequestConfig } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { matchString } from '../lib';
+import { matchString } from '../src/lib';
+import { getData, updateData } from './mockData';
 
 export type Options = {
     timetou?: number
@@ -21,7 +22,6 @@ export type GeneratedData = {
     created_at: string;
 }
 
-let generatedData: Array<GeneratedData> | undefined = undefined
 let optionsWithValue: Array<OptionsType> | undefined = undefined
 
 type OptionsType = {
@@ -48,17 +48,6 @@ type GenerateDataSubtable = [number, {
     data: Array<GeneratedData>
 }]
 
-export const generateRandomString = (length: number) => {
-    let result = '';
-    const characters =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜáéíóúàèìòùäëïöü';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-};
-
 
 export const startMock = (axios: AxiosInstance, options?: Options,) => {
     const mock = new MockAdapter(axios, {
@@ -71,7 +60,7 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
         console.log(`Axios request: '/api/crud' GET`)
         console.log(request)
         return new Promise(function (resolve) {
-            const data = createData()
+            const data = getData()
 
             const filteredData = data.filter(row => {
                 if (!request.params) return true
@@ -94,12 +83,12 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
         console.log(`Axios request: '/api/crud' POST`)
 
         const requestData = JSON.parse(request.data)
-        const data = createData()
+        const data = getData()
 
         const categories = generateOptionsValue()
         const findCategory = categories.find(c => c.value === requestData.category_id)
         requestData.category = findCategory?.name ?? ''
-        requestData.uuid = faker.datatype.uuid()
+        requestData.uuid = faker.string.uuid()
         requestData.ean = faker.datatype.number({ min: 8000000, max: 9000000 })
         requestData.created_at = new Date();
 
@@ -113,7 +102,8 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
         const updateData = JSON.parse(request.data)
         console.log({ updateData })
         const uuid = JSON.parse(request.data).uuid
-        const data = createData()
+
+        const data = getData()
         const findData = data.findIndex(i => i.uuid === uuid)
         if (findData >= 0) {
             const categories = generateOptionsValue()
@@ -127,7 +117,7 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
             }
         }
 
-        generatedData = data;
+        updateData(data)
         return generateCrudResponse(request, 'Data updated correctly')
     })
 
@@ -136,13 +126,13 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
         console.log(JSON.parse(request.data))
 
         const uuid = JSON.parse(request.data).uuid
-        const data = createData()
+        const data = getData()
         const findData = data.findIndex(i => i.uuid === uuid)
         if (findData >= 0) {
             data.splice(findData, 1)
         }
 
-        generatedData = data;
+        updateData(data)
         return generateCrudResponse(request, 'Data deleted correctly')
     })
     // End Simple Crud
@@ -173,47 +163,6 @@ export const startMock = (axios: AxiosInstance, options?: Options,) => {
     return mock
 }
 
-export function get_random<T>(list: Array<T>) {
-    return list[Math.floor((Math.random() * list.length))];
-}
-
-export const createData = () => {
-    if (generatedData) {
-        generatedData.sort((a, b) => (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
-        return generatedData
-    }
-
-    console.log('Generating mok data.. "generateData"')
-    const random = Math.floor(Math.random() * 200) + 40
-    const data: Array<GeneratedData> = []
-    for (var i = 0; i < random; i++) {
-
-        const category = get_random(generateOptionsValue())
-
-        const uuid = faker.datatype.uuid()
-        data.push({
-            uuid: uuid,
-            value: uuid,
-            ean: faker.datatype.number({ min: 8000000, max: 9000000 }),
-            name: faker.commerce.product(),
-            description: Math.random() < 0.4 ? faker.commerce.productDescription() : null,
-            random: Math.random() < 0.4 ? generateRandomString(10) : null,
-            price: parseFloat(faker.commerce.price()) + 0.99,
-            category: category.name,
-            category_id: category.value,
-            created_at: faker.date.recent(10).toISOString(),
-            categories: [
-                get_random(generateOptionsValue()),
-                get_random(generateOptionsValue())
-            ]
-        })
-    }
-
-    generatedData = data
-    console.log('data created: ', data)
-    return generatedData
-}
-
 export const generateOptionsValue = () => {
     if (optionsWithValue) return optionsWithValue
     const data: Array<OptionsType> = []
@@ -223,7 +172,7 @@ export const generateOptionsValue = () => {
             name: cat,
             category: cat,
             value: i.toString(),
-            uuid: faker.datatype.uuid(),
+            uuid: faker.string.uuid(),
             description: faker.commerce.productDescription(),
         })
     }
@@ -266,7 +215,7 @@ const generateDataOptions = (request?: AxiosRequestConfig): Promise<GenerateData
 
 const generateDataSubtable = (request?: AxiosRequestConfig): Promise<GenerateDataSubtable> => {
     return new Promise(function (resolve) {
-        const data = createData().splice(0, 5)
+        const data = getData().splice(0, 5)
         resolve([
             200,
             {

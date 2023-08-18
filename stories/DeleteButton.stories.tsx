@@ -16,6 +16,7 @@ export const Active: Story = {
     disabled: false
   },
 }
+
 export const Disabled: Story = {
   args: {
     disabled: true
