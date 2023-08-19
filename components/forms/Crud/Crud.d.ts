@@ -1,0 +1,39 @@
+import React from "react";
+import { Props as TableProps } from "../Table";
+import { Row as RowTanstack, Table as TableReactTable } from "@tanstack/react-table";
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
+import { CrudType, InputFilter } from "../../../types";
+export interface Props extends Omit<TableProps, "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"> {
+    data?: Array<any>;
+    canSelectRow?: boolean;
+    enableGlobalFilter?: boolean;
+    crudUrl?: string;
+    lazyLoad?: boolean;
+    createButtonTitle?: string;
+    canRefresh?: boolean;
+    canDelete?: boolean;
+    canEdit?: boolean;
+    canExport?: boolean;
+    exportName?: string;
+    handleSuccess?: (response: any, crud: CrudType) => void;
+    handleFetch?: (data: Array<any>) => void;
+    primaryKey: string;
+    sentKeyAs?: string;
+    titleOnDelete?: string;
+    customButtons?: JSX.Element;
+}
+export type PropsRef = {
+    table: TableReactTable<any> | undefined;
+    data: Array<any>;
+    setData: (data: Array<any>) => void;
+    refreshTable: <TPageData>(options?: RefetchOptions & RefetchQueryFilters<TPageData>) => Promise<QueryObserverResult<any, any>> | undefined;
+    getSelectedRows: <T>() => Array<T>;
+    getselectedIds: () => Array<string>;
+    lazyFilters: InputFilter;
+    setLazyilters: React.Dispatch<React.SetStateAction<InputFilter>>;
+    setIsLoading: (isLoading: boolean) => void;
+    getRowStyles?: (row: RowTanstack<any>) => React.CSSProperties;
+    getRowClass?: (row: RowTanstack<any>) => string;
+    exportToExcel: (fileName: string) => Promise<void>;
+};
+export declare const Crud: React.ForwardRefExoticComponent<Props & React.RefAttributes<PropsRef>>;
