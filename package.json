@@ -54,11 +54,11 @@
     "@storybook/react": "^7.3.2",
     "@storybook/react-vite": "^7.3.2",
     "@storybook/testing-library": "^0.2.0",
-    "@tanstack/react-query": "^4.32.6",
-    "@tanstack/react-query-devtools": "^4.32.6",
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
     "@tanstack/react-table": "^8.9.3",
     "@types/luxon": "^3.3.1",
-    "@types/node": "^20.5.0",
+    "@types/node": "^20.5.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/toastr": "^2.1.40",
@@ -73,10 +73,9 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
-    "react-draft-wysiwyg": "^1.15.0",
     "react-i18next": "^13.1.2",
     "react-icons": "^4.10.1",
-    "sass": "^1.66.0",
+    "sass": "^1.66.1",
     "storybook": "^7.3.2",
     "storybook-axios": "^1.0.1",
     "toastr": "^2.1.4",
@@ -84,7 +83,19 @@
     "xlsx": "^0.18.5"
   },
   "peerDependencies": {
+    "bootstrap": "^5.3.1",
+    "axios": "^1.4.0",
+    "i18next": "^23.4.4",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "quill": "^1.3.7",
+    "luxon": "^3.4.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-bootstrap": "^2.8.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.1.2",
+    "react-icons": "^4.10.1",
+    "sass": "^1.66.1",
+    "toastr": "^2.1.4",
+    "xlsx": "^0.18.5"
   }
 }

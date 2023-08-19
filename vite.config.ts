@@ -1,12 +1,27 @@
+import { createRequire } from "module";
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import dts from 'vite-plugin-dts'
-import fs from 'fs'
 
-const readJson = () => {
-    let rawdata = fs.readFileSync('student.json') as any;
-    let student = JSON.parse(rawdata);
+function toCamelCase(text) {
+    let words = text.split('-');
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return words.join('');
+}
+
+const getPeerDependencies = (): Record<string, string> => {
+    const require = createRequire(import.meta.url);
+    const data = require("./package.json");
+
+    const peerDependencies = Object.keys(data.peerDependencies).reduce((acc, key) => {
+        acc[key] = toCamelCase(key);
+        return acc;
+    }, {});
+
+    return peerDependencies
 }
 
 // https://vitejs.dev/config/
@@ -19,13 +34,13 @@ export default defineConfig({
 
         },
         rollupOptions: {
-            external: ['react', 'react-dom'],
+            external: [
+                ...Object.keys(getPeerDependencies()),
+            ],
             output: {
                 globals: {
-                    'react': 'React',
-                    'react-dom': 'ReactDOM',
-                    'styled-components': 'styled',
-                },
+                    ...getPeerDependencies(),
+                }
             },
         },
         sourcemap: false,

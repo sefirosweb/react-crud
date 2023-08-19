@@ -25,12 +25,10 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "test"
+    "src"
   ],
   "exclude": [
-    "node_modules",
-    "src/InputSearch/style.tsx"
+    "node_modules"
   ],
   "references": [
     {
