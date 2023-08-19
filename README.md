@@ -84,7 +84,7 @@ Contribute to this project in [GitHub](https://github.com/sefirosweb/react-crud)
 
 # I accept translations
 
-The current translations are in `react_components/src/lib/translations` I accept PR to translate to all languages
+The current translations are in `src/lib/translations` I accept PR to translate to all languages
 
 ## You can get the i18n instance of translation to use your own language code:
 

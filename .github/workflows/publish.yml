@@ -14,13 +14,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
       - run: npm install
-        working-directory: ./react_components
       - run: npm run build
-        working-directory: ./react_components
       - run: npm publish
-        working-directory: ./react_components
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
