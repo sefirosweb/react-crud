@@ -1,54 +1,41 @@
+import { Filters } from "@sefirosweb/react-multiple-search"
 import { matchString } from "../../src/lib"
 
-export const filterData = (row: any, params: Record<string, FilterType>) => {
-    let result = true
-    let globalFilter = true
+export const filterData = (row: any, params: Array<Filters>) => {
+    return params.every(param => {
+        const { filter, text } = param
+        const valueParam = text
+        const keyParam = filter
+        const currentValue = row[keyParam]
 
-    Object.entries(params).every(paramEntry => {
-        const keyParam = paramEntry[0]
-        const valueParam = paramEntry[1]
-
-        if (keyParam === 'globalFilter' && typeof valueParam === "string") {
-            if (matchGlobalFilter(row, valueParam)) {
-                globalFilter = true
-            } else {
-                globalFilter = false
-            }
-            return true
+        if (keyParam === 'globalFilter') {
+            return matchGlobalFilter(row, valueParam)
         }
 
-        if (typeof row[keyParam] === "undefined") {
-            return true
-        }
-
-        if (
-            (typeof valueParam === "string") &&
-            !matchString(row[keyParam], valueParam)
-        ) {
-            result = false
+        if (typeof currentValue === "undefined") {
             return false
+        }
+
+        if (typeof valueParam === "string") {
+            return matchString(currentValue, valueParam)
         }
 
         if (
             (Array.isArray(valueParam) && !isNaN(valueParam[0]))
-            && row[keyParam] < valueParam[0]
+            && currentValue < valueParam[0]
         ) {
-            result = false
             return false
         }
 
         if (
             (Array.isArray(valueParam) && !isNaN(valueParam[1]))
-            && row[keyParam] > valueParam[1]
+            && currentValue > valueParam[1]
         ) {
-            result = false
             return false
         }
 
         return true
     })
-
-    return globalFilter && result
 }
 
 

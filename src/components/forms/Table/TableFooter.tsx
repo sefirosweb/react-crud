@@ -1,5 +1,4 @@
 import { Table } from '@tanstack/react-table';
-import React from 'react';
 import { Col, Form, Pagination, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +26,7 @@ export const TableFooter = (props: Props) => {
               disabled={!table.getCanPreviousPage()}
             />
             <Pagination.Item active>
-              {table.getState().pagination.pageIndex + 1} of{' '}
+              {table.getState().pagination.pageIndex + 1} {t('of')}{' '}
               {table.getPageCount() === 0 ? 1 : table.getPageCount()}
             </Pagination.Item>
             <Pagination.Next

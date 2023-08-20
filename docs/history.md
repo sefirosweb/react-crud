@@ -1,3 +1,7 @@
+# 2.13.0
+
+- Added react-multi-select, now can use a multi select in "global filter" it is aswom to filter multiple values in one input, this causes a break changesn now params is sent in array instead object
+
 # 2.12.1
 
 - Small fixes with props

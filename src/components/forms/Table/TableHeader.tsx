@@ -1,10 +1,5 @@
-import {
-  ColumnFiltersState,
-  flexRender,
-  Header,
-  Table,
-} from "@tanstack/react-table";
 import React from "react";
+import { ColumnFiltersState, flexRender, Header, Table } from "@tanstack/react-table";
 import { FieldTypes } from "../../../types";
 import { Filter } from "./Filter";
 

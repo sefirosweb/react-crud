@@ -6,6 +6,7 @@ interface Props
   onChange: (value: string) => void;
   debounce?: number;
 }
+
 export function DebouncedInput(props: Props) {
   const { onChange, debounce = 230 } = props;
   const initialValue = props.value;

@@ -10,6 +10,7 @@ export default {
     DELETE: 'Formulario de borrado',
     Delete: 'Borrar',
     Edit: 'Editar',
+    of: 'de',
     error: {
         wrong_selected: 'El valor seleccionado no es correcto'
     },

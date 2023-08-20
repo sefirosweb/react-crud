@@ -24,16 +24,18 @@ export const startMock = (axios: AxiosInstance, options?: Options) => {
 
     mock.onGet('/api/crud').reply((request) => {
         console.log(`Axios request: '/api/crud' GET`)
-        console.log(request)
+        console.log({ request })
         return new Promise(function (resolve) {
             const data = getData()
 
             const filteredData = data.filter(row => {
                 if (!request.params) return true
-                if (Object.keys(request.params).length === 0) return true
+                if (request.params.length === 0) return true
 
                 return filterData(row, request.params)
             })
+
+            console.log({ filteredData })
 
             resolve([
                 200,

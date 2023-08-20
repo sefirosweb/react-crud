@@ -1,4 +1,4 @@
-import React, { HTMLProps, useEffect, useRef } from 'react';
+import { HTMLProps, useEffect, useRef } from 'react';
 
 interface Props extends HTMLProps<HTMLInputElement> {
   indeterminate?: boolean;

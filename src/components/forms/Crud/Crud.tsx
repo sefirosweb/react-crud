@@ -1,44 +1,24 @@
-import React, {
-  forwardRef,
-  Ref,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import {
-  Table,
-  Props as TableProps,
-  PropsRef as TablePropsRef,
-} from "../Table";
-import {
-  ColumnFiltersState,
-  Row as RowTanstack,
-  Table as TableReactTable,
-} from "@tanstack/react-table";
+import { Table, Props as TableProps, PropsRef as TablePropsRef } from "../Table";
+import { ColumnFiltersState, Row as RowTanstack, Table as TableReactTable } from "@tanstack/react-table";
 import { QueryClientProvider, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery } from '@tanstack/react-query'
-
 import { TableToolbar } from "./TableToolbar";
 import { CrudType, InputFilter } from "../../../types";
-
-import {
-  HandleModalShow,
-  PropsRef as HandleModalShowPropsRef,
-} from "./HandleModalShow";
+import { HandleModalShow, PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
 import NewColumns from "./NewColumns";
 import exportToExcel from "../../../lib/exportToExcel";
 import { getRequestData } from "../../../api/crudDataTable";
 import { useGetQueryClient } from "../../../api/useGetQueryClient";
+import { FilterLabel, Filters } from '@sefirosweb/react-multiple-search'
+
 
 export interface Props
-  extends Omit<
-    TableProps,
-    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
-  > {
+  extends Omit<TableProps, "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"> {
   data?: Array<any>;
   canSelectRow?: boolean;
   enableGlobalFilter?: boolean;
+  enableGlobalFilterLabels?: Array<FilterLabel>;
   crudUrl?: string;
   lazyLoad?: boolean;
   createButtonTitle?: string;
@@ -73,6 +53,7 @@ export type PropsRef = {
 const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const {
     enableGlobalFilter,
+    enableGlobalFilterLabels,
     canSelectRow,
     columns,
     data = [],
@@ -100,8 +81,9 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataTable, setDataTable] = useState(data);
   const [reactTableFilters, setReactTableFilters] = useState<InputFilter>({});
-  const [inputFilters, setInputFilters] = useState({});
+  const [inputFilters, setInputFilters] = useState<Array<Filters>>([]);
   const [globalFilterText, setGlobalFilterText] = useState("");
+  const [dynamicFilters, setDynamicFilters] = useState<Array<Filters>>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [externalFilters, setExternalFilters] = useState<InputFilter>({});
@@ -113,9 +95,11 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const { data: dataQuery, isFetching: isFetchingQuery, refetch } = useQuery<any>({
     queryKey: [crudUrl, inputFilters],
     queryFn: () => getRequestData(crudUrl, inputFilters),
+    initialData: [],
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
-    enabled: false
+    enabled: false,
+    cacheTime: 0,
   })
 
   useEffect(() => {
@@ -206,12 +190,29 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilter, setGlobalFilterText, lazyLoad]);
 
   useEffect(() => {
-    const newExternalFilters = {
-      ...externalFilters,
-      ...reactTableFilters,
-    };
+    const newExternalFilters: Array<Filters> = [...dynamicFilters]
+
+    Object.entries(externalFilters).forEach(([key, value]) => {
+      newExternalFilters.push({
+        label: key,
+        filter: key,
+        //@ts-ignore
+        text: value,
+      })
+    })
+
+    Object.entries(reactTableFilters).forEach(([key, value]) => {
+      console.log({ key, value })
+      newExternalFilters.push({
+        label: key,
+        filter: key,
+        //@ts-ignore
+        text: value
+      })
+    })
+
     setInputFilters(newExternalFilters);
-  }, [externalFilters, reactTableFilters]);
+  }, [externalFilters, reactTableFilters, dynamicFilters]);
 
   useEffect(() => {
     if (!crudUrl) return;
@@ -245,7 +246,9 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       <div className={className}>
         <TableToolbar
           enableGlobalFilter={enableGlobalFilter}
+          enableGlobalFilterLabels={enableGlobalFilterLabels}
           setGlobalFilter={setGlobalFilter}
+          setDynamicFilters={setDynamicFilters}
           createButtonTitle={createButtonTitle}
           canRefresh={canRefresh}
           refreshTable={refreshTable}
@@ -264,6 +267,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               ref={tableRef}
               isLoading={isLoading}
               globalFilterText={globalFilterText}
+              dynamicFilters={dynamicFilters}
               columnFiltersFields={columnFilters}
               setColumnFiltersFields={setColumnFilters}
               enableColumnFilters={!lazyLoad}

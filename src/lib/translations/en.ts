@@ -10,6 +10,7 @@ export default {
     DELETE: 'Delete form',
     Delete: 'Delete',
     Edit: 'Edit',
+    of: 'of',
     error: {
         wrong_selected: 'The value selected is not correct'
     },

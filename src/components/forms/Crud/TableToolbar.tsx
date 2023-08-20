@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, InputGroup, Row } from "react-bootstrap";
+import { Button, ButtonGroup, Col, InputGroup, Row } from "react-bootstrap";
 import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
 import { FaFileExport } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
-
+import InputSearch, { FilterLabel, Filters } from '@sefirosweb/react-multiple-search'
 
 type Props = {
   isLoading: boolean;
   enableGlobalFilter?: boolean;
+  enableGlobalFilterLabels?: Array<FilterLabel>;
   createButtonTitle?: string;
   canRefresh?: boolean;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+  setDynamicFilters: React.Dispatch<React.SetStateAction<Array<Filters>>>;
   refreshTable: () => void;
   generateExcel: (fileName: string) => Promise<void>;
   handleModalShow: () => void;
@@ -25,7 +27,9 @@ export const TableToolbar = (props: Props) => {
     isLoading,
     createButtonTitle,
     enableGlobalFilter,
+    enableGlobalFilterLabels,
     setGlobalFilter,
+    setDynamicFilters,
     canRefresh,
     refreshTable,
     handleModalShow,
@@ -36,15 +40,21 @@ export const TableToolbar = (props: Props) => {
   } = props;
 
   const [filter, setFilter] = useState("");
+  const [filters, setFilters] = useState<Array<Filters>>([]);
+
   useEffect(() => {
     setGlobalFilter(filter);
   }, [filter]);
+
+  useEffect(() => {
+    setDynamicFilters(filters);
+  }, [filters]);
 
   const { t } = useTranslation()
 
   return (
     <Row>
-      <Col lg={9} md={8} xs={12} className="mb-3">
+      <Col lg={6} md={6} xs={12} className="mb-3">
         {createButtonTitle && (
           <Button variant="success" onClick={() => handleModalShow()} disabled={isLoading}>
             {createButtonTitle}
@@ -54,35 +64,48 @@ export const TableToolbar = (props: Props) => {
         {customButtons}
       </Col>
 
-      <Col lg={3} md={4} xs={12} className="mb-3 align-self-end">
+      <Col lg={6} md={6} xs={12} className="mb-3 align-self-end">
         <div className="d-flex justify-content-end">
-          <InputGroup className="d-flex justify-content-end w-100">
-            {enableGlobalFilter && (
-              <DebouncedInput
-                type="text"
-                value={filter}
-                onChange={(value) => setFilter(String(value))}
-                placeholder={t('Search') as string}
-                className="form-control"
+
+          {enableGlobalFilter && typeof enableGlobalFilterLabels === 'undefined' && (
+            <DebouncedInput
+              type="text"
+              value={filter}
+              onChange={(value) => setFilter(String(value))}
+              placeholder={t('Search') as string}
+              className="form-control"
+            />
+          )}
+
+          {enableGlobalFilter && enableGlobalFilterLabels && (
+            <div className="w-100">
+              <InputSearch
+                filters={filters}
+                setFilters={setFilters}
+                filterLabels={enableGlobalFilterLabels}
               />
-            )}
+            </div>
+          )}
 
-            {canRefresh && (
-              <RefreshButton
-                disabled={isLoading}
-                onClick={() => refreshTable()}
-              />
-            )}
+          {(canRefresh || canExport) && (
+            <div>
+              <ButtonGroup className="ms-2">
+                {canRefresh && (
+                  <RefreshButton
+                    disabled={isLoading}
+                    onClick={() => refreshTable()}
+                  />
+                )}
 
-          </InputGroup>
+                {canExport &&
+                  <Button onClick={() => generateExcel(exportName + Date.now())}>
+                    <FaFileExport size={18} />
+                  </Button>
+                }
+              </ButtonGroup>
+            </div>
+          )}
 
-          {canExport &&
-            <Button className="ms-2 d-flex justify-content-center align-items-center"
-              onClick={() => generateExcel(exportName + Date.now())}
-            >
-              <FaFileExport />
-            </Button>
-          }
         </div>
       </Col>
     </Row >

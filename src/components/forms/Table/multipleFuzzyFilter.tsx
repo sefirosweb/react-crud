@@ -1,7 +1,7 @@
 import { FilterFn } from "@tanstack/react-table";
 import { matchString } from "../../../lib";
 
-export const fuzzyFilter: FilterFn<any> = (row, columnId, value) => {
+export const multipleFuzzyFilter: FilterFn<any> = (row, columnId, values) => {
   const text = row.getValue(columnId) as string | number | null;
-  return matchString(text, value)
+  return values.every((value: string) => matchString(text, value))
 };

@@ -36,7 +36,7 @@ export const getData = () => {
         data.push({
             uuid: uuid,
             value: uuid,
-            ean: faker.number.int({ min: 8000000, max: 9000000 }),
+            ean: faker.number.int({ min: 8437002848521, max: 9000000000000 }),
             name: faker.commerce.product(),
             description: Math.random() < 0.4 ? faker.commerce.productDescription() : null,
             random: Math.random() < 0.4 ? generateRandomString(10) : null,

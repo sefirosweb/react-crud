@@ -6,6 +6,7 @@ import { Product } from "../../test/mockData/Product";
 import { FieldTypes } from "../../src/types";
 import { FormTypeSelect } from "../../src/components/forms/FormTypes/FormTypeSelect";
 import { useState } from "@storybook/addons";
+import { FilterLabel } from "@sefirosweb/react-multiple-search";
 
 const meta: Meta = {
   title: 'Tables/Crud',
@@ -20,6 +21,7 @@ type Story = StoryObj<typeof Crud>;
 const columns: Array<ColumnDefinition<Product>> = [
   {
     accessorKey: "uuid",
+    header: "UUID",
     enableColumnFilter: true,
     dropdown: true,
     getCellStyle: () => {
@@ -30,12 +32,15 @@ const columns: Array<ColumnDefinition<Product>> = [
   },
   {
     accessorKey: "ean",
+    header: "EAN",
     getCellClass: () => {
       return 'bg-success'
     },
   },
   {
     accessorKey: "name",
+    header: "Name",
+    enableColumnFilter: true,
   },
   {
     accessorKey: "description",
@@ -58,10 +63,19 @@ const columns: Array<ColumnDefinition<Product>> = [
   },
 ];
 
+
+// const enableGlobalFilterLabels: Array<FilterLabel> = columns.map(column => {
+//   return {
+//     label: column.header,
+//     filter: column.accessorKey
+//   }
+// })
+
 export const ApiLazyLoad: Story = {
   args: {
     columns: columns,
     enableGlobalFilter: true,
+    // enableGlobalFilterLabels,
     crudUrl: `/api/crud`,
     lazyLoad: true,
   },

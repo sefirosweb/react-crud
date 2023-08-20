@@ -1,11 +1,14 @@
-import React, {
-  forwardRef,
-  Ref,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from "react";
-import * as TableBootstrap from "react-bootstrap";
+import React, { forwardRef, Ref, useEffect, useImperativeHandle, useState } from "react";
+import { Table as BTable } from "react-bootstrap";
+import { LoadingSpinner } from "../../icons/LoadingSpinner";
+import { fuzzyFilter } from "./fuzzyFilter";
+import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
+import { FieldTypes } from "../../../types";
+import { TableHeader } from "./TableHeader";
+import { TableFooter } from "./TableFooter";
+import getVisibleColumns from "./getVisibleColumns";
+import { multipleFuzzyFilter } from "./multipleFuzzyFilter";
+import { Filters } from '@sefirosweb/react-multiple-search'
 
 import {
   CellContext,
@@ -23,15 +26,6 @@ import {
   Table as TableReactTable,
   useReactTable,
 } from "@tanstack/react-table";
-
-import { LoadingSpinner } from "../../icons/LoadingSpinner";
-import { fuzzyFilter } from "./fuzzyFilter";
-import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
-import { FieldTypes } from "../../../types";
-import { TableHeader } from "./TableHeader";
-import { TableFooter } from "./TableFooter";
-import getVisibleColumns from "./getVisibleColumns";
-
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData, TValue> {
     fieldType?: FieldTypes;
@@ -82,6 +76,7 @@ export interface Props {
   className?: string;
   isLoading?: boolean;
   globalFilterText?: string;
+  dynamicFilters?: Array<Filters>;
   enableColumnFilters?: boolean;
   columnFiltersFields?: ColumnFiltersState;
   setColumnFiltersFields?: React.Dispatch<
@@ -116,6 +111,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     className,
     isLoading,
     globalFilterText,
+    dynamicFilters,
     enableColumnFilters = true,
     columnFiltersFields,
     setColumnFiltersFields,
@@ -124,6 +120,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   } = props;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnWithDynamicFilters, setColumnWithDynamicFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState(getVisibleColumns(columns));
@@ -131,6 +128,32 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   useEffect(() => {
     setColumnVisibility(getVisibleColumns(columns))
   }, [columns])
+
+  useEffect(() => {
+    const newColumnFilters = structuredClone(columnFilters).map((columnFilter) => {
+      return {
+        ...columnFilter,
+        value: [columnFilter.value]
+      }
+    })
+
+    if (dynamicFilters) {
+      dynamicFilters.forEach((filter) => {
+        const columnFilter = newColumnFilters.find((columnFilter) => columnFilter.id === filter.filter)
+        if (columnFilter) {
+          columnFilter.value.push(filter.text)
+        } else {
+          newColumnFilters.push({
+            id: filter.filter,
+            value: [filter.text]
+          })
+        }
+      })
+    }
+
+    setColumnWithDynamicFilters(newColumnFilters)
+
+  }, [columnFilters, dynamicFilters])
 
   useEffect(() => {
     setGlobalFilter(globalFilterText ?? "");
@@ -147,7 +170,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     enableColumnFilters: true,
     state: {
       columnVisibility,
-      columnFilters,
+      columnFilters: columnWithDynamicFilters,
       globalFilter,
       sorting,
     },
@@ -169,7 +192,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     },
 
     filterFns: {
-      textFilter: fuzzyFilter
+      textFilter: multipleFuzzyFilter
     },
 
     getColumnCanGlobalFilter: () => true,
@@ -198,7 +221,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
           position: "relative"
         }}>
         <div style={isLoading ? tableIsLoading : { display: "none" }}><LoadingSpinner /></div>
-        <TableBootstrap.Table
+        <BTable
           striped
           hover
           bordered
@@ -240,7 +263,7 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
               ))}
             </tbody>
           )}
-        </TableBootstrap.Table>
+        </BTable>
         <TableFooter table={table} />
       </div>
     </>
