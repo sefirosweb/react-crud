@@ -1,13 +1,13 @@
 import React from "react";
-import { FilterLabel, Filters } from '@sefirosweb/react-multiple-search';
+import { EnableGlobalFilterLabels, GlobalFilters } from "../../../types";
 type Props = {
     isLoading: boolean;
     enableGlobalFilter?: boolean;
-    enableGlobalFilterLabels?: Array<FilterLabel>;
+    enableGlobalFilterLabels?: Array<EnableGlobalFilterLabels>;
     createButtonTitle?: string;
     canRefresh?: boolean;
     setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-    setDynamicFilters: React.Dispatch<React.SetStateAction<Array<Filters>>>;
+    setDynamicFilters: React.Dispatch<React.SetStateAction<Array<GlobalFilters>>>;
     refreshTable: () => void;
     generateExcel: (fileName: string) => Promise<void>;
     handleModalShow: () => void;

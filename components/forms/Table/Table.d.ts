@@ -1,7 +1,6 @@
 import React from "react";
-import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
+import { ColumnDefinition, GlobalFilters, MultiSelectOptionsColumns } from "../../../types";
 import { FieldTypes } from "../../../types";
-import { Filters } from '@sefirosweb/react-multiple-search';
 import { CellContext, ColumnFiltersState, Row, RowData, Table as TableReactTable } from "@tanstack/react-table";
 declare module "@tanstack/table-core" {
     interface ColumnMeta<TData, TValue> {
@@ -23,7 +22,7 @@ export interface Props {
     className?: string;
     isLoading?: boolean;
     globalFilterText?: string;
-    dynamicFilters?: Array<Filters>;
+    dynamicFilters?: Array<GlobalFilters>;
     enableColumnFilters?: boolean;
     columnFiltersFields?: ColumnFiltersState;
     setColumnFiltersFields?: React.Dispatch<React.SetStateAction<ColumnFiltersState>>;

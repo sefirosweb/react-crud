@@ -1,6 +1,5 @@
-import { Filters } from '@sefirosweb/react-multiple-search';
-import { CrudType, ModalDataToSend } from '../types';
-export declare const getRequestData: (url?: string, params?: Array<Filters>) => Promise<unknown>;
+import { CrudType, GlobalFilters, ModalDataToSend } from '../types';
+export declare const getRequestData: (url?: string, params?: Array<GlobalFilters>) => Promise<unknown>;
 type MutateData = {
     crud: CrudType;
     url: string;

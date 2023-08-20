@@ -1,5 +1,6 @@
 import React from 'react';
 import { CellContext, ColumnDef } from '@tanstack/react-table';
+import { FilterLabel, Filters } from '@sefirosweb/react-multiple-search';
 export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
     columns: Array<ColumnDefinition<TData, TValue>>;
     url: string;
@@ -71,4 +72,6 @@ export type DataField = {
 } & Record<string, any>;
 export type InputFilter = Record<string, unknown>;
 export type ModalDataToSend = Record<string, string | number | Array<string> | Array<number>>;
+export type EnableGlobalFilterLabels = FilterLabel;
+export type GlobalFilters = Filters;
 export {};
