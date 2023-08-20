@@ -1,7 +1,7 @@
-import { Filters } from "@sefirosweb/react-multiple-search"
 import { matchString } from "../../src/lib"
+import { GlobalFilters } from "../../src/types"
 
-export const filterData = (row: any, params: Array<Filters>) => {
+export const filterData = (row: any, params: Array<GlobalFilters>) => {
     return params.every(param => {
         const { filter, text } = param
         const valueParam = text

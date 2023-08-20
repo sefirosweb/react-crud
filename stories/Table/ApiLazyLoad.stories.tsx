@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Crud, Props, PropsRef } from "../../src/components/forms/Crud";
+import { Crud, PropsRef } from "../../src/components/forms/Crud";
 import { ColumnDefinition } from "../../src/types";
 import { Product } from "../../test/mockData/Product";
 import { FieldTypes } from "../../src/types";
 import { FormTypeSelect } from "../../src/components/forms/FormTypes/FormTypeSelect";
 import { useState } from "@storybook/addons";
-import { FilterLabel } from "@sefirosweb/react-multiple-search";
 
 const meta: Meta = {
   title: 'Tables/Crud',

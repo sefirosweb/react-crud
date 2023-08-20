@@ -4,13 +4,12 @@ import { Table, Props as TableProps, PropsRef as TablePropsRef } from "../Table"
 import { ColumnFiltersState, Row as RowTanstack, Table as TableReactTable } from "@tanstack/react-table";
 import { QueryClientProvider, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useQuery } from '@tanstack/react-query'
 import { TableToolbar } from "./TableToolbar";
-import { CrudType, InputFilter } from "../../../types";
+import { CrudType, EnableGlobalFilterLabels, GlobalFilters, InputFilter } from "../../../types";
 import { HandleModalShow, PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
 import NewColumns from "./NewColumns";
 import exportToExcel from "../../../lib/exportToExcel";
 import { getRequestData } from "../../../api/crudDataTable";
 import { useGetQueryClient } from "../../../api/useGetQueryClient";
-import { FilterLabel, Filters } from '@sefirosweb/react-multiple-search'
 
 
 export interface Props
@@ -18,7 +17,7 @@ export interface Props
   data?: Array<any>;
   canSelectRow?: boolean;
   enableGlobalFilter?: boolean;
-  enableGlobalFilterLabels?: Array<FilterLabel>;
+  enableGlobalFilterLabels?: Array<EnableGlobalFilterLabels>;
   crudUrl?: string;
   lazyLoad?: boolean;
   createButtonTitle?: string;
@@ -81,9 +80,9 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataTable, setDataTable] = useState(data);
   const [reactTableFilters, setReactTableFilters] = useState<InputFilter>({});
-  const [inputFilters, setInputFilters] = useState<Array<Filters>>([]);
+  const [inputFilters, setInputFilters] = useState<Array<GlobalFilters>>([]);
   const [globalFilterText, setGlobalFilterText] = useState("");
-  const [dynamicFilters, setDynamicFilters] = useState<Array<Filters>>([]);
+  const [dynamicFilters, setDynamicFilters] = useState<Array<GlobalFilters>>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [externalFilters, setExternalFilters] = useState<InputFilter>({});
@@ -190,7 +189,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilter, setGlobalFilterText, lazyLoad]);
 
   useEffect(() => {
-    const newExternalFilters: Array<Filters> = [...dynamicFilters]
+    const newExternalFilters: Array<GlobalFilters> = [...dynamicFilters]
 
     Object.entries(externalFilters).forEach(([key, value]) => {
       newExternalFilters.push({

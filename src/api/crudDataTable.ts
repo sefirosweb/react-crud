@@ -1,8 +1,7 @@
-import { Filters } from '@sefirosweb/react-multiple-search'
 import { axiosInstance as axios } from '../lib/axios'
-import { CrudType, ModalDataToSend } from '../types'
+import { CrudType, GlobalFilters, ModalDataToSend } from '../types'
 
-export const getRequestData = (url?: string, params?: Array<Filters>) => {
+export const getRequestData = (url?: string, params?: Array<GlobalFilters>) => {
     return new Promise((resolve, reject) => {
         if (!url) {
             resolve(null)

@@ -4,16 +4,17 @@ import { RefreshButton } from "../../buttons/RefreshButton";
 import { DebouncedInput } from "../Table/DebouncedInput";
 import { FaFileExport } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
-import InputSearch, { FilterLabel, Filters } from '@sefirosweb/react-multiple-search'
+import InputSearch from '@sefirosweb/react-multiple-search'
+import { EnableGlobalFilterLabels, GlobalFilters } from "../../../types";
 
 type Props = {
   isLoading: boolean;
   enableGlobalFilter?: boolean;
-  enableGlobalFilterLabels?: Array<FilterLabel>;
+  enableGlobalFilterLabels?: Array<EnableGlobalFilterLabels>;
   createButtonTitle?: string;
   canRefresh?: boolean;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-  setDynamicFilters: React.Dispatch<React.SetStateAction<Array<Filters>>>;
+  setDynamicFilters: React.Dispatch<React.SetStateAction<Array<GlobalFilters>>>;
   refreshTable: () => void;
   generateExcel: (fileName: string) => Promise<void>;
   handleModalShow: () => void;
@@ -40,7 +41,7 @@ export const TableToolbar = (props: Props) => {
   } = props;
 
   const [filter, setFilter] = useState("");
-  const [filters, setFilters] = useState<Array<Filters>>([]);
+  const [filters, setFilters] = useState<Array<GlobalFilters>>([]);
 
   useEffect(() => {
     setGlobalFilter(filter);

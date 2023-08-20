@@ -2,13 +2,12 @@ import React, { forwardRef, Ref, useEffect, useImperativeHandle, useState } from
 import { Table as BTable } from "react-bootstrap";
 import { LoadingSpinner } from "../../icons/LoadingSpinner";
 import { fuzzyFilter } from "./fuzzyFilter";
-import { ColumnDefinition, MultiSelectOptionsColumns } from "../../../types";
+import { ColumnDefinition, GlobalFilters, MultiSelectOptionsColumns } from "../../../types";
 import { FieldTypes } from "../../../types";
 import { TableHeader } from "./TableHeader";
 import { TableFooter } from "./TableFooter";
 import getVisibleColumns from "./getVisibleColumns";
 import { multipleFuzzyFilter } from "./multipleFuzzyFilter";
-import { Filters } from '@sefirosweb/react-multiple-search'
 
 import {
   CellContext,
@@ -76,7 +75,7 @@ export interface Props {
   className?: string;
   isLoading?: boolean;
   globalFilterText?: string;
-  dynamicFilters?: Array<Filters>;
+  dynamicFilters?: Array<GlobalFilters>;
   enableColumnFilters?: boolean;
   columnFiltersFields?: ColumnFiltersState;
   setColumnFiltersFields?: React.Dispatch<

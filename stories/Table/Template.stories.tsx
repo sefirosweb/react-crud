@@ -1,9 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Crud } from '../../src/components/forms/Crud';
-import { ColumnDefinition } from '../../src/types';
+import { ColumnDefinition, EnableGlobalFilterLabels } from '../../src/types';
 import { Product, data } from '../../test/mockData/Product';
-import { FilterLabel } from '@sefirosweb/react-multiple-search'
-import { Button } from 'react-bootstrap';
 
 const meta: Meta = {
   title: 'Tables/Crud',
@@ -41,7 +39,7 @@ const columns: Array<ColumnDefinition<Product>> = [
   },
 ];
 
-const enableGlobalFilterLabels: Array<FilterLabel> = columns.map(column => {
+const enableGlobalFilterLabels: Array<EnableGlobalFilterLabels> = columns.map(column => {
   return {
     label: column.header,
     filter: column.accessorKey
