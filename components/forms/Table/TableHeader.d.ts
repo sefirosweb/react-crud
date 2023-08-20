@@ -1,5 +1,5 @@
-import { ColumnFiltersState, Table } from "@tanstack/react-table";
 import React from "react";
+import { ColumnFiltersState, Table } from "@tanstack/react-table";
 type Props = {
     table: Table<any>;
     enableColumnFilters: boolean;

@@ -10,6 +10,7 @@ declare const _default: {
     DELETE: string;
     Delete: string;
     Edit: string;
+    of: string;
     error: {
         wrong_selected: string;
     };

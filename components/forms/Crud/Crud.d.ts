@@ -3,10 +3,12 @@ import { Props as TableProps } from "../Table";
 import { Row as RowTanstack, Table as TableReactTable } from "@tanstack/react-table";
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
 import { CrudType, InputFilter } from "../../../types";
+import { FilterLabel } from '@sefirosweb/react-multiple-search';
 export interface Props extends Omit<TableProps, "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"> {
     data?: Array<any>;
     canSelectRow?: boolean;
     enableGlobalFilter?: boolean;
+    enableGlobalFilterLabels?: Array<FilterLabel>;
     crudUrl?: string;
     lazyLoad?: boolean;
     createButtonTitle?: string;
