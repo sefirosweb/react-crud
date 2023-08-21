@@ -18,6 +18,9 @@ const getPeerDependencies = (): Record<string, string> => {
 
     const peerDependencies = Object.keys(data.peerDependencies).reduce((acc, key) => {
         acc[key] = toCamelCase(key);
+        if (acc[key].startsWith('@')) {
+            acc[key] = acc[key].slice(1);
+        }
         return acc;
     }, {});
 
