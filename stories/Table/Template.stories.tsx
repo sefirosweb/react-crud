@@ -51,6 +51,8 @@ export const Template: Story = {
   args: {
     columns: columns,
     data: data,
+    // lazyLoad: true,
+    // crudUrl: `/api/crud`,
     canRefresh: true,
     canExport: true,
     enableGlobalFilter: true,

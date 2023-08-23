@@ -79,7 +79,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [dataTable, setDataTable] = useState(data);
-  const [reactTableFilters, setReactTableFilters] = useState<InputFilter>({});
+  const [reactTableFilters, setReactTableFilters] = useState<Array<GlobalFilters>>([]);
   const [inputFilters, setInputFilters] = useState<Array<GlobalFilters>>([]);
   const [globalFilterText, setGlobalFilterText] = useState("");
   const [dynamicFilters, setDynamicFilters] = useState<Array<GlobalFilters>>([]);
@@ -171,17 +171,25 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
 
   useEffect(() => {
     if (!lazyLoad) return;
-    const reactTableFilters: InputFilter = {};
+    const reactTableFilters: Array<GlobalFilters> = [...dynamicFilters];
     if (globalFilter !== "") {
-      reactTableFilters["globalFilter"] = globalFilter;
+      reactTableFilters.push({
+        label: "globalFilter",
+        filter: "globalFilter",
+        text: globalFilter,
+      });
     }
 
     columnFilters.forEach((columnFilter) => {
-      reactTableFilters[columnFilter.id] = columnFilter.value;
+      reactTableFilters.push({
+        label: columnFilter.id,
+        filter: columnFilter.id,
+        text: columnFilter.value?.toString() ?? "",
+      });
     });
 
     setReactTableFilters(reactTableFilters);
-  }, [globalFilter, columnFilters, lazyLoad]);
+  }, [globalFilter, columnFilters, dynamicFilters, lazyLoad]);
 
   useEffect(() => {
     if (lazyLoad) return;
@@ -189,7 +197,7 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [globalFilter, setGlobalFilterText, lazyLoad]);
 
   useEffect(() => {
-    const newExternalFilters: Array<GlobalFilters> = [...dynamicFilters]
+    const newExternalFilters: Array<GlobalFilters> = [...reactTableFilters] //...dynamicFilters
 
     Object.entries(externalFilters).forEach(([key, value]) => {
       newExternalFilters.push({
@@ -200,18 +208,8 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
       })
     })
 
-    Object.entries(reactTableFilters).forEach(([key, value]) => {
-      console.log({ key, value })
-      newExternalFilters.push({
-        label: key,
-        filter: key,
-        //@ts-ignore
-        text: value
-      })
-    })
-
     setInputFilters(newExternalFilters);
-  }, [externalFilters, reactTableFilters, dynamicFilters]);
+  }, [externalFilters, reactTableFilters]);
 
   useEffect(() => {
     if (!crudUrl) return;
