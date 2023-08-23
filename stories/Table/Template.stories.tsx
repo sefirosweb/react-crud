@@ -41,8 +41,8 @@ const columns: Array<ColumnDefinition<Product>> = [
 
 const enableGlobalFilterLabels: Array<EnableGlobalFilterLabels> = columns.map(column => {
   return {
-    label: column.header,
-    filter: column.accessorKey
+    label: column.header?.toString() ?? '',
+    filter: column.accessorKey ?? ''
   }
 })
 
