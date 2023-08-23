@@ -1,0 +1,14 @@
+import{C as l}from"./index-bc20e28c.js";import{F as e}from"./index-11f483a8.js";import"./ThemeProvider-a71a5aa9.js";import"./_commonjsHelpers-de833af9.js";import"./index-61bf1805.js";import"./index-763d01f2.js";import"./LoadingSpinner-ee85fb67.js";import"./useTranslation-9aad8729.js";import"./i18nInstance-1f8a4d28.js";import"./matchStrings-5a558dd8.js";import"./i18n-2050a10d.js";import"./axios-94372f69.js";import"./FormTypeSelect-a02290b5.js";import"./useGetQueryClient-cbcca069.js";import"./Form-6057eae6.js";import"./index-8d47fad6.js";import"./createWithBsPrefix-e4b19ea9.js";import"./Row-b5cb55df.js";import"./useEventCallback-2ca67dcc.js";import"./Button-aac535fb.js";import"./index-249823ed.js";import"./index.esm-1806526e.js";import"./Button-97fb7a83.js";import"./index-b11ed130.js";import"./index-086f44c1.js";import"./LoadingButton-5a00958f.js";import"./index-2801d3c9.js";import"./inheritsLoose-c82a83d4.js";import"./index-2675dd19.js";import"./FormTypeDate-ad6bce75.js";import"./FormTypeHtml-bc29b9bd.js";import"./FormTypeNumber-343302cd.js";import"./FormTypePassword-3ad9ea3e.js";import"./FormTypeText-37a0c392.js";import"./FormTypeTextArea-3b3f545c.js";import"./index-1406dde3.js";import"./index-8b309e46.js";import"./index-5be08948.js";import"./index-3fa57039.js";import"./index-b9cefe9f.js";const X={title:"Tables/Crud",component:l},n={primaryKey:"uuid",url:"/api/sub_table",getDataUrl:"/api/get_options",lazyLoad:!0,onExitModal:()=>{console.log("Log on exit modal")},title:"Editing Table Multi Select",columns:[{accessorKey:"uuid"},{accessorKey:"name"}]},p=[{accessorKey:"uuid",visible:!1},{accessorKey:"ean",enableSorting:!0},{accessorKey:"name",editable:!0,enableSorting:!0},{accessorKey:"category_id",header:"Cat.",cell:r=>r.row.original.category,editable:!0,fieldType:e.SELECT,selectOptionsUrl:"/api/get_options"},{header:"Desc",titleOnCRUD:"Description",accessorKey:"description",fieldType:e.HTML,editable:!0},{accessorKey:"price",header:"€",editable:!0,fieldType:e.NUMBER},{id:"category_list",header:"Multi Select",editable:!0,fieldType:e.MULTISELECT,multiSelectOptions:n},{header:"Created",accessorKey:"created_at",enableSorting:!0,cell:r=>new Date(r.getValue()).toLocaleString()}],t={args:{columns:p,enableGlobalFilter:!0,canRefresh:!0,crudUrl:"/api/crud",canDelete:!0,canEdit:!0,primaryKey:"uuid",createButtonTitle:"Create a new record",titleOnDelete:"name"}};var o,i,a;t.parameters={...t.parameters,docs:{...(o=t.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    columns: columns,
+    enableGlobalFilter: true,
+    canRefresh: true,
+    crudUrl: \`/api/crud\`,
+    canDelete: true,
+    canEdit: true,
+    primaryKey: "uuid",
+    createButtonTitle: "Create a new record",
+    titleOnDelete: "name"
+  }
+}`,...(a=(i=t.parameters)==null?void 0:i.docs)==null?void 0:a.source}}};const Y=["CRUD"];export{t as CRUD,Y as __namedExportsOrder,X as default};
+//# sourceMappingURL=CRUD.stories-c789211f.js.map
