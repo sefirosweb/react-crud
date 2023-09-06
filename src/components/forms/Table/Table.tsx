@@ -25,6 +25,9 @@ import {
   Table as TableReactTable,
   useReactTable,
 } from "@tanstack/react-table";
+import { inRangeFilter } from "./inRangeFilter";
+import { inRangeDateFilter } from "./inRangeDateFilter";
+
 declare module "@tanstack/table-core" {
   interface ColumnMeta<TData, TValue> {
     fieldType?: FieldTypes;
@@ -43,14 +46,12 @@ declare module "@tanstack/table-core" {
 
 const filterFnType = (fieldType?: FieldTypes): string => {
   if (fieldType === FieldTypes.NUMBER) return "inNumberRange";
-  if (fieldType === FieldTypes.DATE) return "inNumberRange";
+  if (fieldType === FieldTypes.DATE) return "dateFilter";
 
   return "textFilter";
 }
 
-const parseColumns = (
-  columns: Array<ColumnDefinition<any>>
-): Array<ColumnDef<any>> => {
+const parseColumns = (columns: Array<ColumnDefinition<any>>): Array<ColumnDef<any>> => {
   // @ts-ignore
   return columns
     .map((c) => {
@@ -129,12 +130,13 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
   }, [columns])
 
   useEffect(() => {
-    const newColumnFilters = structuredClone(columnFilters).map((columnFilter) => {
-      return {
-        ...columnFilter,
-        value: [columnFilter.value]
-      }
-    })
+    const newColumnFilters = structuredClone(columnFilters)
+      .map((columnFilter) => {
+        return {
+          ...columnFilter,
+          value: [columnFilter.value]
+        }
+      })
 
     if (dynamicFilters) {
       dynamicFilters.forEach((filter) => {
@@ -191,6 +193,8 @@ export const Table = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     },
 
     filterFns: {
+      dateFilter: inRangeDateFilter,
+      inNumberRange: inRangeFilter,
       textFilter: multipleFuzzyFilter
     },
 

@@ -7,11 +7,7 @@ import { ShowMultiSelectCrud } from "./ShowMultiSelectCrud";
 import { FieldTypes } from "../../../types";
 import { PropsRef as HandleModalShowPropsRef } from "./HandleModalShow";
 import { useTranslation } from "react-i18next";
-export interface Props
-  extends Omit<
-    TableProps,
-    "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"
-  > {
+export interface Props extends Omit<TableProps, "globalFilterText" | "isLoading" | "setColumnFiltersFields" | "data"> {
   primaryKey: string;
   sentKeyAs?: string;
   canEdit?: boolean;

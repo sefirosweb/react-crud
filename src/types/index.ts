@@ -1,6 +1,7 @@
 import React from 'react';
 import { CellContext, ColumnDef } from '@tanstack/react-table';
 import { FilterLabel, Filters } from '@sefirosweb/react-multiple-search';
+import { DateTime } from 'luxon';
 
 export type MultiSelectOptionsColumns<TData, TValue = unknown> = {
   columns: Array<ColumnDefinition<TData, TValue>>;
@@ -111,3 +112,22 @@ export type ModalDataToSend = Record<
 
 export type EnableGlobalFilterLabels = FilterLabel
 export type GlobalFilters = Filters
+
+export type FilterType = FilterTypeText | FilterTypeNumbers | FilterTypeDates
+
+export type FilterTypeText = {
+  type: 'text',
+  value: string,
+}
+
+export type FilterTypeNumbers = {
+  type: 'number',
+  min: number | null,
+  max: number | null,
+}
+
+export type FilterTypeDates = {
+  type: 'date',
+  min: number | null,
+  max: number | null,
+}

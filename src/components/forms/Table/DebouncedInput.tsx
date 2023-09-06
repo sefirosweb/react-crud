@@ -1,36 +1,32 @@
-import React, { InputHTMLAttributes, useEffect, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useState } from 'react';
 
-interface Props
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   value: string;
   onChange: (value: string) => void;
   debounce?: number;
 }
 
-export function DebouncedInput(props: Props) {
-  const { onChange, debounce = 230 } = props;
-  const initialValue = props.value;
-  const [value, setValue] = useState(initialValue);
+export const DebouncedInput = (props: Props) => {
+  const { value, onChange, debounce = 230 } = props;
+  const [currentValue, setCurrentValue] = useState(value);
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    setCurrentValue(value);
+  }, [value]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange(value);
+      onChange(currentValue);
     }, debounce);
 
     return () => clearTimeout(timeout);
-    // cant add onchange on debounce
-    // @ts-ignore
-  }, [value]);
+  }, [currentValue]);
 
   return (
     <input
       {...props}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
+      value={currentValue}
+      onChange={(e) => setCurrentValue(e.target.value)}
     />
   );
 }
