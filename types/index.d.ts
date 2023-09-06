@@ -74,4 +74,19 @@ export type InputFilter = Record<string, unknown>;
 export type ModalDataToSend = Record<string, string | number | Array<string> | Array<number>>;
 export type EnableGlobalFilterLabels = FilterLabel;
 export type GlobalFilters = Filters;
+export type FilterType = FilterTypeText | FilterTypeNumbers | FilterTypeDates;
+export type FilterTypeText = {
+    type: 'text';
+    value: string;
+};
+export type FilterTypeNumbers = {
+    type: 'number';
+    min: number | null;
+    max: number | null;
+};
+export type FilterTypeDates = {
+    type: 'date';
+    min: number | null;
+    max: number | null;
+};
 export {};

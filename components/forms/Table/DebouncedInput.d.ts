@@ -4,5 +4,5 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> 
     onChange: (value: string) => void;
     debounce?: number;
 }
-export declare function DebouncedInput(props: Props): import("react/jsx-runtime").JSX.Element;
+export declare const DebouncedInput: (props: Props) => import("react/jsx-runtime").JSX.Element;
 export {};
