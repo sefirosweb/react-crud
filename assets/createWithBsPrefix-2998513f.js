@@ -1,0 +1,2 @@
+import{u,j as l,c as x}from"./ThemeProvider-09f3a863.js";import{r as d}from"./index-76fb7be0.js";var C=/-(.)/g;function P(e){return e.replace(C,function(s,r){return r.toUpperCase()})}const j=e=>e[0].toUpperCase()+P(e).slice(1);function N(e,{displayName:s=j(e),Component:r,defaultProps:t}={}){const o=d.forwardRef(({className:a,bsPrefix:n,as:c=r||"div",...p},i)=>{const m={...t,...p},f=u(n,e);return l.jsx(c,{ref:i,className:x(a,f),...m})});return o.displayName=s,o}export{N as c};
+//# sourceMappingURL=createWithBsPrefix-2998513f.js.map

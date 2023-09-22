@@ -1,0 +1,2 @@
+import{u as B,a as d,b as R,j as $,c as w}from"./ThemeProvider-09f3a863.js";import{r as j}from"./index-76fb7be0.js";const c=j.forwardRef(({bsPrefix:n,className:i,as:l="div",...t},f)=>{const a=B(n,"row"),p=d(),u=R(),m=`${a}-cols`,r=[];return p.forEach(s=>{const o=t[s];delete t[s];let e;o!=null&&typeof o=="object"?{cols:e}=o:e=o;const x=s!==u?`-${s}`:"";e!=null&&r.push(`${m}${x}-${e}`)}),$.jsx(l,{ref:f,...t,className:w(i,a,...r)})});c.displayName="Row";const h=c;export{h as R};
+//# sourceMappingURL=Row-5355c8a4.js.map

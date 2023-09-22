@@ -1,0 +1,2 @@
+import{j as o}from"./ThemeProvider-09f3a863.js";import{b as n}from"./index.esm-a45aa266.js";import{B as a}from"./Button-880d3194.js";const r=t=>{const{children:e,variant:i="secondary"}=t;return o.jsxs(a,{...t,variant:i,children:[e," ",o.jsx(n,{size:18})]})};try{r.displayName="EditButton",r.__docgenInfo={description:"",displayName:"EditButton",props:{}}}catch{}try{EditButton.displayName="EditButton",EditButton.__docgenInfo={description:"",displayName:"EditButton",props:{}}}catch{}export{r as E};
+//# sourceMappingURL=index-e3f1c84d.js.map

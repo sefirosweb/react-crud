@@ -1,0 +1,2 @@
+import{j as t}from"./ThemeProvider-09f3a863.js";import{c as a}from"./index.esm-a45aa266.js";import{B as s}from"./Button-880d3194.js";const r=e=>{const{children:o,variant:n="danger"}=e;return t.jsxs(s,{...e,variant:n,children:[o," ",t.jsx(a,{size:18})]})};try{r.displayName="DeleteButton",r.__docgenInfo={description:"",displayName:"DeleteButton",props:{}}}catch{}try{DeleteButton.displayName="DeleteButton",DeleteButton.__docgenInfo={description:"",displayName:"DeleteButton",props:{}}}catch{}export{r as D};
+//# sourceMappingURL=index-862e6100.js.map
