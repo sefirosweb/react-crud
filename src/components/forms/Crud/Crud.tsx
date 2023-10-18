@@ -38,7 +38,7 @@ export type PropsRef = {
   table: TableReactTable<any> | undefined;
   data: Array<any>;
   setData: (data: Array<any>) => void
-  refreshTable: <TPageData>(options?: RefetchOptions & RefetchQueryFilters<TPageData>) => Promise<QueryObserverResult<any, any>> | undefined;
+  refreshTable: <TPageData>(options?: RefetchOptions & RefetchQueryFilters) => Promise<QueryObserverResult<any, any>> | undefined;
   getSelectedRows: <T>() => Array<T>;
   getselectedIds: () => Array<string>;
   lazyFilters: InputFilter;
@@ -98,7 +98,6 @@ const CrudTable = forwardRef((props: Props, ref: Ref<PropsRef>) => {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     enabled: false,
-    cacheTime: 0,
   })
 
   useEffect(() => {

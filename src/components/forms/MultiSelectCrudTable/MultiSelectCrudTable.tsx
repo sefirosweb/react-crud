@@ -68,7 +68,7 @@ const MultiSelectCrudTableAction = forwardRef(
       refetchOnWindowFocus: false
     })
 
-    const { mutate, isLoading: isLoadingMutation } = useMutation({
+    const { mutate, isPending: isLoadingMutation } = useMutation({
       mutationFn: mutateData,
       onSettled: (response: any) => {
         if (response.success) {
